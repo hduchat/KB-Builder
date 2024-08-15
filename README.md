@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/d5687dbf-3c86-4112-bc9a-a9ce9cf30b4b" alt="示例图片" width="700" height="300">
+  <img width="50%" alt="image" src="https://github.com/user-attachments/assets/7af61641-e548-459f-b377-c71c1810e38f">
 </p>
 
 # <p align="center"><span style="font-size:20px;">基于 LLM 大语言模型的知识库问答系统</span></p>
@@ -27,12 +27,12 @@ docker run -d --name=maxkb -p 8080:8080 -v ~/.maxkb:/var/lib/postgresql/data cr2
 
 <table style="border-collapse: collapse; border: 1px solid black;">
   <tr>
-    <td style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/fd4078db-308b-424a-a746-543fa4b0b11f" alt=" Demo1"   /></td>
-    <td style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/9aaabd11-7550-4245-b297-8156b7a28ce0" alt=" Demo2"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/fd4078db-308b-424a-a746-543fa4b0b11f" alt=" Demo1"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/9aaabd11-7550-4245-b297-8156b7a28ce0" alt=" Demo2"   /></td>
   </tr>
   <tr>
-    <td style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/c0e3ada2-58ff-4aa0-92ef-88b66bea6fe8" alt=" Demo3"   /></td>
-    <td style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/cedb669f-55df-4153-b45f-eeedb87768e5" alt=" Demo4"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/c0e3ada2-58ff-4aa0-92ef-88b66bea6fe8" alt=" Demo3"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/cedb669f-55df-4153-b45f-eeedb87768e5" alt=" Demo4"   /></td>
   </tr>
 </table>
 
@@ -54,7 +54,10 @@ docker run -d --name=maxkb -p 8080:8080 -v ~/.maxkb:/var/lib/postgresql/data cr2
 感谢飞致云[MaxKB](https://github.com/1Panel-dev/MaxKB)项目提供的技术支持！  
 
 **License**  
-Copyright (c) 2014-2024 飞致云 FIT2CLOUD, All rights reserved.  
-Licensed under The GNU General Public License version 3 (GPLv3) (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+Copyright (c) 2014-2024 滨电智言 , All rights reserved.  
+
+Licensed under The GNU General Public License version 3 (GPLv3)  (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+
 <https://www.gnu.org/licenses/gpl-3.0.html>
+
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
