@@ -48,13 +48,13 @@ UI 展示
 - **向量数据库**：PostgreSQL / pgvector
 - **大模型**：各种本地私有或者公共大模型
 # 滨电智言
-本项目是由杭州电子科技大学滨江研究院开发完成。
-滨电智言是由杭州电子科技大学滨江研究院自主开发完成的面向行业细分领域的大模型产品。滨电智言强化了领域知识提取与知识构建、领域模型训练与微调、知识检索与语义匹配等能力。目前滨电智言初步构建了面向能源工业、科技教育、医疗健康垂直领域的底层模型能力，支持包括智能问答、领域内容生成、文本摘要、报告生成、数据分析等多项大模型应用能力。
+**本项目是由杭州电子科技大学滨江研究院开发完成。**  
+滨电智言是由杭州电子科技大学滨江研究院自主开发完成的面向行业细分领域的大模型产品。滨电智言强化了领域知识提取与知识构建、领域模型训练与微调、知识检索与语义匹配等能力。目前滨电智言初步构建了面向能源工业、科技教育、医疗健康垂直领域的底层模型能力，支持包括智能问答、领域内容生成、文本摘要、报告生成、数据分析等多项大模型应用能力。  
 滨电智言自2023年8月31日正式发布以来，得到腾讯网、搜狐网、杭州网和潮新闻等多家新闻媒体报道，正在和多个客户合作构建垂直行业领域大模型，力争建成高质量产学研结合垂直行业行业领域大模型，为客户打造您企业专属的行业领域大模型智能综合解决方案
 # 特别鸣谢
-感谢飞致云MaxKB项目提供的技术支持！
-**License**
-Copyright (c) 2014-2024 飞致云 FIT2CLOUD, All rights reserved.
+感谢飞致云MaxKB项目提供的技术支持！  
+**License**  
+Copyright (c) 2014-2024 飞致云 FIT2CLOUD, All rights reserved.  
 Licensed under The GNU General Public License version 3 (GPLv3) (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-https://www.gnu.org/licenses/gpl-3.0.html
+https://www.gnu.org/licenses/gpl-3.0.html  
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
