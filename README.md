@@ -14,14 +14,19 @@ KB Builder = Knowledge Base Builder，是一款基于 LLM 大语言模型的开�
 - **灵活的文档处理方式**：提供多种文档切片（智能分段 / 递归拆分 / 自定义标识拆分等）和多种文本清洗等RAG文档预处理方式；
 - **大语言模型中立**：支持对接各种大语言模型来生成QA，包括本地私有大模型（Llama 3 / Qwen 2 等）、国内公共大模型（通义千问 / 智谱 AI 等）和国外公共大模型（OpenAI / Gemini 等）；
 - **知识生成与管理**：提供多个预置场景Prompt库，支持生成高质量的QA问答对，支持基于QA的知识库管理功能。
-- 
-# 快速开始
+  
+## 快速开始
 ```
 docker run -d --name=maxkb -p 8080:8080 -v ~/.maxkb:/var/lib/postgresql/data cr2.bindian.hdu.cn/hduchat/kbbuilder
 用户名: admin
 密码: admin123.
 ```
 💡 可以通过源码进行安装部署
+
+如你有更多问题，可以查看使用手册，或者通过issue，也欢迎加入微信群和我们交流。
+- [使用手册](https://github.com/hduchat/KB-Builder/wiki/%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D)
+- [建议反馈](https://github.com/hduchat/KB-Builder/issues)
+- [技术交流群]https://github.com/hduchat/KB-Builder/wiki/%E8%81%94%E7%B3%BB%E6%88%91%E4%BB%AC)
 
 ## UI 展示
 
@@ -37,23 +42,23 @@ docker run -d --name=maxkb -p 8080:8080 -v ~/.maxkb:/var/lib/postgresql/data cr2
 </table>
 
 
-# 技术栈
+## 技术栈
 - 前端：[Vue.js](https://cn.vuejs.org/)
 - 后端：[Python / Django](https://www.djangoproject.com/)
 - LangChain：[LangChain](https://www.langchain.com/)
 - 向量数据库：[PostgreSQL / pgvector](https://www.postgresql.org/)
 - 大模型：各种本地私有或者公共大模型
   
-# 滨电智言
+## 滨电智言
 **本项目是由杭州电子科技大学滨江研究院开发完成。**  
 
 滨电智言是由杭州电子科技大学滨江研究院自主开发完成的面向行业细分领域的大模型产品。滨电智言强化了领域知识提取与知识构建、领域模型训练与微调、知识检索与语义匹配等能力。目前滨电智言初步构建了面向能源工业、科技教育、医疗健康垂直领域的底层模型能力，支持包括智能问答、领域内容生成、文本摘要、报告生成、数据分析等多项大模型应用能力。  
 滨电智言自2023年8月31日正式发布以来，得到腾讯网、搜狐网、杭州网和潮新闻等多家新闻媒体报道，正在和多个客户合作构建垂直行业领域大模型，力争建成高质量产学研结合垂直行业行业领域大模型，为客户打造您企业专属的行业领域大模型智能综合解决方案
 
-# 特别鸣谢
+## 特别鸣谢
 感谢飞致云[MaxKB](https://github.com/1Panel-dev/MaxKB)项目提供的技术支持！  
 
-**License**  
+## License  
 Copyright (c) 2014-2024 滨电智言 , All rights reserved.  
 
 Licensed under The GNU General Public License version 3 (GPLv3)  (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
