@@ -17,7 +17,7 @@ KB Builder = Knowledge Base Builder，是一款基于 LLM 大语言模型的开�
   
 ## 快速开始
 ```
-docker run -d --name=maxkb -p 8080:8080 -v ~/.maxkb:/var/lib/postgresql/data cr2.bindian.hdu.cn/hduchat/kbbuilder
+docker run -d --name=bindian -p 8080:8080 -v ~/.maxkb:/var/lib/postgresql/data bindian.hdu.edu.cn/bindian
 用户名: admin
 密码: admin123.
 ```
