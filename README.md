@@ -32,7 +32,7 @@ docker run -d --name kb-builder -p 8080:3000 -v ~/.KB-builder:/var/lib/postgresq
 
 <table style="border-collapse: collapse; border: 1px solid black;">
   <tr>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/fd4078db-308b-424a-a746-543fa4b0b11f" alt=" Demo1"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/8516ef95-6cc7-4769-8fde-fee135e4bab5" alt=" Demo1"   /></td>
     <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/9aaabd11-7550-4245-b297-8156b7a28ce0" alt=" Demo2"   /></td>
   </tr>
   <tr>
