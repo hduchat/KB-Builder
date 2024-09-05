@@ -1,0 +1,29 @@
+.md-editor-preview {
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  p {
+    padding: 0 !important;
+  }
+  .md-editor-admonition {
+    margin: 0;
+    padding: 0;
+  }
+  img {
+    border: 0 !important;
+  }
+}
+
+.md-editor-preview-wrapper {
+  padding: 0;
+}
+
+.md-editor-footer {
+  height: auto !important;
+}
+
+.ͼ1 .cm-placeholder {
+  color: var(--app-input-color-placeholder);
+  font-size: 14px;
+  font-weight: 400;
+}

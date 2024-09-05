@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "kb_builder"
+authors = ["sixuanwang <sixuan@hdu.edu.cn>"]
+version = "0.1.0"
+description = "智能知识库"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "4.1.13"
+djangorestframework = "3.14.0"
+drf-yasg = "1.21.7"
+django-filter = "23.2"
+langchain = "0.2.11"
+langchain_community = "0.2.10"
+langchain_huggingface = "0.0.3"
+psycopg2-binary = "2.9.7"
+jieba = "^0.42.1"
+diskcache = "^5.6.3"
+pillow = "^10.2.0"
+filetype = "^1.2.0"
+torch = "^2.2.1"
+sentence-transformers = "^2.2.2"
+blinker = "^1.6.3"
+openai = "^1.37.1"
+tiktoken = "^0.7.0"
+qianfan = "^0.3.6.1"
+pycryptodome = "^3.19.0"
+beautifulsoup4 = "^4.12.2"
+html2text = "^2024.2.26"
+langchain-openai = "^0.1.20"
+django-ipware = "^6.0.4"
+django-apscheduler = "^0.6.2"
+pymupdf = "1.24.1"
+python-docx = "^1.1.0"
+xlwt = "^1.3.0"
+dashscope = "^1.17.0"
+zhipuai = "^2.0.1"
+httpx = "^0.27.0"
+httpx-sse = "^0.4.0"
+websocket-client = "^1.7.0"
+langchain-google-genai = "^1.0.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c7dd2354-3fb8-4f18-a951-8ea1845cf5e3" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/../README.en.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ui/src/assets/img.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/handle/impl/doc_split_handle.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/handle/impl/doc_split_handle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/handle/impl/pdf_split_handle.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/handle/impl/pdf_split_handle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/handle/impl/text_split_handle.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/handle/impl/text_split_handle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/util/split_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/split_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/serializers/document_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/serializers/document_serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/views/document.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/views/document.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/.eslintrc.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/.eslintrc.cjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/csv-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/csv-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/doc-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/doc-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/docx-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/docx-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/icon_document.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/icon_document.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/icon_send.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/icon_send.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/icon_send_colorful.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/icon_send_colorful.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/icon_web.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/icon_web.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/login.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/login.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/md-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/md-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/pdf-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/pdf-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/txt-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/txt-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/unknow-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/unknow-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/upload-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/upload-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/assets/user-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/user-icon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/components/card-box/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/components/card-box/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepSecond.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepSecond.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/document/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/document/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/paragraph/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/paragraph/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_document/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_document/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2juarPwZ0KWq3y2DrsWpEDqhEhN" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "正在合并 dev",
+    "last_opened_file_path": "/Users/wcm/程序项目/开发/KB-Builder/apps/setting/sql",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/setting/sql" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="apps" type="Python.DjangoServer" factoryName="Django server">
+      <module name="apps" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="localhost" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-PY-242.21829.153" />
+        <option value="bundled-python-sdk-464836ebc622-b74155a9e76b-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.21829.153" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="c7dd2354-3fb8-4f18-a951-8ea1845cf5e3" name="更改" comment="" />
+      <created>1722239613598</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1722239613598</updated>
+      <workItem from="1722239614679" duration="2334000" />
+      <workItem from="1722318793789" duration="506000" />
+      <workItem from="1722322262075" duration="4633000" />
+      <workItem from="1722392166648" duration="65000" />
+      <workItem from="1722406918421" duration="8505000" />
+      <workItem from="1722479137033" duration="6022000" />
+      <workItem from="1722682666364" duration="247000" />
+      <workItem from="1722758337480" duration="24000" />
+      <workItem from="1722845604735" duration="21000" />
+      <workItem from="1723013530929" duration="3241000" />
+      <workItem from="1723093611352" duration="6403000" />
+      <workItem from="1723110915962" duration="24000" />
+      <workItem from="1724123625381" duration="63000" />
+      <workItem from="1724123906446" duration="577000" />
+      <workItem from="1725341351393" duration="98000" />
+      <workItem from="1725421425893" duration="6915000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

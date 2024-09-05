@@ -1,0 +1,22 @@
+# 邮箱配置
+EMAIL_ADDRESS:
+EMAIL_USE_TLS: False
+EMAIL_USE_SSL: True
+EMAIL_HOST: smtp.qq.com
+EMAIL_PORT: 465
+EMAIL_HOST_USER:
+EMAIL_HOST_PASSWORD:
+
+# 数据库链接信息
+DB_NAME: kb_builder
+DB_HOST: 192.168.30.28
+DB_PORT: 5432
+DB_USER: postgres
+DB_PASSWORD: 123456
+DB_ENGINE: django.db.backends.postgresql_psycopg2
+
+DEBUG: false
+
+EMBEDDING_MODEL_NAME: D:\project\m3e-base
+
+TIME_ZONE: Asia/Shanghai
