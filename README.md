@@ -16,11 +16,21 @@ KB Builder = Knowledge Base Builder，是一款基于 LLM 大语言模型的开�
 - **知识生成与管理**：提供多个预置场景Prompt库，支持生成高质量的QA问答对，支持基于QA的知识库生成功能，后续将提供更多的重写增强结构化处理等知识库管理能力。
   
 ## 快速开始
+
+### 阿里云镜像一键部署  
 ```
 docker run -d --name kb-builder -p 8080:8088 -v ~/.KB-builder:/var/lib/postgresql/data registry.cn-hangzhou.aliyuncs.com/hduchat/bindian.hdu.edu.cn:latest 
 用户名: admin
 密码: admin123.
 ```
+
+### DockerHub镜像一键部署   
+```
+docker run -d --name kb_builder -p 8080:8088 -v ~/.kb-builder:/var/lib/postgresql/data hduchat/bindian.hdu.edu.cn
+用户名: admin
+密码: admin123.
+```
+
 💡 可以通过源码进行安装部署
 
 如你有更多问题，可以查看使用手册，或者通过issue，也欢迎加入微信群和我们交流。
