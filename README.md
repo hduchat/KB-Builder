@@ -17,7 +17,7 @@ KB Builder = Knowledge Base Builder，是一款基于 LLM 大语言模型的开�
   
 ## 快速开始
 ```
-docker run -d --name kb-builder -p 8080:3000 -v ~/.KB-builder:/var/lib/postgresql/data hduchat/bindian.hdu.edu.cn/kb-builder 
+docker run -d --name kb-builder -p 8080:3000 -v ~/.KB-builder:/var/lib/postgresql/data registry.cn-hangzhou.aliyuncs.com/hduchat/bindian.hdu.edu.cn:latest 
 用户名: admin
 密码: admin123.
 ```
