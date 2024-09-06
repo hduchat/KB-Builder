@@ -48,6 +48,9 @@ docker run -d --name kb-builder -p 8080:8088 -v ~/.KB-builder:/var/lib/postgresq
 - LangChain：[LangChain](https://www.langchain.com/)
 - 向量数据库：[PostgreSQL / pgvector](https://www.postgresql.org/)
 - 大模型：各种本地私有或者公共大模型
+
+## 微信加入KB-Builder交流群
+![image](https://github.com/user-attachments/assets/440c070e-88c2-466f-9497-3e30120f32d3)
   
 ## 滨电智言
 **本项目是由杭州电子科技大学滨江研究院开发完成。**  
