@@ -137,7 +137,6 @@ celerybeat.pid
 # Environments
 # .env
 .venv
-env/
 venv/
 ENV/
 env.bak/
@@ -177,7 +176,6 @@ ui/package-lock.json
 ui/node_modules
 ui/dist
 apps/static
-models/
 data
 .dev
 poetry.lock
