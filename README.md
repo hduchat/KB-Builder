@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img width="50%" alt="image" src="https://github.com/user-attachments/assets/7af61641-e548-459f-b377-c71c1810e38f">
+  <img width="60%" alt="image" src="https://github.com/user-attachments/assets/7af61641-e548-459f-b377-c71c1810e38f">
 </p>
 
 # <p align="center"><span style="font-size:20px;">基于 LLM 大语言模型的知识库生成系统</span></p>
@@ -60,8 +60,10 @@ docker run -d --name kb_builder -p 8080:8088 -v ~/.kb-builder:/var/lib/postgresq
 - 大模型：各种本地私有或者公共大模型
 
 ## 微信加入KB-Builder交流群
-![image](https://github.com/user-attachments/assets/440c070e-88c2-466f-9497-3e30120f32d3)
-  
+<p align="left">
+    <img width="30%" alt="image" src="https://github.com/user-attachments/assets/440c070e-88c2-466f-9497-3e30120f32d3">
+</p>
+    
 ## 滨电智言
 **本项目是由杭州电子科技大学滨江研究院开发完成。**  
 
