@@ -165,7 +165,7 @@ def parse_level(text, pattern: str):
     :param pattern:  正则
     :return: 符合正则的文本
     """
-    level_content_list = list(map(to_tree_obj, re_findall(pattern, text)))
+    level_content_list = list(map(to_tree_obj, [r[0:255] for r in re_findall(pattern, text) if r is not None]))
     return list(map(filter_special_symbol, level_content_list))
 
 
@@ -279,11 +279,11 @@ def filter_special_char(content: str):
 
 class SplitModel:
 
-    def __init__(self, content_level_pattern, with_filter=True, limit=2048, overlap=128):
+    def __init__(self, content_level_pattern, with_filter=True, limit=512, overlap=128):
         self.content_level_pattern = content_level_pattern
         self.with_filter = with_filter
-        if limit is None or limit > 4096:
-            limit = 4096
+        if limit is None or limit > 512:
+            limit = 512
         if limit < 50:
             limit = 50
         self.limit = limit
