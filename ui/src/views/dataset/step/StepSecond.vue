@@ -25,11 +25,11 @@
                     <div class="set-rules__form">
                       <div class="form-item mb-16">
                         <div class="title mb-8">分段长度</div>
-                        <el-slider v-model="form.limit" show-input :show-input-controls="false" :min="50" :max="512" />
+                        <el-slider v-model="form.limit" show-input :show-input-controls="false" :min="256" :max="2048" />
                       </div>
                       <div class="form-item mb-16">
                         <div class="title mb-8">分段重叠</div>
-                        <el-slider v-model="form.overlap" show-input :show-input-controls="false" :min="64" :max="256" />
+                        <el-slider v-model="form.overlap" show-input :show-input-controls="false" :min="128" :max="512" />
                       </div>
                       <div class="form-item mb-16">
                         <div class="title mb-8">自动清洗</div>
@@ -69,7 +69,7 @@
                       </div>
                       <div class="form-item mb-16">
                         <div class="title mb-8">分段长度</div>
-                        <el-slider v-model="form.limit" show-input :show-input-controls="false" :min="50" :max="512" />
+                        <el-slider v-model="form.limit" show-input :show-input-controls="false" :min="256" :max="2048" />
                       </div>
                       <div class="form-item mb-16">
                         <div class="title mb-8">自动清洗</div>
@@ -130,8 +130,8 @@ const form = reactive<{
   [propName: string]: any
 }>({
   patterns: [],
-  limit: 512,
-  overlap: 128,
+  limit: 1024,
+  overlap: 256,
   with_filter: true
 })
 
