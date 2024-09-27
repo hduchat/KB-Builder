@@ -675,7 +675,8 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
     class SplitPattern(ApiMixin, serializers.Serializer):
         @staticmethod
         def list():
-            return [{'key': '递归切分', 'value': 'Recursive'},
+            return [
+                    # {'key': '递归切分', 'value': 'Recursive'},
                     # {'key': '段落切分', 'value': 'Paragraph'},
                     {'key': "#", 'value': '(?<=^)# .*|(?<=\\n)# .*'},
                     {'key': '##', 'value': '(?<=\\n)(?<!#)## (?!#).*|(?<=^)(?<!#)## (?!#).*'},
@@ -684,7 +685,7 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
                     # {'key': '#####', 'value': "(?<=\\n)(?<!#)##### (?!#).*|(?<=^)(?<!#)##### (?!#).*"},
                     # {'key': '######', 'value': "(?<=\\n)(?<!#)###### (?!#).*|(?<=^)(?<!#)###### (?!#).*"},
                     # {'key': '-', 'value': '(?<! )- .*'},
-                    # {'key': '空格', 'value': '(?<!\\s)\\s(?!\\s)'},
+                    {'key': '空格', 'value': '(?<!\\s)\\s(?!\\s)'},
                     # {'key': '分号', 'value': '(?<!；)；(?!；)'}, {'key': '逗号', 'value': '(?<!，)，(?!，)'},
                     {'key': '句号', 'value': '(?<!。)。(?!。)'}, {'key': '回车', 'value': '(?<!\\n)\\n(?!\\n)'},
                     {'key': '空行', 'value': '(?<!\\n)\\n\\n(?!\\n)'}]

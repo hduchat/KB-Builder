@@ -279,13 +279,13 @@ def filter_special_char(content: str):
 
 class SplitModel:
 
-    def __init__(self, content_level_pattern, with_filter=True, limit=512, overlap=128):
+    def __init__(self, content_level_pattern, with_filter=True, limit=1024, overlap=512):
         self.content_level_pattern = content_level_pattern
         self.with_filter = with_filter
-        if limit is None or limit > 512:
-            limit = 512
-        if limit < 50:
-            limit = 50
+        if limit is None or limit > 1024:
+            limit = 1024
+        if limit < 256:
+            limit = 256
         self.limit = limit
 
         if overlap is None or overlap > 512:

@@ -5,41 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c7dd2354-3fb8-4f18-a951-8ea1845cf5e3" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/../README.en.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ui/src/assets/img.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/handle/impl/doc_split_handle.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/handle/impl/doc_split_handle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/handle/impl/pdf_split_handle.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/handle/impl/pdf_split_handle.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/handle/impl/text_split_handle.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/handle/impl/text_split_handle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/application/serializers/chat_message_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/serializers/chat_message_serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/util/split_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/split_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/models/data_set.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/models/data_set.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataset/serializers/document_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/serializers/document_serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/views/document.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/views/document.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/.eslintrc.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/.eslintrc.cjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/csv-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/csv-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/doc-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/doc-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/docx-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/docx-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/icon_document.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/icon_document.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/icon_send.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/icon_send.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/icon_send_colorful.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/icon_send_colorful.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/icon_web.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/icon_web.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/login.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/login.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/md-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/md-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/pdf-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/pdf-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/txt-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/txt-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/unknow-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/unknow-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/upload-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/upload-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/assets/user-icon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/assets/user-icon.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/components/card-box/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/components/card-box/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/serializers/paragraph_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/serializers/paragraph_serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/components/ai-chat/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/components/ai-chat/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/application/components/ParamSettingDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/application/components/ParamSettingDialog.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepSecond.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepSecond.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/document/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/document/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/log/component/EditContentDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/log/component/EditContentDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/log/component/EditMarkDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/log/component/EditMarkDialog.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/paragraph/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/paragraph/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_document/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_document/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,20 +37,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "正在合并 dev",
-    "last_opened_file_path": "/Users/wcm/程序项目/开发/KB-Builder/apps/setting/sql",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/wcm/程序项目/开发/KB-Builder/apps/setting/sql&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/setting/sql" />
@@ -137,10 +114,24 @@
       <workItem from="1724123906446" duration="577000" />
       <workItem from="1725341351393" duration="98000" />
       <workItem from="1725421425893" duration="6915000" />
+      <workItem from="1726728204362" duration="7558000" />
+      <workItem from="1726888254120" duration="376000" />
+      <workItem from="1726888636268" duration="18000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
