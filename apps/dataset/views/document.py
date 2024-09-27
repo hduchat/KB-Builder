@@ -247,7 +247,8 @@ class Document(APIView):
                              tags=["知识库/文档"],
                              security=[])
         def post(self, request: Request):
-            split_data = {'file': request.FILES.getlist('file')}
+            split_data = {'file': request.FILES.getlist('file')}#获取文档
+            #获取切片的细节
             request_data = request.data
             if 'patterns' in request.data and request.data.get('patterns') is not None and len(
                     request.data.get('patterns')) > 0:
@@ -258,8 +259,11 @@ class Document(APIView):
                 split_data.__setitem__('overlap', request.data.get('overlap'))
             if 'with_filter' in request.data:
                 split_data.__setitem__('with_filter', request_data.get('with_filter'))
+            if 'use_ocr' in request.data:
+                split_data.__setitem__('use_ocr', request_data.get('use_ocr'))
+            
             ds = DocumentSerializers.Split(
-                data=split_data)
+                data=split_data)#调用切片函数
             ds.is_valid(raise_exception=True)
             return result.success(ds.parse())
 

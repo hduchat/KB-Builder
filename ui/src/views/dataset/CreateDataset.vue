@@ -77,7 +77,7 @@ const disabled = ref(false)
 const active = ref(0)
 const successInfo = ref<any>(null)
 
-async function next() {
+async function next() {//显示组件变化，active变化
   disabled.value = true
   if (await StepFirstRef.value?.onSubmit()) {
     if (active.value++ > 2) active.value = 0
@@ -106,10 +106,11 @@ function submit() {
     documents.push({
       name: item.name,
       paragraphs: item.content
-    })
+    })// 将每个段落的信息推入 documents 数组  
   })
+
   const obj = { ...baseInfo.value, documents } as datasetData
-  if (id) {
+  if (id) {//存在id，上传文档
     // 上传文档
     document
       .asyncPostDocument(id as string, documents)
@@ -121,7 +122,7 @@ function submit() {
       .catch(() => {
         loading.value = false
       })
-  } else {
+  } else {//不存在id，创建新知识库
     datasetApi.postfatherDataset(obj, loading).then((res) => {
       successInfo.value = res.data
       active.value = 2
@@ -129,6 +130,7 @@ function submit() {
     })
   }
 }
+
 function back() {
   if (baseInfo.value || webInfo.value || documentsFiles.value?.length > 0) {
     MsgConfirm(`提示`, `当前的更改尚未保存，确认退出吗?`, {

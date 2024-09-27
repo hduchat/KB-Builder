@@ -86,9 +86,9 @@ function radioChange() {
 }
 
 const onSubmit = async () => {
-  if (isCreate) {
-    if (form.value.type === '0') {
-      if ((await BaseFormRef.value?.validate()) && (await UploadComponentRef.value.validate())) {
+  if (isCreate) {//判断是创建知识库还是为知识库添加文件
+    if (form.value.type === '0') {//判断是文件表单还是web表单
+      if ((await BaseFormRef.value?.validate()) && (await UploadComponentRef.value.validate())) {//表单和上传数据有效性
         if (UploadComponentRef.value.form.fileList.length > 50) {
           MsgError('每次最多上传50个文件！')
           return false
@@ -103,7 +103,7 @@ const onSubmit = async () => {
       } else {
         return false
       }
-    } else {
+    } else {//form.value.type === '1'，文本表单
       if (await BaseFormRef.value?.validate()) {
         await webFormRef.value.validate((valid: any) => {
           if (valid) {
@@ -113,6 +113,7 @@ const onSubmit = async () => {
               dataset.saveBaseInfo(null)
               dataset.saveWebInfo(null)
               router.push({ path: `/dataset/${res.data.id}/document` })
+              //提交数据，提示，清空表单，跳转
             })
           } else {
             return false
@@ -122,7 +123,7 @@ const onSubmit = async () => {
         return false
       }
     }
-  } else {
+  } else {//非创建模式
     if (await UploadComponentRef.value.validate()) {
       /*
         stores保存数据
@@ -141,11 +142,13 @@ defineExpose({
   onSubmit,
   loading
 })
+
 </script>
+
 <style scoped lang="scss">
 .upload-document {
   width: 70%;
   margin: 0 auto;
-  margin-bottom: 20px;
+  margin-bottom: 20 px;
 }
 </style>

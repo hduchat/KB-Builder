@@ -83,12 +83,16 @@
                 </el-card>
               </el-radio-group>
             </div>
+            <el-checkbox v-model="useOCR" class="mb-16">  
+              使用OCR  
+            </el-checkbox>  
           </el-scrollbar>
           <!-- <div>
             <el-checkbox v-model="checkedConnect" @change="changeHandle">
               导入时添加分段标题为关联问题（适用于标题为问题的问答对）
             </el-checkbox>
           </div> -->
+
           <div class="text-right mt-8">
             <el-button @click="splitDocument">生成预览</el-button>
           </div>
@@ -120,6 +124,7 @@ const loading = ref(false)
 const paragraphList = ref<any[]>([])
 const patternLoading = ref<boolean>(false)
 const checkedConnect = ref<boolean>(false)
+const useOCR = ref<boolean>(false)
 
 const firstChecked = ref(true)
 
@@ -135,7 +140,7 @@ const form = reactive<{
   with_filter: true
 })
 
-function changeHandle(val: boolean) {
+function changeHandle(val: boolean) {//是否导入分段标题
   if (val && firstChecked.value) {
     const list = paragraphList.value
     list.map((item: any) => {
@@ -154,13 +159,14 @@ function changeHandle(val: boolean) {
   }
 }
 function splitDocument() {
-  loading.value = true
+  loading.value = true//加载状态
   let fd = new FormData()
-  documentsFiles.value.forEach((item) => {
+  documentsFiles.value.forEach((item) => {//遍历，添加文件到FormData
     if (item?.raw) {
       fd.append('file', item?.raw)
     }
   })
+
   if (radio.value === '2') {
     fd.append('patterns', 'Recursive')
     Object.keys(form).forEach((key) => {
@@ -169,6 +175,7 @@ function splitDocument() {
       }
     })
   }
+
   if (radio.value === '3') {
     Object.keys(form).forEach((key) => {
       if (key == 'patterns') {
@@ -178,6 +185,13 @@ function splitDocument() {
       }
     })
   }
+
+  if (useOCR.value) {  
+    fd.append('use_ocr', 'true');   
+  } else {  
+    fd.append('use_ocr', 'false');   
+  }  
+
   documentApi
     .postSplitDocument(fd)
     .then((res: any) => {
@@ -221,7 +235,8 @@ onMounted(() => {
 
 defineExpose({
   paragraphList,
-  checkedConnect
+  checkedConnect,
+  useOCR
 })
 </script>
 <style scoped lang="scss">
