@@ -6,7 +6,7 @@
       <span class="lighter" v-else>{{ form.title || '' }}</span>
     </el-form-item>
     <el-form-item label="分段内容" prop="content">
-      <MarkdownEditor v-if="isEdit" v-model="form.content" placeholder="请输入分段内容" :maxLength="4096" :preview="false"
+      <MarkdownEditor v-if="isEdit" v-model="form.content" placeholder="请输入分段内容" :maxLength="100000" :preview="false"
         :toolbars="toolbars" style="height: 300px" @onUploadImg="onUploadImg" />
       <MdPreview v-else ref="editorRef" editorId="preview-only" :modelValue="form.content" class="maxkb-md" />
     </el-form-item>
@@ -66,7 +66,7 @@ const form = ref<any>({
 const rules = reactive<FormRules>({
   content: [
     { required: true, message: '请输入分段内容', trigger: 'blur' },
-    { max: 4096, message: '内容最多不超过 4096 个字', trigger: 'blur' }
+    { max: 100000, message: '内容最多不超过 100000 个字', trigger: 'blur' }
   ]
 })
 

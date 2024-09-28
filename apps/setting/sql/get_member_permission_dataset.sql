@@ -9,6 +9,8 @@ FROM
 		"name",
 		'DATASET' AS "type",
         d.type_child,  --  新增：从 dataset 表中获取 type_child 字段
+		"child_id",
+		"app_id",
 		user_id
 	FROM
 		dataset d  -- 修改：为 dataset 表添加别名 "d"
@@ -20,6 +22,8 @@ FROM
 		"name",
 		'APPLICATION' AS "type",
         NULL AS type_child,  --  新增：为 application 类型添加 type_child 字段，并赋值为 NULL
+		NULL AS child_id,
+		NULL AS app_id,
 		user_id
 	FROM
 		application

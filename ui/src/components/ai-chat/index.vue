@@ -147,7 +147,7 @@
           placeholder="请输入"
           :rows="1"
           type="textarea"
-          :maxlength="1024"
+          :maxlength="100000"
           @keydown.enter="sendChatHandle($event)"
         />
         <div class="operate">

@@ -27,6 +27,7 @@ from common.exception.app_exception import AppApiException
 from common.handle.impl.doc_split_handle import DocSplitHandle
 from common.handle.impl.pdf_split_handle import PdfSplitHandle
 from common.handle.impl.text_split_handle import TextSplitHandle
+from common.handle.impl.pdf_ocrspilt_handle import PdfocrSplitHandle
 from common.mixins.api_mixin import ApiMixin
 from common.util.common import post
 from common.util.field_message import ErrMessage
@@ -616,6 +617,10 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
 
         with_filter = serializers.BooleanField(required=False, error_messages=ErrMessage.boolean(
             "自动清洗"))
+        use_ocr = serializers.BooleanField(required=False, error_messages=ErrMessage.boolean(
+            "使用ocr"))
+        
+
 
         def is_valid(self, *, raise_exception=True):
             super().is_valid(raise_exception=True)
@@ -650,6 +655,10 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
                                   in_=openapi.IN_FORM,
                                   required=False,
                                   type=openapi.TYPE_BOOLEAN, title="是否清除特殊字符", description="是否清除特殊字符"),
+                openapi.Parameter(name='use_ocr',
+                                  in_=openapi.IN_FORM,
+                                  required=False,
+                                  type=openapi.TYPE_BOOLEAN, title="是否使用ocr", description="是否使用ocr"),
             ]
 
         def parse(self):
@@ -659,13 +668,15 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
                                                 self.data.get("patterns", None),
                                                 self.data.get("with_filter", None),
                                                 self.data.get("limit", None),
-                                                self.data.get("overlap", None)),
+                                                self.data.get("overlap", None),
+                                                self.data.get("use_ocr", None)),
                     file_list))
 
     class SplitPattern(ApiMixin, serializers.Serializer):
         @staticmethod
         def list():
-            return [{'key': '递归切分', 'value': 'Recursive'},
+            return [
+                    # {'key': '递归切分', 'value': 'Recursive'},
                     # {'key': '段落切分', 'value': 'Paragraph'},
                     {'key': "#", 'value': '(?<=^)# .*|(?<=\\n)# .*'},
                     {'key': '##', 'value': '(?<=\\n)(?<!#)## (?!#).*|(?<=^)(?<!#)## (?!#).*'},
@@ -674,7 +685,7 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
                     # {'key': '#####', 'value': "(?<=\\n)(?<!#)##### (?!#).*|(?<=^)(?<!#)##### (?!#).*"},
                     # {'key': '######', 'value': "(?<=\\n)(?<!#)###### (?!#).*|(?<=^)(?<!#)###### (?!#).*"},
                     # {'key': '-', 'value': '(?<! )- .*'},
-                    # {'key': '空格', 'value': '(?<!\\s)\\s(?!\\s)'},
+                    {'key': '空格', 'value': '(?<!\\s)\\s(?!\\s)'},
                     # {'key': '分号', 'value': '(?<!；)；(?!；)'}, {'key': '逗号', 'value': '(?<!，)，(?!，)'},
                     {'key': '句号', 'value': '(?<!。)。(?!。)'}, {'key': '回车', 'value': '(?<!\\n)\\n(?!\\n)'},
                     {'key': '空行', 'value': '(?<!\\n)\\n\\n(?!\\n)'}]
@@ -775,26 +786,36 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
             QuerySet(Document).filter(id__in=document_id_list).update(**update_dict)
 
 
+
+default_split_handle = TextSplitHandle()#默认切片方法
+split_handles = [DocSplitHandle(), PdfSplitHandle(), default_split_handle]#定义文档切片方法
+split_ocr_handles = [DocSplitHandle(), PdfocrSplitHandle(), default_split_handle]#定义文档切片方法
+
+#处理文件内容的缓冲
 class FileBufferHandle:
     buffer = None
+    #用于缓存文件内容
 
+    #定义获取缓冲区内容的方法
     def get_buffer(self, file):
         if self.buffer is None:
             self.buffer = file.read()
         return self.buffer
 
-
-default_split_handle = TextSplitHandle()
-split_handles = [DocSplitHandle(), PdfSplitHandle(), default_split_handle]
-
-
+# 定义一个函数用来批量保存图片  
 def save_image(image_list):
+    # 使用 QuerySet 的 bulk_create 方法将图片列表批量插入数据库  
     QuerySet(Image).bulk_create(image_list)
 
-
-def file_to_paragraph(file, pattern_list: List, with_filter: bool, limit: int, overlap: int):
+# 定义一个函数将文件内容转换为段落，并根据一些配置进行处理
+def file_to_paragraph(file, pattern_list: List, with_filter: bool, limit: int, overlap: int, user_ocr:bool):
     get_buffer = FileBufferHandle().get_buffer
-    for split_handle in split_handles:
-        if split_handle.support(file, get_buffer):
-            return split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image)
+    if (user_ocr):
+        for split_handle in split_ocr_handles:#遍历切片方法（以文档类型划分）
+            if split_handle.support(file, get_buffer):#是否支持
+                return split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image)#使用方法
+    else:
+        for split_handle in split_handles:#遍历切片方法（以文档类型划分）
+            if split_handle.support(file, get_buffer):#是否支持
+                return split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image)#使用方法
     return default_split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image)

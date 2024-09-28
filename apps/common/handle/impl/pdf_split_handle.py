@@ -14,6 +14,7 @@ import fitz
 from common.handle.base_split_handle import BaseSplitHandle
 from common.util.split_model import SplitModel
 
+#正则表达式列表，用于识别和分割文本
 default_pattern_list = [re.compile('(?<=^)# .*|(?<=\\n)# .*'),
                         re.compile('(?<=\\n)(?<!#)## (?!#).*|(?<=^)(?<!#)## (?!#).*'),
                         re.compile("(?<=\\n)(?<!#)### (?!#).*|(?<=^)(?<!#)### (?!#).*"),
@@ -22,7 +23,7 @@ default_pattern_list = [re.compile('(?<=^)# .*|(?<=\\n)# .*'),
                         re.compile("(?<=\\n)(?<!#)###### (?!#).*|(?<=^)(?<!#)###### (?!#).*"),
                         re.compile("(?<!\n)\n\n+")]
 
-
+#定义一个函数，从特定页面将pdf转为字符串
 def number_to_text(pdf_document, page_number):
     page = pdf_document.load_page(page_number)
     text = page.get_text()

@@ -49,8 +49,14 @@
         <div class="team-manage__table">
           <h4 class="p-24 pb-0 mb-4">权限设置</h4>
           <el-tabs v-model="activeName" class="team-manage__tabs">
-            <el-tab-pane
+            <!-- <el-tab-pane
               v-for="(item, index) in settingTags"
+              :key="item.value"
+              :label="item.label"
+              :name="item.value"
+            > -->
+            <el-tab-pane
+              v-for="(item, index) in visibleSettingTags"
               :key="item.value"
               :label="item.label"
               :name="item.value"
@@ -61,6 +67,7 @@
                 :type="item.value"
                 :tableHeight="tableHeight"
                 :manage="isManage(currentType)"
+                :settingTags.sync="settingTags"
               ></PermissionSetting>
             </el-tab-pane>
           </el-tabs>
@@ -76,7 +83,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, reactive, watch } from 'vue'
+import { onMounted, ref, reactive, watch , computed} from 'vue'
 import TeamApi from '@/api/team'
 import type { TeamMember } from '@/api/type/team'
 import CreateMemberDialog from './component/CreateMemberDialog.vue'
@@ -97,17 +104,19 @@ const filterText = ref('')
 const activeName = ref(DATASET)
 const tableHeight = ref(0)
 
+const visibleSettingTags = computed(() => settingTags.filter(tag => tag.value !== APPLICATION))  
+
 const settingTags = reactive([
   {
     label: '知识库',
     value: DATASET,
     data: [] as any
   },
-  // {
-  //   label: '应用',
-  //   value: APPLICATION,
-  //   data: [] as any
-  // }
+  {
+    label: '应用',
+    value: APPLICATION,
+    data: [] as any
+  }
 ])
 
 watch(filterText, (val) => {
@@ -123,15 +132,17 @@ function submitPermissions() {
   const obj: any = {
     team_member_permission_list: []
   }
+
   settingTags.map((item) => {
     item.data.map((v: any) => {
       obj['team_member_permission_list'].push({
         target_id: v.id,
         type: v.type,
-        operate: v.operate
+        operate: v.operate,
       })
     })
   })
+
   TeamApi.putMemberPermissions(currentUser.value, obj)
     .then(() => {
       MsgSuccess('提交成功')

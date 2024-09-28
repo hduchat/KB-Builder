@@ -75,6 +75,7 @@
 import { ref, onMounted, reactive, computed } from 'vue'
 import SyncWebDialog from '@/views/dataset/component/SyncWebDialog.vue'
 import datasetApi from '@/api/dataset'
+import applicationApi from '@/api/application'
 import { MsgSuccess, MsgConfirm } from '@/utils/message'
 import { useRouter } from 'vue-router'
 import { numberFormat } from '@/utils/utils'
@@ -105,24 +106,38 @@ function searchHandle() {
   getList()
 }
 
-function deleteDataset(row: any) {
-  MsgConfirm(
-    `是否删除问答库：${row.name} ?`,
-    /* `此问答库关联 ${row.application_mapping_count} 个应用，删除后无法恢复，请谨慎操作。`, */
-    '',
-    {
-      confirmButtonText: '删除',
-      confirmButtonClass: 'danger'
-    }
-  )
-    .then(() => {
-      datasetApi.delDataset(row.id, loading).then(() => {
-        const index = datasetList.value.findIndex((v) => v.id === row.id)
-        datasetList.value.splice(index, 1)
-        MsgSuccess('删除成功')
-      })
-    })
-    .catch(() => { })
+async function deleteDataset(row:any) {  
+  try {  
+    // 显示确认对话框，并等待用户确认  
+    await MsgConfirm(`是否删除问答库：${row.name} ?`, '', {  
+      confirmButtonText: '删除',  
+      confirmButtonClass: 'danger'  
+    });  
+
+    // 获取父知识库的信息  
+    const fatherDataset = await datasetApi.getDatasetDetail(row.id, loading);  
+
+    // 获取子知识库 ID  
+    const childId = fatherDataset.data.child_id;  
+
+    // 获取子知识库的信息  
+    const childDataset = await datasetApi.getDatasetDetail(childId, loading);  
+
+    // 并行删除父知识库和子知识库的应用  
+    await Promise.all([  
+      applicationApi.delApplication(fatherDataset.data.app_id),  
+      applicationApi.delApplication(childDataset.data.app_id)  
+    ]);  
+
+    // 删除数据集并更新界面  
+    await datasetApi.delDataset(row.id, loading);  
+    const index = datasetList.value.findIndex(v => v.id === row.id);  
+    datasetList.value.splice(index, 1);  
+    MsgSuccess('删除成功');  
+  } catch (error) {  
+    // 捕获并处理所有异步操作中的错误  
+    console.error('删除失败', error);  
+  }  
 }
 
 function getList() {

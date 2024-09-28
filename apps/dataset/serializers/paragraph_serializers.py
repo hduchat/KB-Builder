@@ -38,7 +38,7 @@ class ParagraphInstanceSerializer(ApiMixin, serializers.Serializer):
     段落实例对象
     """
     content = serializers.CharField(required=True, error_messages=ErrMessage.char("段落内容"),
-                                    max_length=4096,
+                                    max_length=102400,
                                     min_length=1,
                                     allow_null=True, allow_blank=True)
 
@@ -73,7 +73,7 @@ class ParagraphInstanceSerializer(ApiMixin, serializers.Serializer):
 class EditParagraphSerializers(serializers.Serializer):
     title = serializers.CharField(required=False, max_length=256, error_messages=ErrMessage.char(
         "分段标题"), allow_null=True, allow_blank=True)
-    content = serializers.CharField(required=False, max_length=4096, allow_null=True, allow_blank=True,
+    content = serializers.CharField(required=False, max_length=102400, allow_null=True, allow_blank=True,
                                     error_messages=ErrMessage.char(
                                         "分段内容"))
     problem_list = ProblemInstanceSerializer(required=False, many=True)
@@ -82,7 +82,7 @@ class EditParagraphSerializers(serializers.Serializer):
 class ParagraphSerializers(ApiMixin, serializers.Serializer):
     title = serializers.CharField(required=False, max_length=256, error_messages=ErrMessage.char(
         "分段标题"), allow_null=True, allow_blank=True)
-    content = serializers.CharField(required=True, max_length=4096, error_messages=ErrMessage.char(
+    content = serializers.CharField(required=True, max_length=102400, error_messages=ErrMessage.char(
         "分段内容"))
 
     class DownloadSerializer(ApiMixin, serializers.Serializer):
