@@ -83,26 +83,28 @@
                 </el-card>
               </el-radio-group>
             </div>
-            <el-checkbox v-model="useOCR" class="mb-16">  
-              使用OCR  
-            </el-checkbox>  
-          </el-scrollbar>
+            <el-scrollbar>  
+              <div class="container-wrapper">  
+                <el-checkbox v-model="useOCR" class="mb-16">使用OCR</el-checkbox>  
+                <el-button @click="splitDocument" class="align-right">生成预览</el-button>  
+              </div>  
+            </el-scrollbar> 
+            </el-scrollbar>
           <!-- <div>
             <el-checkbox v-model="checkedConnect" @change="changeHandle">
               导入时添加分段标题为关联问题（适用于标题为问题的问答对）
             </el-checkbox>
           </div> -->
 
-          <div class="text-right mt-8">
+          <!-- <div class="text-right mt-8">
             <el-button @click="splitDocument">生成预览</el-button>
-          </div>
+          </div> -->
         </div>
       </el-col>
 
       <el-col :span="14" class="p-24 border-l">
         <div v-loading="loading">
           <h4 class="title-decoration-1 mb-8">分段预览</h4>
-
           <ParagraphPreview v-model:data="paragraphList" :isConnect="checkedConnect" />
         </div>
       </el-col>
@@ -240,11 +242,21 @@ defineExpose({
 })
 </script>
 <style scoped lang="scss">
+.container-wrapper {  
+  display: flex;  
+  flex-direction: column;  
+  align-items: flex-start;  
+}  
+
+.align-right {  
+  align-self: flex-end;  
+}  
+
 .set-rules {
   width: 100%;
 
   .left-height {
-    max-height: calc(var(--create-dataset-height) - 110px + 32px);
+    max-height: calc(var(--create-dataset-height) - 110px);
     overflow-x: hidden;
   }
 
