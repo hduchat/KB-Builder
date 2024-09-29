@@ -481,7 +481,7 @@ function editName(val: string, id: string) {
     const obj = {
       name: val
     }
-    updateData(child_id.value, obj, '修改成功')
+    updateData(id, obj, '修改成功')
   } else {
     MsgError('文件名称不能为空！')
   }

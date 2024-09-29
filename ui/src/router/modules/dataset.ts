@@ -38,6 +38,18 @@ const datasetRouter = {
           component: () => import('@/views/document/index.vue')
         },
         {
+          path: 'doc_rewrite',
+          name: 'DocRewrite',
+          meta: {
+            icon: 'DocumentAdd',
+            title: '文档结构改写',
+            active: 'doc_rewrite',
+            parentPath: '/dataset/:id',
+            parentName: 'DatasetDetail'
+          },
+          component: () => import('@/views/doc_rewrite/index.vue') // 修改为新页面的组件文件路径
+        },
+        {
           path: 'qa_generate',
           name: 'qa_generate',
           meta: {
@@ -55,7 +67,7 @@ const datasetRouter = {
           meta: {
             icon: 'app-document',
             iconActive: 'app-document-active',
-            title: '问答文件',
+            title: '结果文件',
             active: 'qa_document',
             parentPath: '/dataset/:id',
             parentName: 'DatasetDetail'
