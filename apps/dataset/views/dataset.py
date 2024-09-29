@@ -11,7 +11,7 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import action
 from rest_framework.views import APIView
 from rest_framework.views import Request
-import json 
+import json
 
 from common.auth import TokenAuth, has_permissions
 from common.constants.permission_constants import PermissionConstants, CompareConstants, Permission, Group, Operate, \
@@ -60,8 +60,8 @@ class Dataset(APIView):
         @has_permissions(PermissionConstants.DATASET_CREATE, compare=CompareConstants.AND)
         def post(self, request: Request):
             return result.success(DataSetSerializers.Create(data={'user_id': request.user.id}).save_web(request.data))
-        
-    class CreatfatherbDataset(APIView):    
+
+    class CreatfatherbDataset(APIView):
         authentication_classes = [TokenAuth]
 
         @action(methods=['POST'], detail=False)
@@ -204,7 +204,7 @@ class Dataset(APIView):
                       'user_id': str(request.user.id)})
             d.is_valid()
             return result.success(d.page(current_page, page_size))
-        
+
     class child_id(APIView):
         authentication_classes = [TokenAuth]
 
@@ -220,9 +220,9 @@ class Dataset(APIView):
         def get(id):
             d = DataSetSerializers.Query.get_child_id(id)
             d.is_valid()
-            return result.success(d)  
+            return result.success(d)
 
-    class qa_generate(APIView):  
+    class qa_generate(APIView):
         authentication_classes = [TokenAuth]
 
         @action(methods=['POST'], detail=False)
@@ -238,10 +238,19 @@ class Dataset(APIView):
                                                            dynamic_tag=keywords.get('dataset_id'))])
         )
         def post(self, request: Request, dataset_id: str):
+            """
+            process_type 参数解释：
+            - 0: 表示问答文件生成
+            - 1: 表示文档结构改写
+            """
+            process_type = request.data.get('process_type', 0)  # 获取process_type参数, 默认为0
+            print("Received process_type:", process_type, type(process_type))
+
             return result.success(DataSetSerializers.generate_qa(
                 data={'dataset_id': dataset_id,
                       'user_id': request.user.id,
                       'client_id': request.auth.client_id,
-                      'client_type': request.auth.client_type
+                      'client_type': request.auth.client_type,
+                      'process_type': process_type
                       }
             ).generate_qa_database(request.data))

@@ -1,9 +1,9 @@
 <template>
-  <LayoutContainer header="问答知识库生成">
+  <LayoutContainer header="文档结构改写">
     <div class="main-calc-height centered-content">
       <el-scrollbar>
         <div class="p-24">
-          <h4 class="title-decoration-1 mb-16">问答生成</h4>
+          <h4 class="title-decoration-1 mb-16">文档结构改写</h4>
           <el-form ref="FormRef" :model="applicationForm" :rules="rules" label-position="top"
             require-asterisk-position="right">
             <el-form-item label="文档" prop="document_id">
@@ -72,7 +72,7 @@
             </el-form-item>
           </el-form>
           <div class="text-right">
-            <el-button type="primary" :disabled="loading" @click="onSubmit(FormRef)">问答文件生成</el-button>
+            <el-button type="primary" :disabled="loading" @click="onSubmit(FormRef)">文档结构改写</el-button>
             <el-button :disabled="loading" @click="resetForm(FormRef)">重置</el-button>
           </div>
           <!-- 添加生成状态提示 -->
@@ -81,8 +81,7 @@
               <el-icon class="is-loading primary">
                 <Loading />
               </el-icon>
-              问答正在生成中，请跳转到“问答文件”查看生成结果
-
+              文档结构改写中，请稍后...
             </el-text>
           </div>
         </div>
@@ -93,32 +92,20 @@
     <SelectProviderDialog ref="selectProviderRef" @change="openCreateModel($event)" />
   </LayoutContainer>
 </template>
+
 <script setup lang="ts">
 import { reactive, ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import type { FormInstance, FormRules } from 'element-plus'
-import type { ApplicationFormType } from '@/api/type/application'
 import CreateModelDialog from '@/views/template/component/CreateModelDialog.vue'
 import SelectProviderDialog from '@/views/template/component/SelectProviderDialog.vue'
 import type { Provider } from '@/api/type/model'
 import { relatedObject } from '@/utils/utils'
 import useStore from '@/stores'
-import { t } from '@/locales'
 import applicationApi from '@/api/application'
 import { groupBy } from 'lodash'
-import datasetApi from '@/api/dataset'
+import { prompts } from '@/prompts/DocRewritePrompts';
 
-const promptGroup = ref([{
-  cueWord: '通用prompt模板 ',
-  prompt: '几个理想的问答示例将在之后给出\n\t例子:\n\t问题：大模型有字数限制无法大文档一次输入？\n\t回答：目前这个没有好的解决办法，只能通过预先拆分大文档为多个文档片段后分批执行。\n\n\t问题：gpt两个步骤是否可以合并成一个请求让gpt返回，可以节省约一半的时间和tokens？\n\t回答：拆成两次主要是因为问题可能需要人工微调修改后再去生成答案，这样可以提高知识库质量，当然也可以全部自动处理。\n\n\t请仅提供问答\n\t若文本提供的信息不充分请不要生成相应问答\n\t请生成尽可能多的问答\n\n\t文本：\n'
-}, {
-  cueWord: '文学教育Prompt模板',
-  prompt: '请作为一个教育从业者针对给出的文本生成问答，用于评估学生对文本的熟悉程度\n\t几个理想的文学问答示例将在之后给出\n\t例子：  \n\t问题:在草船借箭这一回中，谁与诸葛亮一起草船借箭？\n\t回答:是鲁肃与诸葛亮一起草船借箭。\n\n\t问题:在草船借箭这一回中，谁提出了草船借箭这一计谋？\n\t回答:是诸葛亮提出了草船借箭。\n\n\t请生成尽可能多的问答来评估对学生对以下文本的了解\n\t生成的问答请尽可能丰富\n\t请仅提供问答\n\t请使用通俗的语言生成问答\n\n\t文本：\n'
-},
-{
-  cueWord: '产品说明书Prompt模板',
-  prompt: '请作为一个资深工程师，针对文本生成问答\n\n\t几个理想的问答示例将在之后给出\n\t例子： \n\t问题:阿司匹林禁用的情况有哪些？\n\t回答:禁用的情况包括活动性溃疡病或其他原因引起的消化道出血，血友病或血小板减少症，以及有阿司匹林或其他非类抗炎药过敏史者，尤其是出现哮喘、神经血管性水肿或休克者。\n\n\t问题:阿司匹林的半衰期（Ti2）是多少？\n\t回答:阿司匹林的半衰期（Ti2）为15～20分钟。\n\n\t请详细指明问答的对象\n\t请仅提供问答\n\t若提供的信息不充分请不要生成问答\n\t请生成数个总结性的问答\n\t若文本的信息不充分请不要生成问答\n\n\t文本：\n'
-}])
+const promptGroup = ref(prompts)
 const appId = ref()
 const { dataset } = useStore()
 const FormRef = ref()
@@ -142,6 +129,7 @@ const applicationForm = ref({
   document_id: '',
   model_id: '',
   prompt: '',
+  process_type: ''
 })
 
 const rules = reactive({
@@ -218,7 +206,7 @@ const onSubmit = async (form: any) => {
   await form.validate((valid: any, fields: any) => {
     if (valid) {
       generating.value = true; // 设置 generating 为 true
-      applicationForm.value.process_type = 0;  // 设置处理方式为0
+      applicationForm.value.process_type = 1;  // 设置处理方式为1，即文档重写
       dataset.asyncPostDatasetQA(id, applicationForm.value, loading)
         .then((res: any) => {
           console.log("res: ", res);
@@ -238,7 +226,6 @@ onMounted(() => {
   })
   getDocuments()
 })
-
 
 </script>
 
