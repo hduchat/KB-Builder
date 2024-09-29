@@ -886,6 +886,7 @@ class DataSetSerializers(serializers.ModelSerializer):
 
     class generate_qa(ApiMixin, serializers.Serializer):
         authentication_classes = [TokenAuth]
+        os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
         dataset_id = serializers.CharField(required=True, error_messages=ErrMessage.char(
             "知识库id"))
@@ -895,6 +896,8 @@ class DataSetSerializers(serializers.ModelSerializer):
             "客户端id"))
         client_type = serializers.CharField(required=True, error_messages=ErrMessage.char(
             "客户端类型"))
+        process_type = serializers.CharField(default=0, required=False, error_messages=ErrMessage.char(
+            "处理方式"))
 
         def is_valid(self, *, raise_exception=True):
             super().is_valid(raise_exception=True)
@@ -944,12 +947,21 @@ class DataSetSerializers(serializers.ModelSerializer):
             # 获取源文件信息
             filename = document_detail['name']
             dot_index = filename.rfind('.')
+
+            if self.validated_data['process_type'] == '0':  # 使用 validated_data 获取参数值
+                suffix = "-QA生成.txt"
+            elif self.validated_data['process_type'] == '1':
+                suffix = "-结构改写.txt"
+            else:
+                # 默认后缀
+                suffix = ".txt"
+
             # 如果没有扩展名
             if dot_index == -1:
-                name = filename + "-QA生成.txt"
+                name = filename + suffix
             else:
                 file_base = filename[:dot_index]
-                name = file_base + "-QA生成.txt"
+                name = file_base + suffix
 
             for item in slice_list:
                 # 遍历文件切片
