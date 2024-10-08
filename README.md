@@ -14,6 +14,7 @@ KB Builder = Knowledge Base Builder，是一款基于 LLM 大语言模型的开�
 - **灵活的文档处理方式**：提供多种文档切片（智能分段 / 递归拆分 / 自定义标识拆分等）和多种文本清洗等RAG文档预处理方式；
 - **大语言模型中立**：支持对接各种大语言模型来生成QA，包括本地私有大模型（Llama 3 / Qwen 2 等）、国内公共大模型（通义千问 / 智谱 AI 等）和国外公共大模型（OpenAI / Gemini 等）；
 - **知识生成与管理**：提供多个预置场景Prompt库，支持生成高质量的QA问答对，支持基于QA的知识库生成功能，后续将提供更多的重写增强结构化处理等知识库管理能力。
+- **基于知识工程的文档改写**： 将RAG不能高效处理的结构化数据，通过文档改写修改为RAG友好的非结构化数据。
   
 ## 快速开始
 
@@ -46,8 +47,12 @@ docker run -d --name kb_builder -p 8080:8088 -v ~/.kb-builder:/var/lib/postgresq
     <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/9aaabd11-7550-4245-b297-8156b7a28ce0" alt=" Demo2"   /></td>
   </tr>
   <tr>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/c0e3ada2-58ff-4aa0-92ef-88b66bea6fe8" alt=" Demo3"   /></td>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/cedb669f-55df-4153-b45f-eeedb87768e5" alt=" Demo4"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/003e6a01-20d6-43b2-80aa-28c989b31220" alt=" Demo3"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/96fe3078-a5f6-47cc-ae90-3402c3e1c5e2" alt=" Demo4"   /></td>
+  </tr>
+  <tr>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/c0e3ada2-58ff-4aa0-92ef-88b66bea6fe8" alt=" Demo5"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/cedb669f-55df-4153-b45f-eeedb87768e5" alt=" Demo6"   /></td>
   </tr>
 </table>
 
