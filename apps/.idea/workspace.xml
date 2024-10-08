@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c7dd2354-3fb8-4f18-a951-8ea1845cf5e3" name="更改" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/serializers/chat_message_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/application/serializers/chat_message_serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/split_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/split_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/models/data_set.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/models/data_set.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/serializers/document_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/serializers/document_serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/serializers/paragraph_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/serializers/paragraph_serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/components/ai-chat/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/components/ai-chat/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/application/components/ParamSettingDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/application/components/ParamSettingDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepSecond.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepSecond.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/log/component/EditContentDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/log/component/EditContentDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/log/component/EditMarkDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/log/component/EditMarkDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/paragraph/component/ParagraphForm.vue" afterDir="false" />
-    </list>
+    <list default="true" id="c7dd2354-3fb8-4f18-a951-8ea1845cf5e3" name="更改" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

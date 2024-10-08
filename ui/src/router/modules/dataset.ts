@@ -42,7 +42,7 @@ const datasetRouter = {
           name: 'DocRewrite',
           meta: {
             icon: 'DocumentAdd',
-            title: '文档结构改写',
+            title: '文档处理: 结构改写',
             active: 'doc_rewrite',
             parentPath: '/dataset/:id',
             parentName: 'DatasetDetail'
@@ -54,7 +54,7 @@ const datasetRouter = {
           name: 'qa_generate',
           meta: {
             icon: 'DocumentAdd',
-            title: '问答文件生成',
+            title: '文档处理: 问答生成',
             active: 'qa_generate',
             parentPath: '/dataset/:id',
             parentName: 'DatasetDetail'
