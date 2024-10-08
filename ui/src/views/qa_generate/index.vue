@@ -142,6 +142,8 @@ const applicationForm = ref({
   document_id: '',
   model_id: '',
   prompt: '',
+  cueWord:'',
+  process_type:0
 })
 
 const rules = reactive({
