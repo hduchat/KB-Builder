@@ -13,14 +13,17 @@ KB Builder = Knowledge Base Builder，是一款基于 LLM 大语言模型的开�
 - **文件类型支持广泛**：支持直接上传docx、txt、markdown、pdf格式文档、后续将支持更多文本格式文件；
 - **灵活的文档处理方式**：提供多种文档切片（智能分段 / 递归拆分 / 自定义标识拆分等）和多种文本清洗等RAG文档预处理方式；
 - **大语言模型中立**：支持对接各种大语言模型来生成QA，包括本地私有大模型（Llama 3 / Qwen 2 等）、国内公共大模型（通义千问 / 智谱 AI 等）和国外公共大模型（OpenAI / Gemini 等）；
+
+**特色功能**
 - **知识生成与管理**：提供多个预置场景Prompt库，支持生成高质量的QA问答对，支持基于QA的知识库生成功能，后续将提供更多的重写增强结构化处理等知识库管理能力。
-- **基于知识工程的文档改写**： 将RAG不能高效处理的结构化数据，通过文档改写修改为RAG友好的非结构化数据。
+- **基于知识工程的文档改写**：将RAG不能高效处理的结构化数据，通过文档改写修改为RAG友好的非结构化数据。
+- **PDF文件OCR提取文字**：基于Paddle开源深度学习平台，可以OCR识别PDF文件中无法直接提取解析的文字，方便用户处理印刷件、加密无法直接复制文本的PDF。
   
 ## 快速开始
 
 ### 阿里云镜像一键部署  
 ```
-docker run -d --name kb-builder -p 8080:8088 -v ~/.KB-builder:/var/lib/postgresql/data registry.cn-hangzhou.aliyuncs.com/hduchat/bindian.hdu.edu.cn:latest 
+docker run -d --name kb-builder -p 8080:8088 -v ~/.KB-builder:/var/lib/postgresql/data registry.cn-beijing.aliyuncs.com/hduchat/bindian.hdu.edu.cn:latest
 用户名: admin
 密码: admin123.
 ```
@@ -43,8 +46,8 @@ docker run -d --name kb_builder -p 8080:8088 -v ~/.kb-builder:/var/lib/postgresq
 
 <table style="border-collapse: collapse; border: 1px solid black;">
   <tr>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/8516ef95-6cc7-4769-8fde-fee135e4bab5" alt=" Demo1"   /></td>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/9aaabd11-7550-4245-b297-8156b7a28ce0" alt=" Demo2"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/b6f071ef-00b5-4edf-88fc-b7206e0857d6" alt=" Demo1"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/05c1fed4-1cba-41b6-a7df-1298ae622d93" alt=" Demo2"   /></td>
   </tr>
   <tr>
     <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/003e6a01-20d6-43b2-80aa-28c989b31220" alt=" Demo3"   /></td>
