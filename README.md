@@ -10,17 +10,15 @@ KB Builder = Knowledge Base Builder，是一款基于 LLM 大语言模型的开�
 基于RAG（Retrieval-Augmented Generation）数据生成增强方法，为用户提供基于RAG的知识增强生成和知识库快速构建能力，致力于成为企业的知识构建中枢。
 提供平台化智能对话服务能力，提供文档知识库管理功能，支持用户上传docx、pdf、txt、md格式的文档；用户点击“解析文档”可调用大模型生成问答对数据，筛选生成高质量的知识库问答对数据。  
 
+**特色功能**
 - **文件类型支持广泛**：支持直接上传docx、txt、markdown、pdf格式文档、后续将支持更多文本格式文件；
 - **灵活的文档处理方式**：提供多种文档切片（智能分段 / 递归拆分 / 自定义标识拆分等）和多种文本清洗等RAG文档预处理方式；
 - **大语言模型中立**：支持对接各种大语言模型来生成QA，包括本地私有大模型（Llama 3 / Qwen 2 等）、国内公共大模型（通义千问 / 智谱 AI 等）和国外公共大模型（OpenAI / Gemini 等）；
-
-**特色功能**
 - **知识生成与管理**：提供多个预置场景Prompt库，支持生成高质量的QA问答对，支持基于QA的知识库生成功能，后续将提供更多的重写增强结构化处理等知识库管理能力。
 - **基于知识工程的文档改写**：将RAG不能高效处理的结构化数据，通过文档改写修改为RAG友好的非结构化数据。
 - **PDF文件OCR提取文字**：基于Paddle开源深度学习平台，可以OCR识别PDF文件中无法直接提取解析的文字，方便用户处理印刷件、加密无法直接复制文本的PDF。
   
 ## 快速开始
-
 ### 阿里云镜像一键部署  
 ```
 docker run -d --name kb-builder -p 8080:8088 -v ~/.KB-builder:/var/lib/postgresql/data registry.cn-beijing.aliyuncs.com/hduchat/bindian.hdu.edu.cn:latest
@@ -46,16 +44,16 @@ docker run -d --name kb_builder -p 8080:8088 -v ~/.kb-builder:/var/lib/postgresq
 
 <table style="border-collapse: collapse; border: 1px solid black;">
   <tr>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/b6f071ef-00b5-4edf-88fc-b7206e0857d6" alt=" Demo1"   /></td>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/05c1fed4-1cba-41b6-a7df-1298ae622d93" alt=" Demo2"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/b6f071ef-00b5-4edf-88fc-b7206e0857d6" alt=" Demo1"   /> PDF文件OCR提取文字 </td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/05c1fed4-1cba-41b6-a7df-1298ae622d93" alt=" Demo2"   /> 多种文档清洗切片 </td>
   </tr>
   <tr>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/003e6a01-20d6-43b2-80aa-28c989b31220" alt=" Demo3"   /></td>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/96fe3078-a5f6-47cc-ae90-3402c3e1c5e2" alt=" Demo4"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/003e6a01-20d6-43b2-80aa-28c989b31220" alt=" Demo3"   /> 文档内容改写 </td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/96fe3078-a5f6-47cc-ae90-3402c3e1c5e2" alt=" Demo4"   /> 文档QA生成 </td>
   </tr>
   <tr>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/c0e3ada2-58ff-4aa0-92ef-88b66bea6fe8" alt=" Demo5"   /></td>
-    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/cedb669f-55df-4153-b45f-eeedb87768e5" alt=" Demo6"   /></td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/c0e3ada2-58ff-4aa0-92ef-88b66bea6fe8" alt=" Demo5"   /> 生成内容下载 </td>
+    <td width="50%";style="padding: 5px;background-color:#fff;"><img src= "https://github.com/user-attachments/assets/cedb669f-55df-4153-b45f-eeedb87768e5" alt=" Demo6"   /> 对接各种大语言模型 </td>
   </tr>
 </table>
 
