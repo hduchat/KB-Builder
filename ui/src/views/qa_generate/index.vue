@@ -3,10 +3,10 @@
     <div class="main-calc-height centered-content">
       <el-scrollbar>
         <div class="p-24">
-          <h4 class="title-decoration-1 mb-16">问答生成</h4>
+          <h4 class="title-decoration-1 mb-16">文档处理方法二：问答生成</h4>
           <el-form ref="FormRef" :model="applicationForm" :rules="rules" label-position="top"
             require-asterisk-position="right">
-            <el-form-item label="文档" prop="document_id">
+            <el-form-item label="文档(预处理后的文件)" prop="document_id">
               <el-select v-model="applicationForm.document_id" filterable clearable placeholder="请选择文档">
                 <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />
               </el-select>
@@ -81,7 +81,7 @@
               <el-icon class="is-loading primary">
                 <Loading />
               </el-icon>
-              问答正在生成中，请跳转到“问答文件”查看生成结果
+              问答正在生成中，请随后跳转到“结果文件”查看生成结果
 
             </el-text>
           </div>
@@ -143,6 +143,8 @@ const applicationForm = ref({
   document_id: '',
   model_id: '',
   prompt: '',
+  cueWord:'',
+  process_type:0
 })
 
 const rules = reactive({
