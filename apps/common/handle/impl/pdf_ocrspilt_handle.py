@@ -46,7 +46,7 @@ def convert_to_binary(roi_img):
     return roi_img  
 
 def get_title(index, sorted_res_cp,item):
-    title = ""
+    title = [""]
     if (index > 0 and sorted_res_cp[index - 1]["type"].lower() == item  + '_caption'):
         title = [res_item['text'] for res_item in sorted_res_cp[index - 1]["res"]]
     if (index < len(sorted_res_cp) - 1 and sorted_res_cp[index + 1]["type"].lower() == item  + '_caption'):
