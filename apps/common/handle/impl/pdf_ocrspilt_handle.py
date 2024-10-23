@@ -111,7 +111,7 @@ def pic_process_file(pdf_document, images_list):
                     images_list.append(image)  
                     title = get_title(index, sorted_res_cp, region["type"].lower() )
                     #title ='111111'
-                    content += f'# {title}\n'
+                    content += f'# {title[0]}\n'
                     content += f'![](/api/image/{image_uuid})\n'
             
     return content    
