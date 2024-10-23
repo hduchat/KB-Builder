@@ -409,7 +409,7 @@ function downloadDocument(row: any) {
   const documentId = row.id
   paragraphApi.
     downloadParagraph(
-      child_id,
+      child_id.value,
       documentId,
       loading
     )

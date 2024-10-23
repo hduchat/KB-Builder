@@ -86,6 +86,7 @@
             <el-scrollbar>  
               <div class="container-wrapper">  
                 <el-checkbox v-model="useOCR" class="mb-16">使用OCR</el-checkbox>  
+                <el-checkbox v-model="Extract_pic" class="mb-16">提取图片</el-checkbox>  
                 <el-button @click="splitDocument" class="align-right">生成预览</el-button>  
               </div>  
             </el-scrollbar> 
@@ -126,7 +127,8 @@ const loading = ref(false)
 const paragraphList = ref<any[]>([])
 const patternLoading = ref<boolean>(false)
 const checkedConnect = ref<boolean>(false)
-const useOCR = ref<boolean>(false)
+const useOCR = ref<boolean>(false) 
+const Extract_pic = ref<boolean>(false)
 
 const firstChecked = ref(true)
 
@@ -193,6 +195,11 @@ function splitDocument() {
   } else {  
     fd.append('use_ocr', 'false');   
   }  
+  if (Extract_pic.value) {  
+    fd.append('extract_pic', 'true');   
+  } else {  
+    fd.append('extract_pic', 'false');   
+  }  
 
   documentApi
     .postSplitDocument(fd)
@@ -238,7 +245,9 @@ onMounted(() => {
 defineExpose({
   paragraphList,
   checkedConnect,
-  useOCR
+  useOCR,
+  documentsFiles,
+  form
 })
 </script>
 <style scoped lang="scss">
