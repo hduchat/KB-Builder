@@ -27,7 +27,7 @@
       >
         创建并导入
       </el-button>
-      <el-button @click="submit" type="primary" v-if="active === 1" :disabled="loading">
+      <el-button @click="submit1" type="primary" v-if="active === 1" :disabled="loading">
         开始导入
       </el-button>
     </div>
@@ -42,6 +42,7 @@ import ResultSuccess from './step/ResultSuccess.vue'
 import datasetApi from '@/api/dataset'
 import type { datasetData } from '@/api/type/dataset'
 import { MsgConfirm, MsgSuccess } from '@/utils/message'
+import documentApi from '@/api/document'
 
 import useStore from '@/stores'
 const { dataset, document } = useStore()
@@ -94,41 +95,92 @@ function clearStore() {
   dataset.saveWebInfo(null)
   dataset.saveDocumentsFile([])
 }
-function submit() {
+
+
+function submit1() {
   loading.value = true
   const documents = [] as any
-  StepSecondRef.value?.paragraphList.map((item: any) => {
-    if (!StepSecondRef.value?.checkedConnect) {
-      item.content.map((v: any) => {
-        delete v['problem_list']
-      })
+
+  let fd = new FormData()
+  documentsFiles.value.forEach((item) => {//遍历，添加文件到FormData
+    if (item?.raw) {
+      fd.append('file', item?.raw)
     }
-    documents.push({
-      name: item.name,
-      paragraphs: item.content
-    })// 将每个段落的信息推入 documents 数组  
   })
 
-  const obj = { ...baseInfo.value, documents } as datasetData
-  if (id) {//存在id，上传文档
-    // 上传文档
-    document
-      .asyncPostDocument(id as string, documents)
-      .then(() => {
-        MsgSuccess('提交成功')
-        clearStore()
-        router.push({ path: `/dataset/${id}/document` })
-      })
-      .catch(() => {
-        loading.value = false
-      })
-  } else {//不存在id，创建新知识库
-    datasetApi.postfatherDataset(obj, loading).then((res) => {
-      successInfo.value = res.data
-      active.value = 2
-      clearStore()
+  if (StepSecondRef.value?.radio === '2') {
+    fd.append('patterns', 'Recursive')
+    Object.keys(StepSecondRef.value?.form).forEach((key) => {
+      if (key !== 'patterns') {
+        fd.append(key, StepSecondRef.value?.form[key])
+      }
     })
   }
+
+  if (StepSecondRef.value?.radio === '3') {
+    Object.keys(StepSecondRef.value?.form).forEach((key) => {
+      if (key == 'patterns') {
+        StepSecondRef.value?.form.patterns.forEach((item) => fd.append('patterns', item))
+      } else {
+        fd.append(key, StepSecondRef.value?.form[key])
+      }
+    })
+  }
+
+  if (StepSecondRef.value?.useOCR) {  
+    fd.append('use_ocr', 'true');   
+  } else {  
+    fd.append('use_ocr', 'false');   
+  }  
+
+  if (StepSecondRef.value?.Extract_pic) {  
+    fd.append('extract_pic', 'true');   
+  } else {  
+    fd.append('extract_pic', 'false');   
+  }  
+
+  const obj = { ...baseInfo.value,  } as datasetData
+  if (id) { // 存在id，上传文档  
+  // 跳转页面  
+  document.setFile(id as string,fd)
+
+  router.push({ path: `/dataset/${id}/document` })  
+    .then(() => {  
+      // 上传文档  
+      document.asyncspitlDocument(document.datasetId, document.file)  
+        .then(() => {  
+          MsgSuccess('提交成功了')  
+          clearStore()  
+        })  
+        .catch(() => {  
+          loading.value = false  
+        })  
+    })  
+    .catch(() => {  
+      loading.value = false  
+    })  
+} else { // 不存在id，创建新知识库  
+  datasetApi.postfatherDataset(obj, loading)  
+    .then((res) => {  
+      successInfo.value = res.data  
+      active.value = 2  
+      clearStore()  
+      // 跳转页面  
+      document.setFile(res.data.id as string,fd)
+      router.push({ path: `/dataset/${res.data.id}/document` }) // 假设新的id存储在res.data.id  
+        .then(() => {  
+          // 上传文档  
+          document.asyncspitlDocument(document.datasetId, document.file)  
+        })  
+        .catch(() => {  
+          loading.value = false  
+        })  
+    })  
+    .catch(() => {  
+      loading.value = false  
+    })  
+}  
+
 }
 
 function back() {

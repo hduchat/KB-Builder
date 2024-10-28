@@ -95,7 +95,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import type { FormInstance, FormRules } from 'element-plus'
 import type { ApplicationFormType } from '@/api/type/application'
 import CreateModelDialog from '@/views/template/component/CreateModelDialog.vue'
@@ -126,6 +126,7 @@ const AIModelArr = ref([])
 const documentArr = ref<any>([])
 const loading = ref(false)
 const { model } = useStore()
+const router = useRouter();  
 
 const route = useRoute()
 const {
@@ -142,6 +143,8 @@ const applicationForm = ref({
   document_id: '',
   model_id: '',
   prompt: '',
+  cueWord:'',
+  process_type:0
 })
 
 const rules = reactive({
@@ -215,10 +218,12 @@ const generating = ref(false); // 添加 generating 状态
 
 const onSubmit = async (form: any) => {
   if (!form) return
-  await form.validate((valid: any, fields: any) => {
+  await form.validate(async (valid: any, fields: any) => {
     if (valid) {
       generating.value = true; // 设置 generating 为 true
       applicationForm.value.process_type = 0;  // 设置处理方式为0
+
+      await router.push({ path: `/dataset/${id}/document` });
       dataset.asyncPostDatasetQA(id, applicationForm.value, loading)
         .then((res: any) => {
           console.log("res: ", res);

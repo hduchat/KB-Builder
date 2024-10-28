@@ -19,6 +19,7 @@ from django.db import transaction
 from django.db.models import QuerySet
 from drf_yasg import openapi
 from rest_framework import serializers
+from itertools import chain  
 
 from common.db.search import native_search, native_page_search
 from common.event.common import work_thread_pool
@@ -27,7 +28,7 @@ from common.exception.app_exception import AppApiException
 from common.handle.impl.doc_split_handle import DocSplitHandle
 from common.handle.impl.pdf_split_handle import PdfSplitHandle
 from common.handle.impl.text_split_handle import TextSplitHandle
-from common.handle.impl.pdf_ocrspilt_handle import PdfocrSplitHandle
+from common.handle.impl.pdf_ocrspilt_handle import PdfocrSplitHandle,Pdf_picocrSplitHandle
 from common.mixins.api_mixin import ApiMixin
 from common.util.common import post
 from common.util.field_message import ErrMessage
@@ -619,6 +620,8 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
             "自动清洗"))
         use_ocr = serializers.BooleanField(required=False, error_messages=ErrMessage.boolean(
             "使用ocr"))
+        extract_pic = serializers.BooleanField(required=False, error_messages=ErrMessage.boolean(
+            "提取图片"))
         
 
 
@@ -659,18 +662,27 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
                                   in_=openapi.IN_FORM,
                                   required=False,
                                   type=openapi.TYPE_BOOLEAN, title="是否使用ocr", description="是否使用ocr"),
+                openapi.Parameter(name='extract_pic',
+                                  in_=openapi.IN_FORM,
+                                  required=False,
+                                  type=openapi.TYPE_BOOLEAN, title="是否提取图片", description="是否提取图片"),
             ]
 
-        def parse(self):
-            file_list = self.data.get("file")
-            return list(
-                map(lambda f: file_to_paragraph(f,
-                                                self.data.get("patterns", None),
-                                                self.data.get("with_filter", None),
-                                                self.data.get("limit", None),
-                                                self.data.get("overlap", None),
-                                                self.data.get("use_ocr", None)),
-                    file_list))
+        def parse(self):  
+            file_list = self.data.get("file")  
+            return list(  
+                chain.from_iterable(  
+                    map(lambda f: file_to_paragraph(  
+                        f,  
+                        self.data.get("patterns", None),  
+                        self.data.get("with_filter", None),  
+                        self.data.get("limit", None),  
+                        self.data.get("overlap", None),  
+                        self.data.get("use_ocr", None),
+                        self.data.get("extract_pic", None)),  
+                    file_list)  
+                )  
+            )  
 
     class SplitPattern(ApiMixin, serializers.Serializer):
         @staticmethod
@@ -788,8 +800,8 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
 
 
 default_split_handle = TextSplitHandle()#默认切片方法
-split_handles = [DocSplitHandle(), PdfSplitHandle(), default_split_handle]#定义文档切片方法
-split_ocr_handles = [DocSplitHandle(), PdfocrSplitHandle(), default_split_handle]#定义文档切片方法
+split_handles = [DocSplitHandle(), default_split_handle]#定义文档切片方法
+split_ocr_handles = [DocSplitHandle(), PdfocrSplitHandle(), Pdf_picocrSplitHandle(), default_split_handle]#定义文档切片方法
 
 #处理文件内容的缓冲
 class FileBufferHandle:
@@ -808,14 +820,21 @@ def save_image(image_list):
     QuerySet(Image).bulk_create(image_list)
 
 # 定义一个函数将文件内容转换为段落，并根据一些配置进行处理
-def file_to_paragraph(file, pattern_list: List, with_filter: bool, limit: int, overlap: int, user_ocr:bool):
+def file_to_paragraph(file, pattern_list: List, with_filter: bool, limit: int, overlap: int, user_ocr:bool, extract_pic:bool):
     get_buffer = FileBufferHandle().get_buffer
+    paragraph = []
     if (user_ocr):
-        for split_handle in split_ocr_handles:#遍历切片方法（以文档类型划分）
-            if split_handle.support(file, get_buffer):#是否支持
-                return split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image)#使用方法
+        if PdfocrSplitHandle().support(file, get_buffer):#是否支持
+            paragraph.append(PdfocrSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
     else:
-        for split_handle in split_handles:#遍历切片方法（以文档类型划分）
-            if split_handle.support(file, get_buffer):#是否支持
-                return split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image)#使用方法
-    return default_split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image)
+        if PdfSplitHandle().support(file, get_buffer):#是否支持
+            paragraph.append(PdfSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+
+    if (extract_pic):
+        if Pdf_picocrSplitHandle().support(file, get_buffer):
+            paragraph.append(Pdf_picocrSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+
+    for split_handle in split_handles:#遍历切片方法（以文档类型划分）
+        if split_handle.support(file, get_buffer):#是否支持
+            paragraph.append(split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+    return paragraph

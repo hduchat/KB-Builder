@@ -2,7 +2,7 @@
   <el-scrollbar>
     <el-result icon="success" title="🎉 问答库创建成功 🎉">
       <template #sub-title>
-        <div class="mt-8">
+        <!-- <div class="mt-8">
           <span class="bold">{{ data?.document_list.length || 0 }}</span>
           <el-text type="info" class="ml-4">文档</el-text>
           <el-divider direction="vertical" />
@@ -11,7 +11,7 @@
           <el-divider direction="vertical" />
           <span class="bold">{{ numberFormat(char_length) || 0 }}</span>
           <el-text type="info" class="ml-4">字符</el-text>
-        </div>
+        </div> -->
       </template>
       <template #extra>
         <el-button @click="router.push({ path: `/dataset` })">返回问答库列表</el-button>
@@ -21,7 +21,7 @@
         >
       </template>
     </el-result>
-    <div class="result-success">
+    <!-- <div class="result-success">
       <p class="bolder">文档列表</p>
       <el-card
         shadow="never"
@@ -58,7 +58,7 @@
           </div>
         </div>
       </el-card>
-    </div>
+    </div> -->
   </el-scrollbar>
 </template>
 <script setup lang="ts">
