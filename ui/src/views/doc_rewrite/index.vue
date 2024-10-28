@@ -6,11 +6,52 @@
           <h4 class="title-decoration-1 mb-16">文档处理方法一：文档结构改写</h4>
           <el-form ref="FormRef" :model="applicationForm" :rules="rules" label-position="top"
             require-asterisk-position="right">
-            <el-form-item label="文档(预处理后的文件）" prop="document_id">
+            <el-form-item label="文件类型" required>
+              <el-radio-group v-model="fileType" class="card__radio" @change="handleFileTypeChange">
+                <el-row :gutter="20">
+                  <el-col :span="12">
+                    <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '0' ? 'active' : ''">
+                      <el-radio value="0" size="large">
+                        <div class="flex align-center">
+                          <AppAvatar class="mr-8 avatar-light" shape="square" :size="32">
+                            <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
+                          </AppAvatar>
+                          <div>
+                            <p class="mb-4">未处理的文件</p>
+                            <el-text type="info">上传后的原始文件</el-text>
+                          </div>
+                        </div>
+                      </el-radio>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '1' ? 'active' : ''">
+                      <el-radio value="1" size="large">
+                        <div class="flex align-center">
+                          <AppAvatar class="mr-8 avatar-purple" shape="square" :size="32">
+                            <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
+                          </AppAvatar>
+                          <div>
+                            <p class="mb-4">已处理的文档</p>
+                            <el-text type="info">经过处理后的结果文件</el-text>
+                          </div>
+                        </div>
+                      </el-radio>
+                    </el-card>
+                  </el-col>
+                </el-row>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="文档列表" prop="document_id" class="mt-8">
               <el-select v-model="applicationForm.document_id" filterable clearable placeholder="请选择文档">
                 <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
+<!--            <el-form-item label="文档(预处理后的文件）" prop="document_id">-->
+<!--              <el-select v-model="applicationForm.document_id" filterable clearable placeholder="请选择文档">-->
+<!--                <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />-->
+<!--              </el-select>-->
+<!--            </el-form-item>-->
             <el-form-item label="AI模型" prop="model_id">
               <el-select v-model="applicationForm.model_id" clearable filterable placeholder="请选择AI模型">
                 <el-option-group v-for="(value, label) in modelOptions" :key="value"
@@ -68,7 +109,7 @@
             <el-form-item label="详细提示词" prop="prompt">
               <el-input v-model="applicationForm.prompt" clearable type="textarea"
                 placeholder="描述问答库的内容，详尽的描述将帮助AI能深入理解该问答库的内容，能更准确的检索到内容，提高该问答库的命中率。" maxlength="2048" show-word-limit
-                :rows="6" @blur="applicationForm.prompt = applicationForm.prompt.trim()" />
+                :rows="5" @blur="applicationForm.prompt = applicationForm.prompt.trim()" />
             </el-form-item>
           </el-form>
           <div class="text-right">
@@ -191,11 +232,34 @@ const openCreateModel = (provider?: Provider) => {
     selectProviderRef.value?.open()
   }
 }
+
+// 获取上传后未处理的文档
 const getDocuments = async () => {
   dataset.asyncGetDatasetDocuments(id, loading).then((res: any) => {
     documentArr.value = res.data
   })
 }
+// 获取已经处理过的文档
+const getProcessedDocuments = async () => {
+  await dataset.asyncGetDatasetDetail(id, loading).then((res: any) => {
+    const childDatasetId = res.data.child_id; // 获取子知识库 ID
+    if (childDatasetId) {
+      dataset.asyncGetDatasetDocuments(childDatasetId, loading).then((res: any) => {
+        documentArr.value = res.data; // 更新文档列表
+      });
+    }
+  });
+};
+const fileType = ref('0'); // 默认选择 "未处理的文件"
+const handleFileTypeChange = () => {
+  applicationForm.value.document_id = '';
+  if (fileType.value === '0') {
+    getDocuments();
+  } else {
+    getProcessedDocuments();
+  }
+};
+
 const resetForm = (form: any) => {
   if (!form) return
   form.resetFields()
@@ -210,7 +274,7 @@ const onSubmit = async (form: any) => {
       generating.value = true; // 设置 generating 为 true
       applicationForm.value.process_type = 1;  // 设置处理方式为1，即文档重写
 
-      await router.push({ path: `/dataset/${id}/document` });
+      // await router.push({ path: `/dataset/${id}/document` });  // 跳转到【结果文档】界面
       dataset.asyncPostDatasetQA(id, applicationForm.value, loading)
         .then((res: any) => {
           console.log("res: ", res);
@@ -228,7 +292,7 @@ onMounted(() => {
   getApplicationId().then(() => {
     getModel()
   })
-  getDocuments()
+  handleFileTypeChange();
 })
 
 </script>
@@ -251,4 +315,13 @@ onMounted(() => {
 .generating-status {
   text-align: center;
 }
+
+.custom-card {
+  height: 70px; // 调整卡片的高度
+}
+
+.el-form-item {
+  margin-bottom: 6px;
+}
+
 </style>

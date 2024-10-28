@@ -51,10 +51,10 @@ const useDatasetStore = defineStore({
           })
       })
     },
-    async asyncGetDatasetchild_id(id: string, loading?: Ref<boolean>) {
+    async asyncGetDatasetChild_id(id: string, loading?: Ref<boolean>) {
       return new Promise((resolve, reject) => {
         datasetApi
-          .getchildDatasetid(id, loading)
+          .getChildDatasetid(id, loading)
           .then((data) => {
             resolve(data)
           })

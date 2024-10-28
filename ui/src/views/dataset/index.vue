@@ -106,38 +106,36 @@ function searchHandle() {
   getList()
 }
 
-async function deleteDataset(row:any) {  
-  try {  
-    // 显示确认对话框，并等待用户确认  
-    await MsgConfirm(`是否删除问答库：${row.name} ?`, '', {  
-      confirmButtonText: '删除',  
-      confirmButtonClass: 'danger'  
-    });  
+async function deleteDataset(row:any) {
+  try {
+    // 显示确认对话框，并等待用户确认
+    await MsgConfirm(`是否删除问答库：${row.name} ?`, '', {
+      confirmButtonText: '删除',
+      confirmButtonClass: 'danger'
+    });
 
-    // 获取父知识库的信息  
-    const fatherDataset = await datasetApi.getDatasetDetail(row.id, loading);  
+    // 获取父知识库的信息
+    const fatherDataset = await datasetApi.getDatasetDetail(row.id, loading);
 
-    // 获取子知识库 ID  
-    const childId = fatherDataset.data.child_id;  
+    // 获取 子知识库ID & 信息
+    const childId = fatherDataset.data.child_id;
+    const childDataset = await datasetApi.getDatasetDetail(childId, loading);
 
-    // 获取子知识库的信息  
-    const childDataset = await datasetApi.getDatasetDetail(childId, loading);  
+    // 并行删除父知识库和子知识库的应用
+    await Promise.all([
+      applicationApi.delApplication(fatherDataset.data.app_id),
+      applicationApi.delApplication(childDataset.data.app_id)
+    ]);
 
-    // 并行删除父知识库和子知识库的应用  
-    await Promise.all([  
-      applicationApi.delApplication(fatherDataset.data.app_id),  
-      applicationApi.delApplication(childDataset.data.app_id)  
-    ]);  
-
-    // 删除数据集并更新界面  
-    await datasetApi.delDataset(row.id, loading);  
-    const index = datasetList.value.findIndex(v => v.id === row.id);  
-    datasetList.value.splice(index, 1);  
-    MsgSuccess('删除成功');  
-  } catch (error) {  
-    // 捕获并处理所有异步操作中的错误  
-    console.error('删除失败', error);  
-  }  
+    // 删除数据集并更新界面
+    await datasetApi.delDataset(row.id, loading);
+    const index = datasetList.value.findIndex(v => v.id === row.id);
+    datasetList.value.splice(index, 1);
+    MsgSuccess('删除成功');
+  } catch (error) {
+    // 捕获并处理所有异步操作中的错误
+    console.error('删除失败', error);
+  }
 }
 
 function getList() {
