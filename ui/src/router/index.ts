@@ -23,42 +23,17 @@ router.beforeEach(
       return
     }
     const { user } = useStore()
-    if (to.path.startsWith('/dataset/')) {
-      if (to.path.startsWith('/dataset/create') || to.path.startsWith('/dataset/upload')) {
-        next()
-      }
-      const id = to.params.id || to.query.id // 注意：在子路由中，id可能不在to.params中，而是需要通过to.params.$routeMatch或其他方式获取
-      const documentId = to.params.documentId || to.query.documentId
-      if (!id) {
-        // 如果没有id，则重定向或显示错误
-        next({ path: '/error', query: { error: 'Missing ID' } })
-        return
-      }
 
-      try {
-        // 发送API请求来检查id
-        const response = await datasetApi.getDatasetDetail(id as string)
-        if (response.data.type_child !== '1') {
-          // 如果type_child不等于1，但documentId存在的话则放行
-          if (documentId) {
-            next()
-          }
-          // 如果type_child不等于1，其余情况则重定向或显示错误
-          next({ path: '/error', query: { error: 'Invalid ID' } })
-        } else {
-          // 如果type_child等于1，则继续路由导航
-          next()
-        }
-      } catch (error) {
-        // 如果API请求失败，则处理错误
-        console.error('Error fetching data for route guard:', error)
-        next({ path: '/error', query: { error: 'Failed to fetch data' } })
-      }
-    } else {
-      // 如果不是/dataset/:id的路由，则直接放行
-      next()
-    }
-    const notAuthRouteNameList = ['register', 'login', 'forgot_password', 'reset_password', 'Chat']
+    const notAuthRouteNameList = [
+      'register',
+      'login',
+      'forgot_password',
+      'reset_password',
+      'Chat',
+      'homePage',
+      'index',
+      'pricing'
+    ]
 
     if (!notAuthRouteNameList.includes(to.name ? to.name.toString() : '')) {
       const token = user.getToken()
@@ -67,9 +42,45 @@ router.beforeEach(
           path: '/login'
         })
         return
-      }
-      if (!user.userInfo) {
-        await user.profile()
+      } else {
+        if (!user.userInfo) {
+          await user.profile()
+        }
+        if (to.path.startsWith('/dataset/')) {
+          if (to.path.startsWith('/dataset/create') || to.path.startsWith('/dataset/upload')) {
+            next()
+          }
+          const id = to.params.id || to.query.id // 注意：在子路由中，id可能不在to.params中，而是需要通过to.params.$routeMatch或其他方式获取
+          const documentId = to.params.documentId || to.query.documentId
+          if (!id) {
+            // 如果没有id，则重定向或显示错误
+            next({ path: '/error', query: { error: 'Missing ID' } })
+            return
+          }
+
+          try {
+            // 发送API请求来检查id
+            const response = await datasetApi.getDatasetDetail(id as string)
+            if (response.data.type_child !== '1') {
+              // 如果type_child不等于1，但documentId存在的话则放行
+              if (documentId) {
+                next()
+              }
+              // 如果type_child不等于1，其余情况则重定向或显示错误
+              next({ path: '/error', query: { error: 'Invalid ID' } })
+            } else {
+              // 如果type_child等于1，则继续路由导航
+              next()
+            }
+          } catch (error) {
+            // 如果API请求失败，则处理错误
+            console.error('Error fetching data for route guard:', error)
+            next({ path: '/error', query: { error: 'Failed to fetch data' } })
+          }
+        } else {
+          // 如果不是/dataset/:id的路由，则直接放行
+          next()
+        }
       }
     }
     // 判断是否有菜单权限
