@@ -85,6 +85,13 @@
 </template>
 
 <script setup lang='ts' name=''>
+import { useRouter} from 'vue-router'
+const router = useRouter()
+router.beforeEach((to, from, next) => {
+  // 让页面回到顶部
+  document.documentElement.scrollTop = 0;
+  next();
+});
 const picUrls = [
   'https://pic.imgdb.cn/item/67173cbfd29ded1a8ce8b82a.jpg',
   'https://pic.imgdb.cn/item/67173cc0d29ded1a8ce8b862.png',
