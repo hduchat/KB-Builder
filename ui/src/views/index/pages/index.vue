@@ -43,10 +43,7 @@
       <div class="shadow">
         <el-carousel indicator-position="outside" height="auto">
           <el-carousel-item style="height:auto">
-            <img :src="picUrls[0]" class="carousel-img" alt="">
-          </el-carousel-item>
-          <el-carousel-item style="height:auto">
-            <img :src="picUrls[1]" class="carousel-img" alt="">
+            <img src="@/assets/图片1-modified.png" class="carousel-img" alt="">
           </el-carousel-item>
           <el-carousel-item style="height:auto">
             <img :src="picUrls[2]" class="carousel-img" alt="">
@@ -59,6 +56,13 @@
           </el-carousel-item>
         </el-carousel>
       </div>
+      <div class="b-video">
+        <a
+          href="https://www.bilibili.com/video/BV1VPpcezE5u/?spm_id_from=333.337.search-card.all.click&vd_source=4911d6ed3bdda37015ba6788ae1c1ae4">
+          B站官方视频介绍
+        </a>
+      </div>
+
     </section>
     <section class="introduction-boxes">
       <div class="intro-box" :class="{ 'bg-light': !isReverse(index) }" v-for="(item, index) in introBoxes"
@@ -85,7 +89,8 @@
 </template>
 
 <script setup lang='ts' name=''>
-import { useRouter} from 'vue-router'
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router'
 const router = useRouter()
 router.beforeEach((to, from, next) => {
   // 让页面回到顶部
@@ -121,6 +126,7 @@ const introBoxes = [
 const isReverse = (index: number) => {
   return index % 2 === 0 ? false : true
 }
+
 </script>
 <style lang='scss' scoped>
 .bg-header {
@@ -155,6 +161,16 @@ const isReverse = (index: number) => {
   padding: 50px 0;
   position: relative;
   margin-top: -150px;
+
+  .b-video {
+    color: #8d9398 !important;
+    text-align: center;
+    margin-top: 24px;
+
+    a:hover {
+      color: blue;
+    }
+  }
 
   .shadow {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;

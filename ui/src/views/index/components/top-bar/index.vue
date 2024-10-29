@@ -28,12 +28,14 @@
 import { computed } from 'vue'
 import { getChildRouteListByPathAndName } from '@/router/index'
 import MenuItem from './MenuItem.vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const topMenuList = computed(() => {
   return getChildRouteListByPathAndName('/', 'homePage')
 })
 
 const goToLogin = () => {
-  window.open(`${window.location.origin}/ui/dataset`)
+  router.push({ name: 'home' })
 }
 </script>
 <style lang='scss' scoped>
