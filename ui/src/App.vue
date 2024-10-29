@@ -4,6 +4,6 @@
   <RouterView />
 </template>
 
-<style scoped>
-
+<style lang="scss">
+@import "common/font/iconfont.css";
 </style>

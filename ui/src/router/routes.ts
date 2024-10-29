@@ -1,18 +1,40 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { Role } from '@/utils/permission/type'
+import IndexLayout from '@/views/index/index.vue'
+import IndexMain from '@/views/index/pages/index.vue'
+import PricingMain from '@/views/index/pages/pricing.vue'
 
 const modules: any = import.meta.glob('./modules/*.ts', { eager: true })
 const rolesRoutes: RouteRecordRaw[] = [...Object.keys(modules).map((key) => modules[key].default)]
 
 export const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/home',
     name: 'home',
-    component: () => import('@/layout/app-layout/index.vue'),
     redirect: '/dataset',
+    component: () => import('@/layout/app-layout/index.vue'),
     children: [...rolesRoutes]
   },
-
+  {
+    path: '/',
+    name: 'homePage',
+    component: IndexLayout,
+    redirect: 'index.html',
+    children: [
+      {
+        path: 'index.html',
+        name: 'index',
+        meta: { title: '首页' },
+        component: IndexMain
+      },
+      {
+        path: 'pricing.html',
+        name: 'pricing',
+        meta: { title: '企业版' },
+        component: PricingMain
+      }
+    ]
+  },
   {
     path: '/chat/:accessToken',
     name: 'Chat',
