@@ -59,6 +59,13 @@
           </el-carousel-item>
         </el-carousel>
       </div>
+      <div class="b-video">
+        <a
+          href="https://www.bilibili.com/video/BV1VPpcezE5u/?spm_id_from=333.337.search-card.all.click&vd_source=4911d6ed3bdda37015ba6788ae1c1ae4">
+          B站官方视频介绍
+        </a>
+      </div>
+
     </section>
     <section class="introduction-boxes">
       <div class="intro-box" :class="{ 'bg-light': !isReverse(index) }" v-for="(item, index) in introBoxes"
@@ -148,6 +155,16 @@ const isReverse = (index: number) => {
   padding: 50px 0;
   position: relative;
   margin-top: -150px;
+
+  .b-video {
+    color: #8d9398 !important;
+    text-align: center;
+    margin-top: 24px;
+
+    a:hover {
+      color: blue;
+    }
+  }
 
   .shadow {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
