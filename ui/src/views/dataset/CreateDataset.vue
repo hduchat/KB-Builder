@@ -27,11 +27,8 @@
       >
         创建并导入
       </el-button>
-      <el-button @click="submit" type="primary" v-if="active === 1" :disabled="loading">
-        开始导入
-      </el-button>
       <el-button @click="submit1" type="primary" v-if="active === 1" :disabled="loading">
-        同时切片并导入
+        开始导入
       </el-button>
     </div>
   </LayoutContainer>
@@ -98,43 +95,7 @@ function clearStore() {
   dataset.saveWebInfo(null)
   dataset.saveDocumentsFile([])
 }
-function submit() {
-  loading.value = true
-  const documents = [] as any
-  StepSecondRef.value?.paragraphList.map((item: any) => {
-    if (!StepSecondRef.value?.checkedConnect) {
-      item.content.map((v: any) => {
-        delete v['problem_list']
-      })
-    }
-    documents.push({
-      name: item.name,
-      paragraphs: item.content
-    })// 将每个段落的信息推入 documents 数组  
-  })
 
-  const obj = { ...baseInfo.value,  } as datasetData
-  if (id) {//存在id，上传文档
-    // 上传文档
-    document
-      .asyncPostDocument(id as string, documents)
-      .then(() => {
-        MsgSuccess('提交成功')
-        clearStore()
-        router.push({ path: `/dataset/${id}/document` })
-      })
-      .catch(() => {
-        loading.value = false
-      })
-  } else {//不存在id，创建新知识库
-    datasetApi.postfatherDataset(obj, loading).then((res) => {
-      successInfo.value = res.data
-      active.value = 2
-      clearStore()
-      document.asyncPostDocument(res.data.id as string, documents)
-    })
-  }
-}
 
 function submit1() {
   loading.value = true
