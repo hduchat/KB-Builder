@@ -55,6 +55,13 @@
 
 <script setup lang='ts' name=''>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'
+const router = useRouter()
+router.beforeEach((to, from, next) => {
+  // 让页面回到顶部
+  document.documentElement.scrollTop = 0;
+  next();
+});
 const tableItems = ref([
   {
     row: true,

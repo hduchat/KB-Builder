@@ -43,10 +43,7 @@
       <div class="shadow">
         <el-carousel indicator-position="outside" height="auto">
           <el-carousel-item style="height:auto">
-            <img src="@/assets/home-modified.png" class="carousel-img" alt="">
-          </el-carousel-item>
-          <el-carousel-item style="height:auto">
-            <img :src="picUrls[1]" class="carousel-img" alt="">
+            <img src="@/assets/图片1-modified.png" class="carousel-img" alt="">
           </el-carousel-item>
           <el-carousel-item style="height:auto">
             <img :src="picUrls[2]" class="carousel-img" alt="">
@@ -92,6 +89,14 @@
 </template>
 
 <script setup lang='ts' name=''>
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router'
+const router = useRouter()
+router.beforeEach((to, from, next) => {
+  // 让页面回到顶部
+  document.documentElement.scrollTop = 0;
+  next();
+});
 const picUrls = [
   'https://pic.imgdb.cn/item/67173cbfd29ded1a8ce8b82a.jpg',
   'https://pic.imgdb.cn/item/67173cc0d29ded1a8ce8b862.png',
@@ -121,6 +126,7 @@ const introBoxes = [
 const isReverse = (index: number) => {
   return index % 2 === 0 ? false : true
 }
+
 </script>
 <style lang='scss' scoped>
 .bg-header {
