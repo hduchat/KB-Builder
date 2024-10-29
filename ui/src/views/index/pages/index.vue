@@ -43,7 +43,7 @@
       <div class="shadow">
         <el-carousel indicator-position="outside" height="auto">
           <el-carousel-item style="height:auto">
-            <img :src="picUrls[0]" class="carousel-img" alt="">
+            <img src="@/assets/home-modified.png" class="carousel-img" alt="">
           </el-carousel-item>
           <el-carousel-item style="height:auto">
             <img :src="picUrls[1]" class="carousel-img" alt="">
