@@ -6,7 +6,49 @@
           <h4 class="title-decoration-1 mb-16">文档处理方法二：问答生成</h4>
           <el-form ref="FormRef" :model="applicationForm" :rules="rules" label-position="top"
             require-asterisk-position="right">
-            <el-form-item label="文档(预处理后的文件)" prop="document_id">
+            <el-form-item label="文件类型" required>
+              <el-radio-group v-model="fileType" class="card__radio" @change="handleFileTypeChange">
+                <el-row :gutter="20">
+                  <el-col :span="12">
+                    <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '0' ? 'active' : ''">
+                      <el-radio value="0" size="large">
+                        <div class="flex align-center">
+                          <AppAvatar class="mr-8 avatar-light" shape="square" :size="32">
+                            <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
+                          </AppAvatar>
+                          <div>
+                            <p class="mb-4">未处理的文件</p>
+                            <el-text type="info">上传后的原始文件</el-text>
+                          </div>
+                        </div>
+                      </el-radio>
+                    </el-card>
+                  </el-col>
+                  <el-col :span="12">
+                    <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '1' ? 'active' : ''">
+                      <el-radio value="1" size="large">
+                        <div class="flex align-center">
+                          <AppAvatar class="mr-8 avatar-purple" shape="square" :size="32">
+                            <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
+                          </AppAvatar>
+                          <div>
+                            <p class="mb-4">已处理的文档</p>
+                            <el-text type="info">经过处理后的结果文件</el-text>
+                          </div>
+                        </div>
+                      </el-radio>
+                    </el-card>
+                  </el-col>
+                </el-row>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="问答生成方式" required>
+              <el-radio-group v-model="qaGenerationType" @change="handleGenerationTypeChange">
+                <el-radio label="0">基础生成</el-radio>
+                <el-radio label="1">基于关键词的强化问答生成</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="文档列表" prop="document_id" class="mt-8">
               <el-select v-model="applicationForm.document_id" filterable clearable placeholder="请选择文档">
                 <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />
               </el-select>
@@ -54,6 +96,9 @@
                 </template>
               </el-select>
             </el-form-item>
+            <el-form-item label="关键词" prop="keyword" v-if="qaGenerationType === '1'">
+              <el-input v-model="applicationForm.keyword" placeholder="请输入关键词，系统将会侧重“关键词”的内容生成更多问答对" />
+            </el-form-item>
             <el-form-item label="提示词" prop="cueWord">
               <el-select
                 v-model="applicationForm.cueWord"
@@ -61,7 +106,7 @@
                 filterable
                 placeholder="请选择提示词"
                 value-key="cueWord">
-                <el-option v-for="item in promptGroup" :label="item.cueWord" :value="item"
+                <el-option v-for="item in currentPromptGroup" :label="item.cueWord" :value="item"
                   @click="applicationForm.prompt = item.prompt" />
               </el-select>
             </el-form-item>
@@ -94,7 +139,7 @@
   </LayoutContainer>
 </template>
 <script setup lang="ts">
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import type { FormInstance, FormRules } from 'element-plus'
 import type { ApplicationFormType } from '@/api/type/application'
@@ -114,11 +159,27 @@ const promptGroup = ref([{
 }, {
   cueWord: '文学教育Prompt模板',
   prompt: '请作为一个教育从业者针对给出的文本生成问答，用于评估学生对文本的熟悉程度\n\t几个理想的文学问答示例将在之后给出\n\t例子：  \n\t问题:在草船借箭这一回中，谁与诸葛亮一起草船借箭？\n\t回答:是鲁肃与诸葛亮一起草船借箭。\n\n\t问题:在草船借箭这一回中，谁提出了草船借箭这一计谋？\n\t回答:是诸葛亮提出了草船借箭。\n\n\t请生成尽可能多的问答来评估对学生对以下文本的了解\n\t生成的问答请尽可能丰富\n\t请仅提供问答\n\t请使用通俗的语言生成问答\n\n\t文本：\n'
-},
-{
+}, {
   cueWord: '产品说明书Prompt模板',
   prompt: '请作为一个资深工程师，针对文本生成问答\n\n\t几个理想的问答示例将在之后给出\n\t例子： \n\t问题:阿司匹林禁用的情况有哪些？\n\t回答:禁用的情况包括活动性溃疡病或其他原因引起的消化道出血，血友病或血小板减少症，以及有阿司匹林或其他非类抗炎药过敏史者，尤其是出现哮喘、神经血管性水肿或休克者。\n\n\t问题:阿司匹林的半衰期（Ti2）是多少？\n\t回答:阿司匹林的半衰期（Ti2）为15～20分钟。\n\n\t请详细指明问答的对象\n\t请仅提供问答\n\t若提供的信息不充分请不要生成问答\n\t请生成数个总结性的问答\n\t若文本的信息不充分请不要生成问答\n\n\t文本：\n'
 }])
+const promptGroup_keyword = ref([{
+  cueWord: '基于关键词的强化问答生成',
+  prompt: '根据提供的文本内容，生成10个与之相关的问答对。每个问答对都需围绕给定的“关键词”展开，确保：\n' +
+    '\n' +
+    '- 问题和答案尽可能多样化，涵盖与关键词相关的各个方面。\n' +
+    '- 内容丰富，使用通俗易懂的语言，确保读者能够轻松理解。\n' +
+    '- 每个问答对都需要紧密围绕关键词展开，提供详细且有见地的解释或信息。\n' +
+    '- 你只需要按照例子的格式输出问答对即可' +
+    '\n\t例子：' +
+    '\n\t问题:在草船借箭这一回中，谁与诸葛亮一起草船借箭？' +
+    '\n\t回答:是鲁肃与诸葛亮一起草船借箭。' +
+    '\n' +
+    '\n\t问题:在草船借箭这一回中，谁提出了草船借箭这一计谋？' +
+    '\n\t回答:是诸葛亮提出了草船借箭。' +
+    '\n文本：'
+}])
+
 const appId = ref()
 const { dataset } = useStore()
 const FormRef = ref()
@@ -126,8 +187,9 @@ const AIModelArr = ref([])
 const documentArr = ref<any>([])
 const loading = ref(false)
 const { model } = useStore()
-const router = useRouter();  
+const qaGenerationType = ref('0')
 
+const router = useRouter()
 const route = useRoute()
 const {
   params: { id }
@@ -144,7 +206,7 @@ const applicationForm = ref({
   model_id: '',
   prompt: '',
   cueWord:'',
-  process_type:0
+  process_type: ''
 })
 
 const rules = reactive({
@@ -204,11 +266,46 @@ const openCreateModel = (provider?: Provider) => {
     selectProviderRef.value?.open()
   }
 }
+
+// 获取上传后未处理的文档
 const getDocuments = async () => {
   dataset.asyncGetDatasetDocuments(id, loading).then((res: any) => {
     documentArr.value = res.data
   })
 }
+// 获取已经处理过的文档
+const getProcessedDocuments = async () => {
+  await dataset.asyncGetDatasetDetail(id, loading).then((res: any) => {
+    const childDatasetId = res.data.child_id; // 获取子知识库 ID
+    if (childDatasetId) {
+      dataset.asyncGetDatasetDocuments(childDatasetId, loading).then((res: any) => {
+        documentArr.value = res.data; // 更新文档列表
+      });
+    }
+  });
+};
+const fileType = ref('0'); // 默认选择 "未处理的文件"
+const handleFileTypeChange = () => {
+  applicationForm.value.document_id = '';
+  if (fileType.value === '0') {
+    getDocuments();
+  } else {
+    getProcessedDocuments();
+  }
+};
+
+// 不同问答生成类型的提示词获取
+const currentPromptGroup = computed(() => {
+  return qaGenerationType.value === '0' ? promptGroup.value : promptGroup_keyword.value;
+});
+
+// 切换生成类型后清空部分内容
+const handleGenerationTypeChange = () => {
+  applicationForm.value.keyword = null;
+  applicationForm.value.cueWord = null;
+  applicationForm.value.prompt = '';
+};
+
 const resetForm = (form: any) => {
   if (!form) return
   form.resetFields()
@@ -223,7 +320,14 @@ const onSubmit = async (form: any) => {
       generating.value = true; // 设置 generating 为 true
       applicationForm.value.process_type = 0;  // 设置处理方式为0
 
-      await router.push({ path: `/dataset/${id}/document` });
+      // 跳转到【结果文件】(有bug)
+      // await router.push({ path: `/dataset/${id}/document` });
+      // 拼接提示词
+      if (qaGenerationType.value === '1' && applicationForm.value.keyword) {
+        applicationForm.value.prompt =
+          `关键词：${applicationForm.value.keyword.trim()}\n${applicationForm.value.prompt}`;
+      }
+
       dataset.asyncPostDatasetQA(id, applicationForm.value, loading)
         .then((res: any) => {
           console.log("res: ", res);
@@ -241,7 +345,7 @@ onMounted(() => {
   getApplicationId().then(() => {
     getModel()
   })
-  getDocuments()
+  handleFileTypeChange();
 })
 
 
@@ -265,4 +369,13 @@ onMounted(() => {
 .generating-status {
   text-align: center;
 }
+
+.custom-card {
+  height: 70px; // 调整卡片的高度
+}
+
+.el-form-item {
+  margin-bottom: 6px;
+}
+
 </style>

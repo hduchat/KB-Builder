@@ -244,7 +244,6 @@ class Dataset(APIView):
             - 1: 表示文档结构改写
             """
             process_type = request.data.get('process_type', 0)  # 获取process_type参数, 默认为0
-            print("Received process_type:", process_type, type(process_type))
 
             return result.success(DataSetSerializers.generate_qa(
                 data={'dataset_id': dataset_id,

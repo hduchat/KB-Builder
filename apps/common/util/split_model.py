@@ -282,9 +282,11 @@ class SplitModel:
     def __init__(self, content_level_pattern, with_filter=True, limit=1024, overlap=512):
         self.content_level_pattern = content_level_pattern
         self.with_filter = with_filter
-        if limit is None or limit > 1024:
+        if limit is None:
             limit = 1024
-        if limit < 256:
+        elif limit > 4096:
+            limit = 4096
+        elif limit < 256:
             limit = 256
         self.limit = limit
 

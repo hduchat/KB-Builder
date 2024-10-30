@@ -37,7 +37,7 @@ const getDataset: (
         }
  */
 
-const getchildDatasetid: (dataset_id: string, loading?: Ref<boolean>) => Promise<Result<any>> = (
+const getChildDatasetid: (dataset_id: string, loading?: Ref<boolean>) => Promise<Result<any>> = (
   dataset_id,
   loading
 ) => {
@@ -215,7 +215,7 @@ export default {
   postWebDataset,
   putSyncWebDataset,
   postfatherDataset,
-  getchildDatasetid,
+  getChildDatasetid,
   getDatasetDocuments,
   postDatasetQA
 }
