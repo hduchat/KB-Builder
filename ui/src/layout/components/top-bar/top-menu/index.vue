@@ -1,11 +1,6 @@
 <template>
   <div class="top-menu-container flex align-center h-full">
-    <MenuItem
-      :menu="menu"
-      v-hasPermission="menu.meta?.permission"
-      v-for="(menu, index) in topMenuList"
-      :key="index"
-    >
+    <MenuItem :menu="menu" v-hasPermission="menu.meta?.permission" v-for="(menu, index) in topMenuList" :key="index">
     </MenuItem>
   </div>
 </template>
@@ -15,9 +10,7 @@ import { getChildRouteListByPathAndName } from '@/router/index'
 import MenuItem from './MenuItem.vue'
 
 const topMenuList = computed(() => {
-  return getChildRouteListByPathAndName('/', 'home')
+  return getChildRouteListByPathAndName('/home', 'home')
 })
 </script>
-<style lang="scss" scope>
-
-</style>
+<style lang="scss" scope></style>

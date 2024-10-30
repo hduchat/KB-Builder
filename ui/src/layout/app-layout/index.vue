@@ -25,6 +25,7 @@ import { TopBar, AppMain } from '../components'
   box-sizing: border-box;
   overflow: auto;
 }
+
 .app-header {
   background: var(--app-header-bg-color);
   position: fixed;
