@@ -6,15 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c7dd2354-3fb8-4f18-a951-8ea1845cf5e3" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/util/split_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/util/split_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dataset/serializers/dataset_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/serializers/dataset_serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataset/views/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/views/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/api/dataset.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/api/dataset.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/stores/modules/dataset.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/stores/modules/dataset.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/application/CreateAndSetting.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/application/CreateAndSetting.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepFirst.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepFirst.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepSecond.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepSecond.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/doc_rewrite/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/doc_rewrite/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -40,7 +33,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/wcm/程序项目/开发/KB-Builder/apps/setting/sql&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -120,6 +113,12 @@
       <workItem from="1729653207366" duration="6510000" />
       <workItem from="1729736447028" duration="5469000" />
       <workItem from="1730031042801" duration="1334000" />
+      <workItem from="1730354818628" duration="1300000" />
+      <workItem from="1730356139910" duration="2106000" />
+      <workItem from="1730358263667" duration="686000" />
+      <workItem from="1730359976650" duration="6943000" />
+      <workItem from="1730705338825" duration="5147000" />
+      <workItem from="1730720351495" duration="1850000" />
     </task>
     <servers />
   </component>

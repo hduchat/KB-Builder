@@ -898,6 +898,8 @@ class DataSetSerializers(serializers.ModelSerializer):
             "客户端类型"))
         process_type = serializers.CharField(default=0, required=False, error_messages=ErrMessage.char(
             "处理方式"))
+        file_type = serializers.CharField(required=False, error_messages=ErrMessage.char(
+            "处理文件类型"))
 
         def is_valid(self, *, raise_exception=True):
             super().is_valid(raise_exception=True)
@@ -922,22 +924,29 @@ class DataSetSerializers(serializers.ModelSerializer):
         def generate_qa_database(self, instance: Dict):
 
             self.is_valid()
+            # 获取数据库id，用户id以及数据库具体信息
             dataset_id = self.data.get('dataset_id')
             user_id = self.data.get('user_id')
             dataset_detail = DataSetSerializers.Operate(data={'id': dataset_id, 'user_id': user_id}).one(
                 user_id=user_id)
-            # 获取数据库id，用户id以及数据库具体信息
+            child_id = dataset_detail['child_id']
+            file_type = self.validated_data['file_type']
 
             chat_instance = self._create_chat_instance(instance, dataset_detail['app_id'])
             chat_id = ChatSerializers.OpenTempChat(data={**chat_instance, 'user_id': user_id}
                                                    ).open()
             # 制作用于问答生成的chat
-
-            ParagraphSerializer = ParagraphSerializers.Query(
-                data={**instance, 'dataset_id': dataset_id,
-                      'document_id': instance['document_id']})
-            ParagraphSerializer.is_valid(raise_exception=True)
-            slice_list = ParagraphSerializer.list()
+            if file_type == '0':
+                paragraphSerializer = ParagraphSerializers.Query(
+                    data={**instance, 'dataset_id': dataset_id,
+                          'document_id': instance['document_id']})
+            elif file_type == '1':
+                paragraphSerializer = ParagraphSerializers.Query(
+                    data={**instance, 'dataset_id': child_id,
+                          'document_id': instance['document_id']})
+            paragraphSerializer.is_valid(raise_exception=True)
+            slice_list = paragraphSerializer.list()
+            print("*********slice_list", slice_list)
             # 获得文件的切片列表
 
             do_serializers = DocumentSerializers.Operate(

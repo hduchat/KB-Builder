@@ -242,14 +242,20 @@ class Dataset(APIView):
             process_type 参数解释：
             - 0: 表示问答文件生成
             - 1: 表示文档结构改写
+
+            file_type 参数解释:
+            - 0: 处理文件类型是未处理的文件
+            - 1: 处理文件类型是已处理过的文件
             """
             process_type = request.data.get('process_type', 0)  # 获取process_type参数, 默认为0
+            file_type = request.data.get('fileType', 0)
 
             return result.success(DataSetSerializers.generate_qa(
                 data={'dataset_id': dataset_id,
                       'user_id': request.user.id,
                       'client_id': request.auth.client_id,
                       'client_type': request.auth.client_type,
-                      'process_type': process_type
+                      'process_type': process_type,
+                      'file_type': file_type
                       }
             ).generate_qa_database(request.data))
