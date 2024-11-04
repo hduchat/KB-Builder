@@ -13,28 +13,16 @@
 
     <div class="flex-center avatar">
       <el-tooltip effect="dark" :content="$t('layout.topbar.github')" placement="top">
-        <AppIcon
-          iconName="app-github"
-          class="cursor color-secondary mr-8 ml-8"
-          style="font-size: 20px"
-          @click="toUrl('https://github.com/hduchat/KB-Builder')"
-        ></AppIcon>
+        <AppIcon iconName="app-github" class="cursor color-secondary mr-8 ml-8" style="font-size: 20px"
+          @click="toUrl('https://github.com/hduchat/KB-Builder')"></AppIcon>
       </el-tooltip>
       <el-tooltip effect="dark" :content="$t('layout.topbar.wiki')" placement="top">
-        <AppIcon
-          iconName="app-reading"
-          class="cursor color-secondary mr-8 ml-8"
-          style="font-size: 20px"
-          @click="toUrl('https://github.com/hduchat/KB-Builder/wiki/%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D')"
-        ></AppIcon>
+        <AppIcon iconName="app-reading" class="cursor color-secondary mr-8 ml-8" style="font-size: 20px"
+          @click="toUrl('https://github.com/hduchat/KB-Builder/wiki/%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D')"></AppIcon>
       </el-tooltip>
       <el-tooltip effect="dark" :content="$t('layout.topbar.forum')" placement="top">
-        <AppIcon
-          iconName="app-help"
-          class="cursor color-secondary mr-16 ml-8"
-          style="font-size: 20px"
-          @click="toUrl('https://github.com/hduchat/KB-Builder/wiki')"
-        ></AppIcon>
+        <AppIcon iconName="app-help" class="cursor color-secondary mr-16 ml-8" style="font-size: 20px"
+          @click="toUrl('https://github.com/hduchat/KB-Builder/wiki')"></AppIcon>
       </el-tooltip>
       <Avatar></Avatar>
     </div>
