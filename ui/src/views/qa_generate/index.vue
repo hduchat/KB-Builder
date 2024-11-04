@@ -7,7 +7,7 @@
           <el-form ref="FormRef" :model="applicationForm" :rules="rules" label-position="top"
             require-asterisk-position="right">
             <el-form-item label="文件类型" required>
-              <el-radio-group v-model="fileType" class="card__radio" @change="handleFileTypeChange">
+              <el-radio-group v-model="applicationForm.fileType" class="card__radio" @change="handleFileTypeChange">
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '0' ? 'active' : ''">
@@ -205,8 +205,9 @@ const applicationForm = ref({
   document_id: '',
   model_id: '',
   prompt: '',
-  cueWord:'',
-  process_type: ''
+  cueWord: '',
+  process_type: '',
+  fileType: '0'
 })
 
 const rules = reactive({
@@ -284,7 +285,7 @@ const getProcessedDocuments = async () => {
     }
   });
 };
-const fileType = ref('0'); // 默认选择 "未处理的文件"
+const fileType = computed(() => applicationForm.value.fileType);
 const handleFileTypeChange = () => {
   applicationForm.value.document_id = '';
   if (fileType.value === '0') {
