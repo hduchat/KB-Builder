@@ -206,6 +206,7 @@ const applicationForm = ref({
   model_id: '',
   prompt: '',
   cueWord: '',
+  keyword: '',
   process_type: '',
   fileType: '0'
 })
@@ -214,6 +215,7 @@ const rules = reactive({
   document_id: [{ required: true, message: '请选择文档', trigger: 'blur' }],
   model_id: [{ required: true, message: '请选择AI模型', trigger: 'blur' }],
   prompt: [{ required: true, message: '请输入详细关键词', trigger: 'blur' }],
+  keyword: [{ required: true, message: '请输入关键词', trigger: 'blur' }]
 })
 
 
@@ -302,8 +304,8 @@ const currentPromptGroup = computed(() => {
 
 // 切换生成类型后清空部分内容
 const handleGenerationTypeChange = () => {
-  applicationForm.value.keyword = null;
-  applicationForm.value.cueWord = null;
+  applicationForm.value.keyword = '';
+  applicationForm.value.cueWord = '';
   applicationForm.value.prompt = '';
 };
 
@@ -319,7 +321,7 @@ const onSubmit = async (form: any) => {
   await form.validate(async (valid: any, fields: any) => {
     if (valid) {
       generating.value = true; // 设置 generating 为 true
-      applicationForm.value.process_type = 0;  // 设置处理方式为0
+      applicationForm.value.process_type = '0';  // 设置处理方式为0
 
       // 跳转到【结果文件】(有bug)
       // await router.push({ path: `/dataset/${id}/document` });

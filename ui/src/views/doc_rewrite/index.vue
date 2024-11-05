@@ -273,7 +273,7 @@ const onSubmit = async (form: any) => {
   await form.validate(async (valid: any, fields: any) => {
     if (valid) {
       generating.value = true; // 设置 generating 为 true
-      applicationForm.value.process_type = 1;  // 设置处理方式为1，即文档重写
+      applicationForm.value.process_type = '1';  // 设置处理方式为1，即文档重写
 
       // await router.push({ path: `/dataset/${id}/document` });  // 跳转到【结果文档】界面
       dataset.asyncPostDatasetQA(id, applicationForm.value, loading)
