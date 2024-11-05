@@ -120,7 +120,7 @@ function submit1() {
   if (StepSecondRef.value?.radio === '3') {
     Object.keys(StepSecondRef.value?.form).forEach((key) => {
       if (key == 'patterns') {
-        StepSecondRef.value?.form.patterns.forEach((item) => fd.append('patterns', item))
+        StepSecondRef.value?.form.patterns.forEach((item: string) => fd.append('patterns', item))
       } else {
         fd.append(key, StepSecondRef.value?.form[key])
       }
