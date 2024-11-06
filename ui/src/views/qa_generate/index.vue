@@ -7,7 +7,7 @@
           <el-form ref="FormRef" :model="applicationForm" :rules="rules" label-position="top"
             require-asterisk-position="right">
             <el-form-item label="文件类型" required>
-              <el-radio-group v-model="fileType" class="card__radio" @change="handleFileTypeChange">
+              <el-radio-group v-model="applicationForm.fileType" class="card__radio" @change="handleFileTypeChange">
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '0' ? 'active' : ''">
@@ -205,14 +205,17 @@ const applicationForm = ref({
   document_id: '',
   model_id: '',
   prompt: '',
-  cueWord:'',
-  process_type: ''
+  cueWord: '',
+  keyword: '',
+  process_type: '',
+  fileType: '0'
 })
 
 const rules = reactive({
   document_id: [{ required: true, message: '请选择文档', trigger: 'blur' }],
   model_id: [{ required: true, message: '请选择AI模型', trigger: 'blur' }],
   prompt: [{ required: true, message: '请输入详细关键词', trigger: 'blur' }],
+  keyword: [{ required: true, message: '请输入关键词', trigger: 'blur' }]
 })
 
 
@@ -284,7 +287,7 @@ const getProcessedDocuments = async () => {
     }
   });
 };
-const fileType = ref('0'); // 默认选择 "未处理的文件"
+const fileType = computed(() => applicationForm.value.fileType);
 const handleFileTypeChange = () => {
   applicationForm.value.document_id = '';
   if (fileType.value === '0') {
@@ -301,8 +304,8 @@ const currentPromptGroup = computed(() => {
 
 // 切换生成类型后清空部分内容
 const handleGenerationTypeChange = () => {
-  applicationForm.value.keyword = null;
-  applicationForm.value.cueWord = null;
+  applicationForm.value.keyword = '';
+  applicationForm.value.cueWord = '';
   applicationForm.value.prompt = '';
 };
 
@@ -318,7 +321,7 @@ const onSubmit = async (form: any) => {
   await form.validate(async (valid: any, fields: any) => {
     if (valid) {
       generating.value = true; // 设置 generating 为 true
-      applicationForm.value.process_type = 0;  // 设置处理方式为0
+      applicationForm.value.process_type = '0';  // 设置处理方式为0
 
       // 跳转到【结果文件】(有bug)
       // await router.push({ path: `/dataset/${id}/document` });
