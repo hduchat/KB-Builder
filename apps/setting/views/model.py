@@ -102,6 +102,19 @@ class Model(APIView):
             return result.success(
                 ModelSerializer.Operate(data={'id': model_id, 'user_id': request.user.id}).one(with_valid=True))
 
+class Model_info(APIView):
+    authentication_classes = [TokenAuth]
+
+    @action(methods=['POST'], detail=False)
+    @swagger_auto_schema(operation_summary="修改本地模型",
+                         operation_id="修改本地模型",
+                         request_body=ModelCreateApi.get_request_body_api()
+        , tags=["模型"])
+    @has_permissions(PermissionConstants.MODEL_CREATE)
+    def post(self, request: Request):
+        return result.success(
+            ModelSerializer.Operate(data={'id': request.data["id"], 'user_id': request.user.id}).embedding_cache(with_valid=True))
+
 
 class Provide(APIView):
     authentication_classes = [TokenAuth]

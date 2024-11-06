@@ -54,14 +54,20 @@ class OpenAILLMModelCredential(BaseForm, BaseModelCredential):
 
 qwen_model_credential = OpenAILLMModelCredential()
 
-model_dict = {
-    'qwen-turbo': ModelInfo('qwen-turbo', '', ModelTypeConst.LLM, qwen_model_credential),
-    'qwen-plus': ModelInfo('qwen-plus', '', ModelTypeConst.LLM, qwen_model_credential),
-    'qwen-max': ModelInfo('qwen-max', '', ModelTypeConst.LLM, qwen_model_credential)
-}
-
+# model_dict = {
+#     'qwen-turbo': ModelInfo('qwen-turbo', '', ModelTypeConst.LLM, qwen_model_credential),
+#     'qwen-plus': ModelInfo('qwen-plus', '', ModelTypeConst.LLM, qwen_model_credential),
+#     'qwen-max': ModelInfo('qwen-max', '', ModelTypeConst.LLM, qwen_model_credential)
+# }
+module_info_list = [
+    ModelInfo('qwen-turbo', '', ModelTypeConst.LLM, qwen_model_credential, QwenChatModel),
+    ModelInfo('qwen-plus', '', ModelTypeConst.LLM, qwen_model_credential, QwenChatModel),
+    ModelInfo('qwen-max', '', ModelTypeConst.LLM, qwen_model_credential, QwenChatModel)
+]
 
 class QwenModelProvider(IModelProvider):
+    def get_model_info_manage(self):
+        return model_info_manage
 
     def get_dialogue_number(self):
         return 3
