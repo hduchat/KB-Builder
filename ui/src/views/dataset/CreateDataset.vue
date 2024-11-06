@@ -134,10 +134,13 @@ function submit1() {
   }  
 
   if (StepSecondRef.value?.Extract_pic) {  
-    fd.append('extract_pic', 'true');   
+    fd.append('extract_pic', 'true');  
   } else {  
     fd.append('extract_pic', 'false');   
   }  
+
+
+  //fd.append('extract_pic', 'true');  
 
   const obj = { ...baseInfo.value,  } as datasetData
   if (id) { // 存在id，上传文档  
