@@ -54,19 +54,20 @@ class GeminiLLMModelCredential(BaseForm, BaseModelCredential):
 
 gemini_llm_model_credential = GeminiLLMModelCredential()
 
-model_dict = {
-    'gemini-1.0-pro': ModelInfo('gemini-1.0-pro', '最新的Gemini 1.0 Pro模型，随Google更新而更新',
+gemini_1_pro = ModelInfo('gemini-1.0-pro', '最新的Gemini 1.0 Pro模型，随Google更新而更新',
+                         ModelTypeConst.LLM,
+                         gemini_llm_model_credential,
+                         GeminiChatModel)
+
+gemini_1_pro_vision = ModelInfo('gemini-1.0-pro-vision', '最新的Gemini 1.0 Pro Vision模型，随Google更新而更新',
                                 ModelTypeConst.LLM,
                                 gemini_llm_model_credential,
-                                ),
-    'gemini-1.0-pro-vision': ModelInfo('gemini-1.0-pro-vision', '最新的Gemini 1.0 Pro Vision模型，随Google更新而更新',
-                                       ModelTypeConst.LLM,
-                                       gemini_llm_model_credential,
-                                       ),
-}
+                                GeminiChatModel)
 
 
 class GeminiModelProvider(IModelProvider):
+    def get_model_info_manage(self):
+        return model_info_manage
 
     def get_dialogue_number(self):
         return 3

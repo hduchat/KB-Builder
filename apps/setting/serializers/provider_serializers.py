@@ -10,8 +10,10 @@ import json
 import threading
 import time
 import uuid
+import re
+from django.core.cache import caches   
 from typing import Dict
-
+from django.core import validators
 from django.db.models import QuerySet
 from rest_framework import serializers
 
@@ -22,8 +24,8 @@ from common.util.rsa_util import rsa_long_decrypt, rsa_long_encrypt
 from setting.models.model_management import Model, Status
 from setting.models_provider.base_model_provider import ValidCode, DownModelChunkStatus
 from setting.models_provider.constants.model_provider_constants import ModelProvideConstants
-
-
+from smartdoc.const import CONFIG
+model_cache = caches['model_cache']
 class ModelPullManage:
 
     @staticmethod
@@ -139,19 +141,22 @@ class ModelSerializer(serializers.Serializer):
 
         credential = serializers.DictField(required=True, error_messages=ErrMessage.dict("认证信息"))
 
+        permission_type = serializers.CharField(default="PUBLIC", error_messages=ErrMessage.char("权限"), validators=[
+            validators.RegexValidator(regex=re.compile("^PUBLIC|PRIVATE$"),
+                                      message="权限只支持PUBLIC|PRIVATE", code=500)
+        ])
+
         def is_valid(self, *, raise_exception=False):
             super().is_valid(raise_exception=True)
             if QuerySet(Model).filter(user_id=self.data.get('user_id'),
                                       name=self.data.get('name')).exists():
                 raise AppApiException(500, f'模型名称【{self.data.get("name")}】已存在')
             # 校验模型认证数据
-            ModelProvideConstants[self.data.get('provider')].value.get_model_credential(self.data.get('model_type'),
-                                                                                        self.data.get(
-                                                                                            'model_name')).is_valid(
-                self.data.get('model_type'),
-                self.data.get('model_name'),
-                self.data.get('credential'),
-                raise_exception=True)
+            ModelProvideConstants[self.data.get('provider')].value.is_valid_credential(self.data.get('model_type'),
+                                                                                       self.data.get('model_name'),
+                                                                                       self.data.get('credential'),
+                                                                                       raise_exception=True
+                                                                                       )
 
         def insert(self, user_id, with_valid=False):
             status = Status.SUCCESS
@@ -168,10 +173,11 @@ class ModelSerializer(serializers.Serializer):
             provider = self.data.get('provider')
             model_type = self.data.get('model_type')
             model_name = self.data.get('model_name')
+            permission_type = "PUBLIC"
             model_credential_str = json.dumps(credential)
             model = Model(id=uuid.uuid1(), status=status, user_id=user_id, name=name,
                           credential=rsa_long_encrypt(model_credential_str),
-                          provider=provider, model_type=model_type, model_name=model_name)
+                          provider=provider, model_type=model_type, model_name=model_name,permission_type=permission_type)
             model.save()
             if status == Status.DOWNLOAD:
                 thread = threading.Thread(target=ModelPullManage.pull, args=(model, credential))
@@ -205,6 +211,31 @@ class ModelSerializer(serializers.Serializer):
                 self.is_valid(raise_exception=True)
             model = QuerySet(Model).get(id=self.data.get('id'), user_id=self.data.get('user_id'))
             return ModelSerializer.model_to_dict(model)
+        def cache_attributes(self,obj, attributes):  
+            cached_data = {}  
+            for attr in attributes:  
+                value = getattr(obj, attr, None)  
+                if value is not None:  
+                    cached_data[attr] = value  
+            return cached_data
+        def embedding_cache(self,with_valid=False):
+            if with_valid:
+                self.is_valid(raise_exception=True)
+                model = QuerySet(Model).filter(id=self.data.get("id"), user_id=self.data.get("user_id")).first()
+                attributes_to_cache = ["name", "id","model_type","model_name","user_id","provider"] 
+                model_cache.set('model_cache',self.cache_attributes(model,attributes_to_cache))
+                model_info = model_cache.get("model_cache")  
+                print(CONFIG["EMBEDDING_MODEL_NAME"],1)
+                if model_info is not None and "model_name" in model_info :
+                    CONFIG["EMBEDDING_MODEL_NAME"]  = model_info["model_name"] 
+                print(CONFIG["EMBEDDING_MODEL_NAME"],2)
+                return self.cache_attributes(model,attributes_to_cache)
+                
+
+
+            
+            
+
 
         def one_meta(self, with_valid=False):
             if with_valid:
@@ -240,7 +271,7 @@ class ModelSerializer(serializers.Serializer):
                     model_credential.is_valid(
                         model.model_type,
                         instance.get("model_name"),
-                        credential,
+                        credential, provider,
                         raise_exception=True)
                 except AppApiException as e:
                     if e.code == ValidCode.model_not_fount:

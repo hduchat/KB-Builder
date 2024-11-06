@@ -8,9 +8,10 @@
 """
 # from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
-
+from django.core.cache import caches 
 from smartdoc.const import CONFIG
 
+model_cache = caches['model_cache']
 
 class EmbeddingModel:
     instance = None
@@ -22,6 +23,7 @@ class EmbeddingModel:
         :return:
         """
         if EmbeddingModel.instance is None:
+            print(CONFIG.get("EMBEDDING_MODEL_NAME"),111333)
             model_name = CONFIG.get('EMBEDDING_MODEL_NAME')
             cache_folder = CONFIG.get('EMBEDDING_MODEL_PATH')
             device = CONFIG.get('EMBEDDING_DEVICE')
