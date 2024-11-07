@@ -7,7 +7,7 @@
           <el-form ref="FormRef" :model="applicationForm" :rules="rules" label-position="top"
             require-asterisk-position="right">
             <el-form-item label="文件类型" required>
-              <el-radio-group v-model="applicationForm.fileType" class="card__radio" @change="handleFileTypeChange">
+              <el-radio-group v-model="fileType" class="card__radio" @change="handleFileTypeChange">
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '0' ? 'active' : ''">
@@ -47,17 +47,17 @@
                 <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
-<!--            <el-form-item label="文档(预处理后的文件）" prop="document_id">-->
-<!--              <el-select v-model="applicationForm.document_id" filterable clearable placeholder="请选择文档">-->
-<!--                <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />-->
-<!--              </el-select>-->
-<!--            </el-form-item>-->
+            <!--            <el-form-item label="文档(预处理后的文件）" prop="document_id">-->
+            <!--              <el-select v-model="applicationForm.document_id" filterable clearable placeholder="请选择文档">-->
+            <!--                <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />-->
+            <!--              </el-select>-->
+            <!--            </el-form-item>-->
             <el-form-item label="AI模型" prop="model_id">
               <el-select v-model="applicationForm.model_id" clearable filterable placeholder="请选择AI模型">
                 <el-option-group v-for="(value, label) in modelOptions" :key="value"
                   :label="relatedObject(providerOptions, label, 'provider')?.name">
-                  <el-option v-for="item in value.filter((v: any) => v.status === 'SUCCESS')" :key="item.id"
-                    :label="item.name" :value="item.id" class="flex-between">
+                  <el-option v-for="item in value.filter((v: any) => v.status === 'SUCCESS' && v.model_type === 'LLM')"
+                    :key="item.id" :label="item.name" :value="item.id" class="flex-between">
                     <div class="flex">
                       <span v-html="relatedObject(providerOptions, label, 'provider')?.icon"
                         class="model-icon mr-8"></span>
@@ -96,11 +96,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="提示词" prop="cueWord">
-              <el-select
-                v-model="applicationForm.cueWord"
-                clearable
-                filterable
-                placeholder="请选择提示词"
+              <el-select v-model="applicationForm.cueWord" clearable filterable placeholder="请选择提示词"
                 value-key="cueWord">
                 <el-option v-for="item in promptGroup" :label="item.cueWord" :value="item"
                   @click="applicationForm.prompt = item.prompt" />
@@ -135,7 +131,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, onMounted, computed } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import CreateModelDialog from '@/views/template/component/CreateModelDialog.vue'
 import SelectProviderDialog from '@/views/template/component/SelectProviderDialog.vue'
@@ -154,7 +150,7 @@ const AIModelArr = ref([])
 const documentArr = ref<any>([])
 const loading = ref(false)
 const { model } = useStore()
-const router = useRouter();  
+const router = useRouter();
 
 const route = useRoute()
 const {
@@ -171,9 +167,8 @@ const applicationForm = ref({
   document_id: '',
   model_id: '',
   prompt: '',
-  cueWord: '',
-  process_type: '',
-  fileType: '0'
+  process_type: 0,
+  cueWord: ''
 })
 
 const rules = reactive({
@@ -251,7 +246,7 @@ const getProcessedDocuments = async () => {
     }
   });
 };
-const fileType = computed(() => applicationForm.value.fileType);
+const fileType = ref('0'); // 默认选择 "未处理的文件"
 const handleFileTypeChange = () => {
   applicationForm.value.document_id = '';
   if (fileType.value === '0') {
@@ -273,7 +268,7 @@ const onSubmit = async (form: any) => {
   await form.validate(async (valid: any, fields: any) => {
     if (valid) {
       generating.value = true; // 设置 generating 为 true
-      applicationForm.value.process_type = '1';  // 设置处理方式为1，即文档重写
+      applicationForm.value.process_type = 1;  // 设置处理方式为1，即文档重写
 
       // await router.push({ path: `/dataset/${id}/document` });  // 跳转到【结果文档】界面
       dataset.asyncPostDatasetQA(id, applicationForm.value, loading)
@@ -324,5 +319,4 @@ onMounted(() => {
 .el-form-item {
   margin-bottom: 6px;
 }
-
 </style>
