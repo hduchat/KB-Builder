@@ -15,7 +15,7 @@ from common import forms
 from common.exception.app_exception import AppApiException
 from common.forms import BaseForm
 from common.util.file_util import get_file_content
-from setting.models_provider.base_model_provider import IModelProvider, ModelProvideInfo, BaseModelCredential, \
+from setting.models_provider.base_model_provider import IModelProvider,ModelInfoManage, ModelProvideInfo, BaseModelCredential, \
     ModelInfo, \
     ModelTypeConst, ValidCode
 from setting.models_provider.impl.azure_model_provider.model.azure_chat_model import AzureChatModel
@@ -62,15 +62,17 @@ class DefaultAzureLLMModelCredential(BaseForm, BaseModelCredential):
 
 base_azure_llm_model_credential = DefaultAzureLLMModelCredential()
 
-model_dict = {
-    'deployment_name': ModelInfo('Azure OpenAI', '具体的基础模型由部署名决定', ModelTypeConst.LLM,
-                                 base_azure_llm_model_credential, api_version='2024-02-15-preview'
-                                 )
-}
+default_model_info = ModelInfo('Azure OpenAI', '具体的基础模型由部署名决定', ModelTypeConst.LLM,
+                               base_azure_llm_model_credential, AzureChatModel, api_version='2024-02-15-preview'
+                               )
 
+model_info_manage = ModelInfoManage.builder().append_default_model_info(default_model_info).append_model_info(
+    default_model_info).build()
 
 class AzureModelProvider(IModelProvider):
 
+    def get_model_info_manage(self):
+        return model_info_manage
     def get_dialogue_number(self):
         return 3
 

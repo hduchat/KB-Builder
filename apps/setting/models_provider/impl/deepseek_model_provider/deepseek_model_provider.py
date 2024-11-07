@@ -54,17 +54,18 @@ class DeepSeekLLMModelCredential(BaseForm, BaseModelCredential):
 
 deepseek_llm_model_credential = DeepSeekLLMModelCredential()
 
-model_dict = {
-    'deepseek-chat': ModelInfo('deepseek-chat', '擅长通用对话任务，支持 32K 上下文', ModelTypeConst.LLM,
-                               deepseek_llm_model_credential,
-                               ),
-    'deepseek-coder': ModelInfo('deepseek-coder', '擅长处理编程任务，支持 16K 上下文', ModelTypeConst.LLM,
-                                deepseek_llm_model_credential,
-                                ),
-}
+deepseek_chat = ModelInfo('deepseek-chat', '擅长通用对话任务，支持 32K 上下文', ModelTypeConst.LLM,
+                          deepseek_llm_model_credential, DeepSeekChatModel
+                          )
+
+deepseek_coder = ModelInfo('deepseek-coder', '擅长处理编程任务，支持 16K 上下文', ModelTypeConst.LLM,
+                           deepseek_llm_model_credential,
+                           DeepSeekChatModel)
 
 
 class DeepSeekModelProvider(IModelProvider):
+    def get_model_info_manage(self):
+        return model_info_manage
 
     def get_dialogue_number(self):
         return 3

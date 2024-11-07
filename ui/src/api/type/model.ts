@@ -60,7 +60,7 @@ interface Model {
   /**
    * 认证信息
    */
-  credential: any
+  credential?: any
   /**
    * 供应商
    */
