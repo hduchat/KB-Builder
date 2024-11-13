@@ -15,7 +15,18 @@ import type { FormField } from '@/components/dynamics-form/type'
 import type { KeyValue } from './type/common'
 const prefix = '/model'
 const prefix_provider = '/provider'
-
+/**
+ * 提交本地模型
+ * @param request 请求对象
+ * @param loading 加载器
+ * @returns
+ */
+const postLocalModel: (request: Model, loading?: Ref<boolean>) => Promise<Result<Array<Model>>> = (
+  request,
+  loading
+) => {
+  return post('/model_info', request, {}, loading)
+}
 /**
  * 获得模型列表
  * @params 参数 name, model_type, model_name
@@ -138,6 +149,7 @@ const deleteModel: (model_id: string, loading?: Ref<boolean>) => Promise<Result<
   return del(`${prefix}/${model_id}`, undefined, {}, loading)
 }
 export default {
+  postLocalModel,
   getModel,
   getProvider,
   getModelCreateForm,

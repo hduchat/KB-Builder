@@ -61,42 +61,36 @@ class WenxinLLMModelCredential(BaseForm, BaseModelCredential):
 
 
 win_xin_llm_model_credential = WenxinLLMModelCredential()
-model_dict = {
-    'ERNIE-Bot-4': ModelInfo('ERNIE-Bot-4',
+
+model_info_list = [ModelInfo('ERNIE-Bot-4',
                              'ERNIE-Bot-4是百度自行研发的大语言模型，覆盖海量中文数据，具有更强的对话问答、内容创作生成等能力。',
-                             ModelTypeConst.LLM, win_xin_llm_model_credential),
-
-    'ERNIE-Bot': ModelInfo('ERNIE-Bot',
-                           'ERNIE-Bot是百度自行研发的大语言模型，覆盖海量中文数据，具有更强的对话问答、内容创作生成等能力。',
-                           ModelTypeConst.LLM, win_xin_llm_model_credential),
-
-    'ERNIE-Bot-turbo': ModelInfo('ERNIE-Bot-turbo',
-                                 'ERNIE-Bot-turbo是百度自行研发的大语言模型，覆盖海量中文数据，具有更强的对话问答、内容创作生成等能力，响应速度更快。',
-                                 ModelTypeConst.LLM, win_xin_llm_model_credential),
-
-    'BLOOMZ-7B': ModelInfo('BLOOMZ-7B',
-                           'BLOOMZ-7B是业内知名的大语言模型，由BigScience研发并开源，能够以46种语言和13种编程语言输出文本。',
-                           ModelTypeConst.LLM, win_xin_llm_model_credential),
-
-    'Llama-2-7b-chat': ModelInfo('Llama-2-7b-chat',
-                                 'Llama-2-7b-chat由Meta AI研发并开源，在编码、推理及知识应用等场景表现优秀，Llama-2-7b-chat是高性能原生开源版本，适用于对话场景。',
-                                 ModelTypeConst.LLM, win_xin_llm_model_credential),
-
-    'Llama-2-13b-chat': ModelInfo('Llama-2-13b-chat',
-                                  'Llama-2-13b-chat由Meta AI研发并开源，在编码、推理及知识应用等场景表现优秀，Llama-2-13b-chat是性能与效果均衡的原生开源版本，适用于对话场景。',
-                                  ModelTypeConst.LLM, win_xin_llm_model_credential),
-
-    'Llama-2-70b-chat': ModelInfo('Llama-2-70b-chat',
-                                  'Llama-2-70b-chat由Meta AI研发并开源，在编码、推理及知识应用等场景表现优秀，Llama-2-70b-chat是高精度效果的原生开源版本。',
-                                  ModelTypeConst.LLM, win_xin_llm_model_credential),
-
-    'Qianfan-Chinese-Llama-2-7B': ModelInfo('Qianfan-Chinese-Llama-2-7B',
-                                            '千帆团队在Llama-2-7b基础上的中文增强版本，在CMMLU、C-EVAL等中文知识库上表现优异。',
-                                            ModelTypeConst.LLM, win_xin_llm_model_credential)
-}
-
+                             ModelTypeConst.LLM, win_xin_llm_model_credential, QianfanChatModel),
+                   ModelInfo('ERNIE-Bot',
+                             'ERNIE-Bot是百度自行研发的大语言模型，覆盖海量中文数据，具有更强的对话问答、内容创作生成等能力。',
+                             ModelTypeConst.LLM, win_xin_llm_model_credential, QianfanChatModel),
+                   ModelInfo('ERNIE-Bot-turbo',
+                             'ERNIE-Bot-turbo是百度自行研发的大语言模型，覆盖海量中文数据，具有更强的对话问答、内容创作生成等能力，响应速度更快。',
+                             ModelTypeConst.LLM, win_xin_llm_model_credential, QianfanChatModel),
+                   ModelInfo('BLOOMZ-7B',
+                             'BLOOMZ-7B是业内知名的大语言模型，由BigScience研发并开源，能够以46种语言和13种编程语言输出文本。',
+                             ModelTypeConst.LLM, win_xin_llm_model_credential, QianfanChatModel),
+                   ModelInfo('Llama-2-7b-chat',
+                             'Llama-2-7b-chat由Meta AI研发并开源，在编码、推理及知识应用等场景表现优秀，Llama-2-7b-chat是高性能原生开源版本，适用于对话场景。',
+                             ModelTypeConst.LLM, win_xin_llm_model_credential, QianfanChatModel),
+                   ModelInfo('Llama-2-13b-chat',
+                             'Llama-2-13b-chat由Meta AI研发并开源，在编码、推理及知识应用等场景表现优秀，Llama-2-13b-chat是性能与效果均衡的原生开源版本，适用于对话场景。',
+                             ModelTypeConst.LLM, win_xin_llm_model_credential, QianfanChatModel),
+                   ModelInfo('Llama-2-70b-chat',
+                             'Llama-2-70b-chat由Meta AI研发并开源，在编码、推理及知识应用等场景表现优秀，Llama-2-70b-chat是高精度效果的原生开源版本。',
+                             ModelTypeConst.LLM, win_xin_llm_model_credential, QianfanChatModel),
+                   ModelInfo('Qianfan-Chinese-Llama-2-7B',
+                             '千帆团队在Llama-2-7b基础上的中文增强版本，在CMMLU、C-EVAL等中文知识库上表现优异。',
+                             ModelTypeConst.LLM, win_xin_llm_model_credential, QianfanChatModel)
+                   ]
 
 class WenxinModelProvider(IModelProvider):
+    def get_model_info_manage(self):
+        return model_info_manage
 
     def get_dialogue_number(self):
         return 2

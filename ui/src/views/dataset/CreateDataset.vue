@@ -120,7 +120,7 @@ function submit1() {
   if (StepSecondRef.value?.radio === '3') {
     Object.keys(StepSecondRef.value?.form).forEach((key) => {
       if (key == 'patterns') {
-        StepSecondRef.value?.form.patterns.forEach((item: string) => fd.append('patterns', item))
+        StepSecondRef.value?.form.patterns.forEach((item) => fd.append('patterns', item))
       } else {
         fd.append(key, StepSecondRef.value?.form[key])
       }
@@ -133,11 +133,12 @@ function submit1() {
     fd.append('use_ocr', 'false');   
   }  
 
-  if (StepSecondRef.value?.Extract_pic) {  
+  if (StepSecondRef.value?.extractPic) {  
     fd.append('extract_pic', 'true');   
   } else {  
     fd.append('extract_pic', 'false');   
   }  
+  
 
   const obj = { ...baseInfo.value,  } as datasetData
   if (id) { // 存在id，上传文档  

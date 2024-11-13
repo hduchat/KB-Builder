@@ -61,14 +61,20 @@ class XunFeiLLMModelCredential(BaseForm, BaseModelCredential):
 
 qwen_model_credential = XunFeiLLMModelCredential()
 
-model_dict = {
-    'generalv3.5': ModelInfo('generalv3.5', '', ModelTypeConst.LLM, qwen_model_credential),
-    'generalv3': ModelInfo('generalv3', '', ModelTypeConst.LLM, qwen_model_credential),
-    'generalv2': ModelInfo('generalv2', '', ModelTypeConst.LLM, qwen_model_credential)
-}
+# model_dict = {
+#     'generalv3.5': ModelInfo('generalv3.5', '', ModelTypeConst.LLM, qwen_model_credential),
+#     'generalv3': ModelInfo('generalv3', '', ModelTypeConst.LLM, qwen_model_credential),
+#     'generalv2': ModelInfo('generalv2', '', ModelTypeConst.LLM, qwen_model_credential)
+# }
+model_info_list = [ModelInfo('generalv3.5', '', ModelTypeConst.LLM, qwen_model_credential, XFChatSparkLLM),
+                   ModelInfo('generalv3', '', ModelTypeConst.LLM, qwen_model_credential, XFChatSparkLLM),
+                   ModelInfo('generalv2', '', ModelTypeConst.LLM, qwen_model_credential, XFChatSparkLLM)
+                   ]
 
 
 class XunFeiModelProvider(IModelProvider):
+    def get_model_info_manage(self):
+        return model_info_manage
 
     def get_dialogue_number(self):
         return 3

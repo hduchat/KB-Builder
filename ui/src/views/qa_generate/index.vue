@@ -7,7 +7,7 @@
           <el-form ref="FormRef" :model="applicationForm" :rules="rules" label-position="top"
             require-asterisk-position="right">
             <el-form-item label="文件类型" required>
-              <el-radio-group v-model="applicationForm.fileType" class="card__radio" @change="handleFileTypeChange">
+              <el-radio-group v-model="fileType" class="card__radio" @change="handleFileTypeChange">
                 <el-row :gutter="20">
                   <el-col :span="12">
                     <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '0' ? 'active' : ''">
@@ -57,8 +57,8 @@
               <el-select v-model="applicationForm.model_id" clearable filterable placeholder="请选择AI模型">
                 <el-option-group v-for="(value, label) in modelOptions" :key="value"
                   :label="relatedObject(providerOptions, label, 'provider')?.name">
-                  <el-option v-for="item in value.filter((v: any) => v.status === 'SUCCESS')" :key="item.id"
-                    :label="item.name" :value="item.id" class="flex-between">
+                  <el-option v-for="item in value.filter((v: any) => v.status === 'SUCCESS' && v.model_type === 'LLM')"
+                    :key="item.id" :label="item.name" :value="item.id" class="flex-between">
                     <div class="flex">
                       <span v-html="relatedObject(providerOptions, label, 'provider')?.icon"
                         class="model-icon mr-8"></span>
@@ -100,11 +100,7 @@
               <el-input v-model="applicationForm.keyword" placeholder="请输入关键词，系统将会侧重“关键词”的内容生成更多问答对" />
             </el-form-item>
             <el-form-item label="提示词" prop="cueWord">
-              <el-select
-                v-model="applicationForm.cueWord"
-                clearable
-                filterable
-                placeholder="请选择提示词"
+              <el-select v-model="applicationForm.cueWord" clearable filterable placeholder="请选择提示词"
                 value-key="cueWord">
                 <el-option v-for="item in currentPromptGroup" :label="item.cueWord" :value="item" @click="applicationForm.prompt = item.prompt" />
               </el-select>
@@ -248,16 +244,13 @@ const applicationForm = ref({
   model_id: '',
   prompt: '',
   cueWord: '',
-  keyword: '',
-  process_type: '',
-  fileType: '0'
+  process_type: ''
 })
 
 const rules = reactive({
   document_id: [{ required: true, message: '请选择文档', trigger: 'blur' }],
   model_id: [{ required: true, message: '请选择AI模型', trigger: 'blur' }],
   prompt: [{ required: true, message: '请输入详细关键词', trigger: 'blur' }],
-  keyword: [{ required: true, message: '请输入关键词', trigger: 'blur' }]
 })
 
 
@@ -289,7 +282,6 @@ function getModel() {
 const getApplicationId = async () => {
   await dataset.asyncGetDatasetDetail(id, loading).then((res: any) => {
     appId.value = res.data.app_id
-
   })
 }
 const openCreateModel = (provider?: Provider) => {
@@ -317,7 +309,7 @@ const getProcessedDocuments = async () => {
     }
   });
 };
-const fileType = computed(() => applicationForm.value.fileType);
+const fileType = ref('0'); // 默认选择 "未处理的文件"
 const handleFileTypeChange = () => {
   applicationForm.value.document_id = '';
   if (fileType.value === '0') {
@@ -334,8 +326,8 @@ const currentPromptGroup = computed(() => {
 
 // 切换生成类型后清空部分内容
 const handleGenerationTypeChange = () => {
-  applicationForm.value.keyword = '';
-  applicationForm.value.cueWord = '';
+  applicationForm.value.keyword = null;
+  applicationForm.value.cueWord = null;
   applicationForm.value.prompt = '';
 };
 
@@ -351,7 +343,7 @@ const onSubmit = async (form: any) => {
   await form.validate(async (valid: any, fields: any) => {
     if (valid) {
       generating.value = true; // 设置 generating 为 true
-      applicationForm.value.process_type = '0';  // 设置处理方式为0
+      applicationForm.value.process_type = 0;  // 设置处理方式为0
 
       // 跳转到【结果文件】(有bug)
       // await router.push({ path: `/dataset/${id}/document` });
@@ -412,5 +404,4 @@ onMounted(() => {
 .el-form-item {
   margin-bottom: 6px;
 }
-
 </style>

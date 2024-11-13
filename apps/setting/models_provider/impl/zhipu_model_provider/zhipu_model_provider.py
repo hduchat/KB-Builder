@@ -54,14 +54,15 @@ class ZhiPuLLMModelCredential(BaseForm, BaseModelCredential):
 
 qwen_model_credential = ZhiPuLLMModelCredential()
 
-model_dict = {
-    'glm-4': ModelInfo('glm-4', '', ModelTypeConst.LLM, qwen_model_credential),
-    'glm-4v': ModelInfo('glm-4v', '', ModelTypeConst.LLM, qwen_model_credential),
-    'glm-3-turbo': ModelInfo('glm-3-turbo', '', ModelTypeConst.LLM, qwen_model_credential)
-}
-
+model_info_list = [
+    ModelInfo('glm-4', '', ModelTypeConst.LLM, qwen_model_credential, ZhipuChatModel),
+    ModelInfo('glm-4v', '', ModelTypeConst.LLM, qwen_model_credential, ZhipuChatModel),
+    ModelInfo('glm-3-turbo', '', ModelTypeConst.LLM, qwen_model_credential, ZhipuChatModel)
+]
 
 class ZhiPuModelProvider(IModelProvider):
+    def get_model_info_manage(self):
+        return model_info_manage
 
     def get_dialogue_number(self):
         return 3

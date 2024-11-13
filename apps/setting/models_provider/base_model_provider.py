@@ -9,7 +9,9 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 from functools import reduce
-from typing import Dict, Iterator
+from typing import Dict, Iterator,Type,List
+
+from pydantic.v1 import BaseModel
 
 from langchain.chat_models.base import BaseChatModel
 
@@ -47,33 +49,42 @@ class DownModelChunk:
 
 
 class IModelProvider(ABC):
+    @abstractmethod
+    def get_model_info_manage(self):
+        pass
 
     @abstractmethod
     def get_model_provide_info(self):
         pass
 
-    @abstractmethod
-    def get_model_type_list(self):
-        pass
-
-    @abstractmethod
-    def get_model_list(self, model_type):
-        pass
-
-    @abstractmethod
-    def get_model_credential(self, model_type, model_name):
-        pass
-
-    @abstractmethod
-    def get_model(self, model_type, model_name, model_credential: Dict[str, object], **model_kwargs) -> BaseChatModel:
-        pass
-
-    @abstractmethod
-    def get_dialogue_number(self):
-        pass
 
     def down_model(self, model_type: str, model_name, model_credential: Dict[str, object]) -> Iterator[DownModelChunk]:
         raise AppApiException(500, "当前平台不支持下载模型")
+
+    def is_valid_credential(self, model_type, model_name, model_credential: Dict[str, object], raise_exception=False):
+        model_info = self.get_model_info_manage().get_model_info(model_type, model_name)
+        return model_info.model_credential.is_valid(model_type, model_name, model_credential, self,
+                                                    raise_exception)
+    def get_model_type_list(self):
+        return self.get_model_info_manage().get_model_type_list()
+
+    def get_model_list(self, model_type):
+        if model_type is None:
+            raise AppApiException(500, '模型类型不能为空')
+        
+        res = self.get_model_info_manage().get_model_list_by_model_type(model_type)
+        cleaned_model_list = [{key: value for key, value in model.items() if key != 'model_class'}  for model in res]  
+        return cleaned_model_list
+
+    def get_model_credential(self, model_type, model_name):
+        model_info = self.get_model_info_manage().get_model_info(model_type, model_name)
+        return model_info.model_credential
+    def get_model(self, model_type, model_name, model_credential: Dict[str, object], **model_kwargs) -> BaseModel:
+        model_info = self.get_model_info_manage().get_model_info(model_type, model_name)
+        return model_info.model_class.new_instance(model_type, model_name, model_credential, **model_kwargs)
+
+    def get_dialogue_number(self):
+        return 3
 
 
 class BaseModelCredential(ABC):
@@ -113,15 +124,24 @@ class BaseModelCredential(ABC):
 
 class ModelTypeConst(Enum):
     LLM = {'code': 'LLM', 'message': '大语言模型'}
+    EMBEDDING = {'code': 'EMBEDDING', 'message': '向量模型'}
+
+class MaxKBBaseModel(ABC):
+    @staticmethod
+    @abstractmethod
+    def new_instance(model_type, model_name, model_credential: Dict[str, object], **model_kwargs):
+        pass
 
 
 class ModelInfo:
     def __init__(self, name: str, desc: str, model_type: ModelTypeConst, model_credential: BaseModelCredential,
+                 model_class: Type[MaxKBBaseModel],
                  **keywords):
         self.name = name
         self.desc = desc
         self.model_type = model_type.name
         self.model_credential = model_credential
+        self.model_class = model_class
         if keywords is not None:
             for key in keywords.keys():
                 self.__setattr__(key, keywords.get(key))
@@ -142,12 +162,62 @@ class ModelInfo:
 
     def get_model_type(self):
         return self.model_type
+    
+    def get_model_class(self):
+        return self.model_class
 
     def to_dict(self):
         return reduce(lambda x, y: {**x, **y},
                       [{attr: self.__getattribute__(attr)} for attr in vars(self) if
                        not attr.startswith("__") and not attr == 'model_credential'], {})
 
+class ModelInfoManage:
+    def __init__(self):
+        self.model_dict = {}
+        self.model_list = []
+        self.default_model_list = []
+        self.default_model_dict = {}
+    
+    def append_model_info(self, model_info: ModelInfo):
+        self.model_list.append(model_info)
+        model_type_dict = self.model_dict.get(model_info.model_type)
+        if model_type_dict is None:
+            self.model_dict[model_info.model_type] = {model_info.name: model_info}
+        else:
+            model_type_dict[model_info.name] = model_info
+    def get_model_list_by_model_type(self, model_type):
+        return [model.to_dict() for model in self.model_list if model.model_type == model_type]
+    def get_model_type_list(self):
+        return [{'key': _type.value.get('message'), 'value': _type.value.get('code')} for _type in ModelTypeConst if
+                len([model for model in self.model_list if model.model_type == _type.name]) > 0]
+
+    def append_default_model_info(self, model_info: ModelInfo):
+        self.default_model_list.append(model_info)
+        self.default_model_dict[model_info.model_type] = model_info
+    def get_model_info(self, model_type, model_name) -> ModelInfo:
+        model_info = self.model_dict.get(model_type, {}).get(model_name, self.default_model_dict.get(model_type))
+        if model_info is None:
+            raise AppApiException(500, '模型不支持')
+        return model_info
+    class builder:
+        def __init__(self):
+            self.modelInfoManage = ModelInfoManage()
+
+        def append_model_info(self, model_info: ModelInfo):
+            self.modelInfoManage.append_model_info(model_info)
+            return self
+
+        def append_model_info_list(self, model_info_list: List[ModelInfo]):
+            for model_info in model_info_list:
+                self.modelInfoManage.append_model_info(model_info)
+            return self
+
+        def append_default_model_info(self, model_info: ModelInfo):
+            self.modelInfoManage.append_default_model_info(model_info)
+            return self
+
+        def build(self):
+            return self.modelInfoManage
 
 class ModelProvideInfo:
     def __init__(self, provider: str, name: str, icon: str):
