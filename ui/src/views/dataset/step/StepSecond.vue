@@ -85,6 +85,9 @@
                   <div class="container-wrapper">  
                     <el-checkbox v-model="useOCR" class="mb-16">使用OCR</el-checkbox>  
                     <el-checkbox v-model="Extract_pic" class="mb-16">提取图片</el-checkbox>  
+                    <div style="color: gray; font-size: 12px; margin-top: -10px;">  
+                      提取图片和使用OCR可能会消耗较多时间  
+                    </div>  
                     <el-button @click="splitDocument" class="align-right">生成预览</el-button>  
                   </div>  
                 </div>  

@@ -249,7 +249,15 @@ class Paragraph(APIView):
         def get(self, request: Request, dataset_id: str, document_id: str):
             """ 下载指定文档的所有段落为txt文件 """
             paragraphs = ParagraphModel.objects.filter(dataset_id=dataset_id, document_id=document_id).values_list(
-                'content', flat=True)
-            content = '\n\n'.join(paragraphs)
+                 'content', flat=True)
+            titles = ParagraphModel.objects.filter(dataset_id=dataset_id, document_id=document_id).values_list(
+                'title', flat=True)
+            
+            combined_content = []  
+            for title, paragraph in zip(titles, paragraphs):  
+            # 将标题与段落内容组合，标题与内容之间使用一个换行符分隔  
+                combined_content.append(f"{title}\n{paragraph}")  
+            
+            content = '\n\n'.join(combined_content)
             # 使用 result.success 将内容包装成 JSON 格式
             return result.success({"content": content})
