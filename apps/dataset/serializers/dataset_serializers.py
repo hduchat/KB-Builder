@@ -946,7 +946,7 @@ class DataSetSerializers(serializers.ModelSerializer):
                           'document_id': instance['document_id']})
             paragraphSerializer.is_valid(raise_exception=True)
             slice_list = paragraphSerializer.list()
-            print("*********slice_list", slice_list)
+            #print("*********slice_list", slice_list)
             # 获得文件的切片列表
 
             do_serializers = DocumentSerializers.Operate(
@@ -972,30 +972,60 @@ class DataSetSerializers(serializers.ModelSerializer):
                 file_base = filename[:dot_index]
                 name = file_base + suffix
 
-            for item in slice_list:
+            first_qa = True
+            for slice in slice_list:
                 # 遍历文件切片
                 # return instance['prompt'] + item['content']
-                slice_text_instance = self._content_instance(chat_id, instance['prompt'] + item['content'],
+                slice_text_instance = self._content_instance(chat_id, instance['prompt'] + slice['content'],
                                                              dataset_detail['app_id'])
                 # 提高输入文本长度
 
                 qa_pair = ChatMessageSerializer(data=slice_text_instance).chat()
                 qa = json.loads(qa_pair.content.decode("utf8"))["data"]
                 # 提取大模型问答生成的结果
+                qa_list = self.data_clean(qa['content'])
 
-                if slice_list.index(item) == 0:
-                    st_paragraph = self._paragraphs_instance('', qa['content'])
-                    document_instance = self._document_instance(name, st_paragraph)
-                    qa_document = DocumentSerializers.Create(data={'dataset_id': dataset_detail['child_id']}).save(
-                        document_instance, with_valid=True)
-                    # 创建文件，并放入第一个问答
+                if (instance['isTextCleaning']):
+                    for pair in qa_list:
+                        paragraph = self._paragraphs_instance(pair['问题'], pair['回答'])
+                        if slice_list.index(slice) == 0 and first_qa:
+                            document_instance = self._document_instance(name, paragraph)
+                            qa_document = DocumentSerializers.Create(data={'dataset_id': dataset_detail['child_id']}).save(
+                                document_instance, with_valid=True)
+                            first_qa = False
+                            # 创建文件，并放入第一个问答
+                        else:
+                            ParagraphSerializers.Create(
+                                data={'dataset_id': dataset_detail['child_id'], 'document_id': qa_document['id']}).save(
+                                paragraph)
+                            # 插入段落，放入问答
                 else:
                     paragraph = self._paragraphs_instance('', qa['content'])
-                    ParagraphSerializers.Create(
-                        data={'dataset_id': dataset_detail['child_id'], 'document_id': qa_document['id']}).save(
-                        paragraph)
-                    # 插入段落，放入问答
+                    if slice_list.index(slice) == 0:
+                        document_instance = self._document_instance(name, paragraph)
+                        qa_document = DocumentSerializers.Create(data={'dataset_id': dataset_detail['child_id']}).save(
+                            document_instance, with_valid=True)
+                        # 创建文件，并放入第一个问答
+                    else:
+                        ParagraphSerializers.Create(
+                            data={'dataset_id': dataset_detail['child_id'], 'document_id': qa_document['id']}).save(
+                            paragraph)
+                        # 插入段落，放入问答
             return {"chat_id": chat_id, "document_id": qa_document['id']}
+        
+        def data_clean(self,content):
+            qa_list = []
+            sets = content.split('[问题]:')  # qa中包含多个问答组，按照问题标签分割成多个单独的问答组
+            for qa_set in sets:  
+                parts = qa_set.split('[回答]:')  
+                if len(parts) == 2:  # 如果qa_set即问答组的长度是2, 则说明此问答组包含问题，回答两部分，没有遗漏  
+                    q, a = parts  
+                    q = q.strip()    # 去掉可能的多余空白  
+                    a = a.strip()    # 去掉可能的多余空白  
+                    qa_list.append({'问题': q, '回答': a})  
+
+            return qa_list
+                    
 
         def _create_chat_instance(self, instance: Dict, app_id) -> Dict:
             chat_instance = {

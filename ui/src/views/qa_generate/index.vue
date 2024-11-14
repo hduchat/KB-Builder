@@ -110,7 +110,7 @@
                 v-model="applicationForm.prompt"   
                 clearable   
                 type="textarea"  
-                :disabled="isTextCleaning"   
+                :disabled="applicationForm.isTextCleaning"   
                 placeholder="描述问答库的内容，详尽的描述将帮助AI能深入理解该问答库的内容，能更准确的检索到内容，提高该问答库的命中率。"   
                 maxlength="2048"   
                 show-word-limit  
@@ -118,7 +118,7 @@
                 @blur="applicationForm.prompt = applicationForm.prompt.trim()" />  
             </el-form-item>  
             <el-form-item>  
-              <el-checkbox class="mb-16" v-model="isTextCleaning" @change="handleTextCleaningChange">文本清洗</el-checkbox>  
+              <el-checkbox class="mb-16" v-model="applicationForm.isTextCleaning" @change="handleTextCleaningChange">文本清洗</el-checkbox>  
             </el-form-item>  
           </el-form>
           <div class="text-right">
@@ -166,9 +166,17 @@ const promptGroup = ref([{
           '[回答]: 目前这个没有好的解决办法，只能通过预先拆分大文档为多个文档片段后分批执行。\n\n'+
           '[问题]: gpt两个步骤是否可以合并成一个请求让gpt返回，可以节省约一半的时间和tokens？\n'+
           '[回答]: 拆成两次主要是因为问题可能需要人工微调修改后再去生成答案，这样可以提高知识库质量，当然也可以全部自动处理。\n\n'+
-          '请仅提供问答\n'+
-          '若文本提供的信息不充分请不要生成相应问答\n'+
-          '请生成尽可能多的问答\n\n'+
+          '请模仿理想问答示例的格式，问答中必须含有对应的“[问题]”和“[回答]”标签、\n\n' + 
+          '请着重满足以下要求\n'+
+          '1: 若文本未提供完整信息，导致问答不完整，请不要生成该问答。另外，确认问答涉及多项内容时，确保完整性，若不完整则跳过。\n'+ 
+          '2: 确保所有生成的问题和答案语法通顺，语言表达准确、无误。\n'+  
+          '3: 严格避免生成无意义或含糊不清的回答，关注回答是否与问题直接相关，拒绝生成与问题无关的或模糊的内容。\n'+
+          '请生成尽可能多的问答来评估对以下文本的了解\n'+
+          '请尽可能生成简洁准确的问题，不要以文件名称开头作为状语\n'+
+          '请仅提供问答对\n\n' +
+          '若提供的信息不充分请不要生成问答对\n'+
+          '不要生成无意义的问答对，不要重复问题为答案，如以疑问句回答问题，不要在回答中仅仅重复问题 \n' +
+          '请不要生成不正面回答问题的无意义问答对\n\n'  +
           '文本：\n'
 }, {
   cueWord: '文学教育Prompt模板',
@@ -244,7 +252,8 @@ const applicationForm = ref({
   model_id: '',
   prompt: '',
   cueWord: '',
-  process_type: ''
+  process_type: '',
+  isTextCleaning: false
 })
 
 const rules = reactive({
@@ -366,7 +375,17 @@ const onSubmit = async (form: any) => {
   })
 }
 
+const handleTextCleaningChange = () => {  
+  if(applicationForm.value.isTextCleaning) {  
+    const selectedPrompt = currentPromptGroup.value.find(  
+      item => item.cueWord === applicationForm.value.cueWord.cueWord
+    );  
 
+    if (selectedPrompt) {  
+      applicationForm.value.prompt = selectedPrompt.prompt;  
+    }  
+  }  
+};  
 
 onMounted(() => {
   getApplicationId().then(() => {
