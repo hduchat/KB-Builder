@@ -28,6 +28,7 @@
         </div>
       </el-card>
     </div>
+    <div class="text-center">{{ $t('layout.topbar.avatar.version') }}:{{ user.version }}</div>
   </el-dialog>
 </template>
 <script setup lang="ts">
@@ -36,7 +37,6 @@ import useStore from '@/stores'
 const defaultTitle = import.meta.env.VITE_APP_TITLE
 
 const { user } = useStore()
-const version = user.version
 
 const aboutDialogVisible = ref(false)
 
