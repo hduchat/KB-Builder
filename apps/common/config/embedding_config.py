@@ -23,7 +23,7 @@ class EmbeddingModel:
         :return:
         """
         if EmbeddingModel.instance is None:
-            print(CONFIG.get("EMBEDDING_MODEL_NAME"),111333)
+            print(CONFIG.get("EMBEDDING_MODEL_NAME"))
             model_name = CONFIG.get('EMBEDDING_MODEL_NAME')
             cache_folder = CONFIG.get('EMBEDDING_MODEL_PATH')
             device = CONFIG.get('EMBEDDING_DEVICE')
