@@ -4,16 +4,16 @@
       <div class="p-24">
         <div class="flex-between">
           <div>
-            <el-button v-if="datasetDetail.type === '1'" type="primary" @click="importDoc">导入文档</el-button>
-            <el-button @click="syncDataset" v-if="datasetDetail.type === '1'">同步问答库</el-button>
-            <el-button @click="syncMulDocument" :disabled="multipleSelection.length === 0"
-              v-if="datasetDetail.type === '1'">同步文档</el-button>
-            <!--            <el-button @click="openDatasetDialog()" :disabled="multipleSelection.length === 0">-->
-            <!--              迁移-->
-            <!--            </el-button>-->
-            <!-- <el-button @click="openBatchEditDocument" :disabled="multipleSelection.length === 0">
-              设置
-            </el-button> -->
+<!--            <el-button v-if="datasetDetail.type === '1'" type="primary" @click="importDoc">导入文档</el-button>-->
+<!--            <el-button @click="syncDataset" v-if="datasetDetail.type === '1'">同步问答库</el-button>-->
+<!--            <el-button @click="syncMulDocument" :disabled="multipleSelection.length === 0"-->
+<!--              v-if="datasetDetail.type === '1'">同步文档</el-button>-->
+<!--            <el-button @click="openDatasetDialog()" :disabled="multipleSelection.length === 0">-->
+<!--              迁移-->
+<!--            </el-button>-->
+<!--            <el-button @click="openBatchEditDocument" :disabled="multipleSelection.length === 0">-->
+<!--              设置-->
+<!--            </el-button>-->
             <el-button @click="deleteMulDocument" :disabled="multipleSelection.length === 0">
               删除
             </el-button>
