@@ -59,7 +59,7 @@ class Dataset(APIView):
                              )
         @has_permissions(PermissionConstants.DATASET_CREATE, compare=CompareConstants.AND)
         def post(self, request: Request):
-            return result.success(DataSetSerializers.Create(data={'user_id': request.user.id}).save_web(request.data))
+            return result.success(DataSetSerializers.Create(data={'user_id': request.user.id}).create_father_datasets_web(request.data))
 
     class CreatfatherbDataset(APIView):
         authentication_classes = [TokenAuth]
