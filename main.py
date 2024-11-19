@@ -3,6 +3,7 @@ import argparse
 import logging
 import os
 import sys
+import requests
 
 import django
 from django.core import management
@@ -48,8 +49,21 @@ def start_services():
     management.call_command('runserver', "0.0.0.0:8088")
 
 
+def get_latest_tag(repo_owner, repo_name):
+    url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()['tag_name']
+    else:
+        print(f"Failed to fetch the latest tag: {response.status_code}")
+        return None
+
+
 if __name__ == '__main__':
     os.environ['HF_HOME'] = '/opt/kb_builder/model/base'
+    latest_tag = get_latest_tag('hduchat', 'KB-Builder')
+    print(f"************** KB Builder version **************: {latest_tag}")
+    os.environ['KB_BUILDER_VERSION'] = latest_tag
     parser = argparse.ArgumentParser(
         description="""
            qabot service control tools;
