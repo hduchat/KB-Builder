@@ -42,7 +42,7 @@ user_cache = cache.caches['user_cache']
 class SystemSerializer(ApiMixin, serializers.Serializer):
     @staticmethod
     def get_profile():
-        version = os.environ.get('MAXKB_VERSION')
+        version = os.environ.get('KB_BUILDER_VERSION')
         return {'version': version}
 
     @staticmethod
