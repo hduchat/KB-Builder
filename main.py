@@ -51,19 +51,22 @@ def start_services():
 
 def get_latest_tag(repo_owner, repo_name):
     url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
-    response = requests.get(url)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # 如果请求失败，会引发HTTPError异常
         return response.json()['tag_name']
-    else:
-        print(f"Failed to fetch the latest tag: {response.status_code}")
+    except requests.RequestException as e:
+        print(f"Failed to fetch the latest tag: {e}")
         return None
 
 
 if __name__ == '__main__':
     os.environ['HF_HOME'] = '/opt/kb_builder/model/base'
     latest_tag = get_latest_tag('hduchat', 'KB-Builder')
-    print(f"************** KB Builder version **************: {latest_tag}")
-    os.environ['KB_BUILDER_VERSION'] = latest_tag
+    if latest_tag:
+        print(f"************** KB Builder version: {latest_tag} **************")
+        os.environ['KB_BUILDER_VERSION'] = latest_tag
+    
     parser = argparse.ArgumentParser(
         description="""
            qabot service control tools;
