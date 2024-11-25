@@ -47,17 +47,17 @@
                 <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />
               </el-select>
             </el-form-item>
-<!--            <el-form-item label="文档(预处理后的文件）" prop="document_id">-->
-<!--              <el-select v-model="applicationForm.document_id" filterable clearable placeholder="请选择文档">-->
-<!--                <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />-->
-<!--              </el-select>-->
-<!--            </el-form-item>-->
+            <!--            <el-form-item label="文档(预处理后的文件）" prop="document_id">-->
+            <!--              <el-select v-model="applicationForm.document_id" filterable clearable placeholder="请选择文档">-->
+            <!--                <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />-->
+            <!--              </el-select>-->
+            <!--            </el-form-item>-->
             <el-form-item label="AI模型" prop="model_id">
               <el-select v-model="applicationForm.model_id" clearable filterable placeholder="请选择AI模型">
                 <el-option-group v-for="(value, label) in modelOptions" :key="value"
                   :label="relatedObject(providerOptions, label, 'provider')?.name">
-                  <el-option v-for="item in value.filter((v: any) => v.status === 'SUCCESS')" :key="item.id"
-                    :label="item.name" :value="item.id" class="flex-between">
+                  <el-option v-for="item in value.filter((v: any) => v.status === 'SUCCESS' && v.model_type === 'LLM')"
+                    :key="item.id" :label="item.name" :value="item.id" class="flex-between">
                     <div class="flex">
                       <span v-html="relatedObject(providerOptions, label, 'provider')?.icon"
                         class="model-icon mr-8"></span>
@@ -96,11 +96,7 @@
               </el-select>
             </el-form-item>
             <el-form-item label="提示词" prop="cueWord">
-              <el-select
-                v-model="applicationForm.cueWord"
-                clearable
-                filterable
-                placeholder="请选择提示词"
+              <el-select v-model="applicationForm.cueWord" clearable filterable placeholder="请选择提示词"
                 value-key="cueWord">
                 <el-option v-for="item in promptGroup" :label="item.cueWord" :value="item"
                   @click="applicationForm.prompt = item.prompt" />
@@ -108,7 +104,7 @@
             </el-form-item>
             <el-form-item label="详细提示词" prop="prompt">
               <el-input v-model="applicationForm.prompt" clearable type="textarea"
-                placeholder="描述问答库的内容，详尽的描述将帮助AI能深入理解该问答库的内容，能更准确的检索到内容，提高该问答库的命中率。" maxlength="2048" show-word-limit
+                placeholder="描述文档的内容，详尽的描述将帮助AI能深入理解该问答库的内容，同时可以提出你的要求。(提示词用户可以自行更改)" maxlength="2048" show-word-limit
                 :rows="5" @blur="applicationForm.prompt = applicationForm.prompt.trim()" />
             </el-form-item>
           </el-form>
@@ -154,7 +150,7 @@ const AIModelArr = ref([])
 const documentArr = ref<any>([])
 const loading = ref(false)
 const { model } = useStore()
-const router = useRouter();  
+const router = useRouter();
 
 const route = useRoute()
 const {
@@ -172,7 +168,7 @@ const applicationForm = ref({
   model_id: '',
   prompt: '',
   process_type: 0,
-  cueWord:''
+  cueWord: ''
 })
 
 const rules = reactive({
@@ -323,5 +319,4 @@ onMounted(() => {
 .el-form-item {
   margin-bottom: 6px;
 }
-
 </style>

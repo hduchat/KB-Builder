@@ -1,4 +1,4 @@
-# coding=utf-8
+    # coding=utf-8
 """
     @project: maxkb
     @Author：虎
@@ -24,6 +24,7 @@ from common.util.rsa_util import rsa_long_decrypt, rsa_long_encrypt
 from setting.models.model_management import Model, Status
 from setting.models_provider.base_model_provider import ValidCode, DownModelChunkStatus
 from setting.models_provider.constants.model_provider_constants import ModelProvideConstants
+from common.config.embedding_config import EmbeddingModel
 from smartdoc.const import CONFIG
 model_cache = caches['model_cache']
 class ModelPullManage:
@@ -225,10 +226,9 @@ class ModelSerializer(serializers.Serializer):
                 attributes_to_cache = ["name", "id","model_type","model_name","user_id","provider"] 
                 model_cache.set('model_cache',self.cache_attributes(model,attributes_to_cache))
                 model_info = model_cache.get("model_cache")  
-                print(CONFIG["EMBEDDING_MODEL_NAME"],1)
                 if model_info is not None and "model_name" in model_info :
                     CONFIG["EMBEDDING_MODEL_NAME"]  = model_info["model_name"] 
-                print(CONFIG["EMBEDDING_MODEL_NAME"],2)
+                EmbeddingModel.get_embedding_model()
                 return self.cache_attributes(model,attributes_to_cache)
                 
 

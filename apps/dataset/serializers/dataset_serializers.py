@@ -409,9 +409,19 @@ class DataSetSerializers(serializers.ModelSerializer):
                 raise AppApiException(500, "知识库名称重复!")
             dataset_id = uuid.uuid1()
             dataset = DataSet(
-                **{'id': dataset_id, 'name': instance.get("name"), 'desc': instance.get('desc'), 'user_id': user_id,
+                **{'id': dataset_id,
+                   'name': instance.get("name"),
+                   'desc': instance.get('desc'),
+                   'user_id': user_id,
                    'type': Type.web,
-                   'meta': {'source_url': instance.get('source_url'), 'selector': instance.get('selector')}})
+                   'type_child': instance.get('type_child'),
+                   'child_id': instance.get('child_id'),
+                   'app_id': instance.get('app_id'),
+                   'meta': {
+                       'source_url': instance.get('source_url'),
+                       'selector': instance.get('selector')
+                    }
+                })
             dataset.save()
             ListenerManagement.sync_web_dataset_signal.send(
                 SyncWebDatasetArgs(str(dataset_id), instance.get('source_url'), instance.get('selector'),
@@ -481,6 +491,16 @@ class DataSetSerializers(serializers.ModelSerializer):
             father_instance = self._create_father_instance(instance, dataset_child_id)
             return self.save(father_instance, with_valid=with_valid)
 
+        def create_father_datasets_web(self, instance: Dict, with_valid=True):
+            # 创建web站点父子知识库
+            child_instance = self._create_child_instance(instance)
+            saved_child_data = self.save(child_instance)
+            dataset_child_id = saved_child_data['id']
+
+            # 创建父知识库
+            father_instance = self._create_father_web_instance(instance, dataset_child_id)
+            return self.save_web(father_instance, with_valid=with_valid)
+
         def create_app(self, instance: Dict, with_valid=True) -> Dict:
             if with_valid:
                 self.is_valid(raise_exception=True)
@@ -537,6 +557,19 @@ class DataSetSerializers(serializers.ModelSerializer):
                 'name': instance['name'],
                 'desc': instance['desc'],
                 'documents': instance.get('documents', []),
+                'type_child': '1',
+                'child_id': child_id,
+                'app_id': None
+            }
+            father_instance['app_id'] = self.create_app(father_instance)
+            return father_instance
+
+        def _create_father_web_instance(self, instance: Dict, child_id: str) -> Dict:
+            father_instance = {
+                'name': instance['name'],
+                'desc': instance['desc'],
+                'source_url': instance['source_url'],
+                'selector': instance['selector'],
                 'type_child': '1',
                 'child_id': child_id,
                 'app_id': None
@@ -898,6 +931,8 @@ class DataSetSerializers(serializers.ModelSerializer):
             "客户端类型"))
         process_type = serializers.CharField(default=0, required=False, error_messages=ErrMessage.char(
             "处理方式"))
+        file_type = serializers.CharField(required=False, error_messages=ErrMessage.char(
+            "处理文件类型"))
 
         def is_valid(self, *, raise_exception=True):
             super().is_valid(raise_exception=True)
@@ -922,22 +957,29 @@ class DataSetSerializers(serializers.ModelSerializer):
         def generate_qa_database(self, instance: Dict):
 
             self.is_valid()
+            # 获取数据库id，用户id以及数据库具体信息
             dataset_id = self.data.get('dataset_id')
             user_id = self.data.get('user_id')
             dataset_detail = DataSetSerializers.Operate(data={'id': dataset_id, 'user_id': user_id}).one(
                 user_id=user_id)
-            # 获取数据库id，用户id以及数据库具体信息
+            child_id = dataset_detail['child_id']
+            file_type = self.validated_data['file_type']
 
             chat_instance = self._create_chat_instance(instance, dataset_detail['app_id'])
             chat_id = ChatSerializers.OpenTempChat(data={**chat_instance, 'user_id': user_id}
                                                    ).open()
             # 制作用于问答生成的chat
-
-            ParagraphSerializer = ParagraphSerializers.Query(
-                data={**instance, 'dataset_id': dataset_id,
-                      'document_id': instance['document_id']})
-            ParagraphSerializer.is_valid(raise_exception=True)
-            slice_list = ParagraphSerializer.list()
+            if file_type == '0':
+                paragraphSerializer = ParagraphSerializers.Query(
+                    data={**instance, 'dataset_id': dataset_id,
+                          'document_id': instance['document_id']})
+            elif file_type == '1':
+                paragraphSerializer = ParagraphSerializers.Query(
+                    data={**instance, 'dataset_id': child_id,
+                          'document_id': instance['document_id']})
+            paragraphSerializer.is_valid(raise_exception=True)
+            slice_list = paragraphSerializer.list()
+            print("*********slice_list", slice_list)
             # 获得文件的切片列表
 
             do_serializers = DocumentSerializers.Operate(

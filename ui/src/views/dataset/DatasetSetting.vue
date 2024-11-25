@@ -6,6 +6,36 @@
           <BaseForm ref="BaseFormRef" :data="detail" />
 
           <el-form ref="webFormRef" :rules="rules" :model="form" label-position="top" require-asterisk-position="right">
+            <el-form-item label="本地模型" required prop="model">
+              <el-select v-model="form.model" clearable filterable placeholder="请选择本地模型">
+                <el-option-group v-for="(value, label) in modelOptions" :key="value"
+                  :label="relatedObject(providerOptions, label, 'provider')?.name">
+                  <el-option
+                    v-for="item in value.filter((v: any) => v.status === 'SUCCESS' && v.model_type === 'EMBEDDING')"
+                    :key="item.id" :label="item.name" :value="item" class="flex-between">
+                    <div class="flex">
+                      <span v-html="relatedObject(providerOptions, label, 'provider')?.icon"
+                        class="model-icon mr-8"></span>
+                      <span>{{ item.name }}</span>
+                    </div>
+                    <el-icon class="check-icon" v-if="item.id === form.model.id">
+                      <Check />
+                    </el-icon>
+                  </el-option>
+
+                </el-option-group>
+                <template #footer>
+                  <div class="w-full text-left cursor" @click="openCreateModel()">
+                    <el-button type="primary" link>
+                      <el-icon class="mr-4">
+                        <Plus />
+                      </el-icon>
+                      {{ $t('views.application.applicationForm.form.addModel') }}
+                    </el-button>
+                  </div>
+                </template>
+              </el-select>
+            </el-form-item>
             <el-form-item label="问答库类型" required>
               <el-card shadow="never" class="mb-8" v-if="detail.type === '0'">
                 <div class="flex align-center">
@@ -41,21 +71,21 @@
           </el-form>
 
 
-<!--          <el-row :gutter="12">-->
-<!--            <el-col :span="12" v-for="(item, index) in application_list" :key="index" class="mb-16">-->
-<!--              <CardCheckbox value-field="id" :data="item" v-model="application_id_list">-->
-<!--                <template #icon>-->
-<!--                  <AppAvatar v-if="isAppIcon(item?.icon)" shape="square" :size="32" style="background: none"-->
-<!--                    class="mr-12">-->
-<!--                    <img :src="item?.icon" alt="" />-->
-<!--                  </AppAvatar>-->
-<!--                  <AppAvatar v-else-if="item?.name" :name="item?.name" pinyinColor shape="square" :size="32"-->
-<!--                    class="mr-12" />-->
-<!--                </template>-->
-<!--                {{ item.name }}-->
-<!--              </CardCheckbox>-->
-<!--            </el-col>-->
-<!--          </el-row>-->
+          <!--          <el-row :gutter="12">-->
+          <!--            <el-col :span="12" v-for="(item, index) in application_list" :key="index" class="mb-16">-->
+          <!--              <CardCheckbox value-field="id" :data="item" v-model="application_id_list">-->
+          <!--                <template #icon>-->
+          <!--                  <AppAvatar v-if="isAppIcon(item?.icon)" shape="square" :size="32" style="background: none"-->
+          <!--                    class="mr-12">-->
+          <!--                    <img :src="item?.icon" alt="" />-->
+          <!--                  </AppAvatar>-->
+          <!--                  <AppAvatar v-else-if="item?.name" :name="item?.name" pinyinColor shape="square" :size="32"-->
+          <!--                    class="mr-12" />-->
+          <!--                </template>-->
+          <!--                {{ item.name }}-->
+          <!--              </CardCheckbox>-->
+          <!--            </el-col>-->
+          <!--          </el-row>-->
 
           <div class="text-right">
             <el-button @click="submit" type="primary"> 保存 </el-button>
@@ -63,23 +93,36 @@
         </div>
       </el-scrollbar>
     </div>
+    <!-- 添加模版 -->
+    <CreateModelDialog ref="createModelRef" @submit="getModel" @change="openCreateModel($event)"></CreateModelDialog>
+    <SelectProviderDialog ref="selectProviderRef" @change="openCreateModel($event)" />
   </LayoutContainer>
 </template>
 <script setup lang="ts">
+import CreateModelDialog from '@/views/template/component/CreateModelDialog.vue'
+import SelectProviderDialog from '@/views/template/component/SelectProviderDialog.vue'
 import { ref, onMounted, reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import BaseForm from '@/views/dataset/component/BaseForm.vue'
 import datasetApi from '@/api/dataset'
+import modelApi from '@/api/model'
+import applicationApi from '@/api/application'
 import type { ApplicationFormType } from '@/api/type/application'
 import { MsgSuccess } from '@/utils/message'
 import { isAppIcon } from '@/utils/application'
 import useStore from '@/stores'
+import { groupBy } from 'lodash'
+import { relatedObject } from '@/utils/utils'
 const route = useRoute()
 const {
   params: { id }
 } = route as any
 
-const { dataset } = useStore()
+const providerOptions = ref<Array<Provider>>([])
+const selectProviderRef = ref<InstanceType<typeof SelectProviderDialog>>()
+const appId = ref()
+const { dataset, model } = useStore()
+const modelOptions = ref<any>(null)
 const webFormRef = ref()
 const BaseFormRef = ref()
 const loading = ref(false)
@@ -88,18 +131,29 @@ const application_list = ref<Array<ApplicationFormType>>([])
 const application_id_list = ref([])
 const form = ref<any>({
   source_url: '',
-  selector: ''
+  selector: '',
+  model: ''
 })
-
+const createModelRef = ref<InstanceType<typeof CreateModelDialog>>()
 const rules = reactive({
   source_url: [{ required: true, message: '请输入 Web 根地址', trigger: 'blur' }]
 })
+
+const openCreateModel = (provider?: Provider) => {
+  if (provider && provider.provider) {
+    createModelRef.value?.open(provider)
+  } else {
+    selectProviderRef.value?.open()
+  }
+}
 
 async function submit() {
   if (await BaseFormRef.value?.validate()) {
     await webFormRef.value.validate((valid: any) => {
       if (valid) {
         loading.value = true
+        console.log('form.value', form.value);
+
         const obj =
           detail.value.type === '1'
             ? {
@@ -114,8 +168,10 @@ async function submit() {
         datasetApi
           .putDataset(id, obj)
           .then((res) => {
-            MsgSuccess('保存成功')
-            loading.value = false
+            modelApi.postLocalModel(form.value.model).then((res) => {
+              MsgSuccess('保存成功')
+              loading.value = false
+            })
           })
           .catch(() => {
             loading.value = false
@@ -124,9 +180,15 @@ async function submit() {
     })
   }
 }
+const getApplicationId = async () => {
+  await dataset.asyncGetDatasetDetail(id, loading).then((res: any) => {
+    appId.value = res.data.app_id
 
-function getDetail() {
-  dataset.asyncGetDatasetDetail(id, loading).then((res: any) => {
+  })
+}
+
+async function getDetail() {
+  await dataset.asyncGetDatasetDetail(id, loading).then((res: any) => {
     detail.value = res.data
     if (detail.value.type === '1') {
       form.value = res.data.meta
@@ -138,9 +200,40 @@ function getDetail() {
     })
   })
 }
+function getModel() {
+  loading.value = true
+  if (appId.value) {
+    applicationApi
+      .getApplicationModel(appId.value)
+      .then((res: any) => {
+        modelOptions.value = groupBy(res?.data, 'provider')
+        console.log("modelOptions.value", modelOptions.value);
+
+        loading.value = false
+      })
+      .catch((err) => {
+        console.log('err', err);
+        loading.value = false
+      })
+  } else {
+    model
+      .asyncGetModel()
+      .then((res: any) => {
+        modelOptions.value = groupBy(res?.data, 'provider')
+        loading.value = false
+      })
+      .catch(() => {
+        loading.value = false
+      })
+  }
+}
 
 onMounted(() => {
-  getDetail()
+  getDetail().then(() => {
+    getApplicationId().then(() => {
+      getModel()
+    })
+  })
 })
 </script>
 <style lang="scss" scoped>
