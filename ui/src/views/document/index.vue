@@ -413,25 +413,52 @@ function downloadDocument(row: any) {
       loading
     )
     .then((response) => {
-      const { content } = response.data
-      const blob = new Blob([content], { type: 'text/plain' })
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      const lastDotIndex = row.name.lastIndexOf('.');
-      const basename = lastDotIndex === -1
-        ? row.name
-        : row.name.substring(0, lastDotIndex);
-      const filename = basename + '.txt';
-      link.setAttribute('download', filename);
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
-      MsgSuccess('段落下载成功')
+      //下载的如果是文本类型
+      if (response.data.type === 'txt') {
+        const { content } = response.data
+        const blob = new Blob([content], { type: 'text/plain' })
+        const url = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        const lastDotIndex = row.name.lastIndexOf('.');
+        const basename = lastDotIndex === -1
+          ? row.name
+          : row.name.substring(0, lastDotIndex);
+        const filename = basename + '.txt';
+        link.setAttribute('download', filename);
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+        MsgSuccess('段落下载成功')
+      }
+      //图片类型
+      else {
+        const { content, image_name } = response.data
+        const lastDotIndex = image_name.lastIndexOf('.');
+        const basename = lastDotIndex === -1
+          ? row.name
+          : row.name.substring(0, lastDotIndex);
+        const filename = basename + '.png';
+        fetch(content)
+          .then(response => response.blob())
+          .then(blob => {
+            const url = URL.createObjectURL(blob); // 创建一个指向Blob对象的URL
+            const a = document.createElement('a'); // 创建一个<a>元素
+            a.style.display = 'none'; // 隐藏<a>元素
+            a.href = url; // 设置<a>元素的href属性为Blob对象的URL
+            a.download = filename; // 设置下载的文件名
+            document.body.appendChild(a); // 将<a>元素添加到文档中（虽然它是隐藏的）
+            a.click(); // 模拟点击<a>元素来触发下载
+            document.body.removeChild(a); // 下载完成后移除<a>元素（可选）
+            URL.revokeObjectURL(url); // 释放之前创建的URL对象（清理内存）
+          });
+      }
+
     })
     .catch((error) => {
       console.error('下载段落失败', error)
+
     })
     .finally(() => {
       loading.value = false
