@@ -128,11 +128,11 @@ function submit1() {
     fd.append('use_ocr', 'false');
   }
 
-  if (StepSecondRef.value?.extractPic) {
-    fd.append('extract_pic', 'true');
-  } else {
-    fd.append('extract_pic', 'false');
-  }
+  if (StepSecondRef.value?.Extract_pic) {
+    fd.append('extract_pic', 'true');
+  } else {
+    fd.append('extract_pic', 'false');
+  }
 
 
   const obj = { ...baseInfo.value, } as datasetData
