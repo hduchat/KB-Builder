@@ -3,7 +3,7 @@
   <img width="60%" alt="image" src="https://github.com/user-attachments/assets/7af61641-e548-459f-b377-c71c1810e38f">
 </p>
 
-# <p align="center"><span style="font-size:20px;">基于 LLM 大语言模型的知识库生成系统</span></p>
+# <p align="center"><span style="font-size:20px;">基于 LLM 大语言模型的知识库文本处理系统</span></p>
 
 
 KB Builder = Knowledge Base Builder，是一款基于 LLM 大语言模型的开源知识库文本处理系统。
