@@ -48,9 +48,9 @@ docker run -d --name kb_builder -p 8080:8088 -v ~/.kb-builder:/var/lib/postgresq
 
 ## 微信加入KB-Builder交流群
 <p align="left">
-    <img width="30%" alt="image" src="https://github.com/user-attachments/assets/440c070e-88c2-466f-9497-3e30120f32d3">
+    <img width="30%" alt="image" src="https://github.com/user-attachments/assets/440f5ddc-6d57-4ae6-b19d-2f8622f8e3ab">
 </p>
-    
+
 ## 滨电智言
 **本项目是由杭州电子科技大学滨江研究院开发完成。**  
 
