@@ -19,6 +19,7 @@ from paddle.utils import try_import
 from copy import deepcopy
 from django.db.models import QuerySet
 from PIL import Image as PILimage
+from dataset.models import Status
 
 from common.handle.base_split_handle import BaseSplitHandle
 from common.util.split_model import SplitModel
@@ -165,6 +166,7 @@ def process_file(pdf_document, images_list):
 
 class PdfocrSplitHandle(BaseSplitHandle):
     def handle(self, file, pattern_list: List, with_filter: bool, limit: int, overlap: int, get_buffer,save_image):
+        status = Status.success
         try:
             image_list = []
             buffer = get_buffer(file)
@@ -181,9 +183,9 @@ class PdfocrSplitHandle(BaseSplitHandle):
             else:
                 split_model = SplitModel(default_pattern_list, with_filter=with_filter, limit=limit, overlap=overlap)
         except BaseException as e:
-            return {'name': file.name,
+            return {'name': file.name + '_ocr',
                     'content': []}
-        return {'name': file.name,
+        return {'name': file.name + '_ocr',
                 'content': split_model.parse(content)
                 }
 
@@ -211,9 +213,9 @@ class Pdf_picocrSplitHandle(BaseSplitHandle):
             else:
                 split_model = SplitModel(default_pattern_list, with_filter=with_filter, limit=limit, overlap=overlap)
         except BaseException as e:
-            return {'name': file.name,
+            return {'name': file.name + '_pic',
                     'content': []}
-        return {'name': file.name,
+        return {'name': file.name + '_pic',
                 'content': split_model.parse(content)
                 }
 

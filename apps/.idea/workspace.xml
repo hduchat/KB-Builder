@@ -8,6 +8,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataset/serializers/dataset_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/serializers/dataset_serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataset/views/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/views/dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users/serializers/user_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers/user_serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/layout/components/top-bar/avatar/AboutDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/layout/components/top-bar/avatar/AboutDialog.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/CreateDataset.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/CreateDataset.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepFirst.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepFirst.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/doc_rewrite/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/doc_rewrite/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_document/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_document/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +40,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/wcm/程序项目/开发/KB-Builder/apps/setting/sql&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -119,6 +126,7 @@
       <workItem from="1730359976650" duration="6943000" />
       <workItem from="1730705338825" duration="5147000" />
       <workItem from="1730720351495" duration="1850000" />
+      <workItem from="1732015679344" duration="2076000" />
     </task>
     <servers />
   </component>

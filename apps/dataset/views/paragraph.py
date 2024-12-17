@@ -6,6 +6,9 @@
     @date：2023/10/16 15:51
     @desc:
 """
+import re
+
+from django.http import HttpResponse  
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import action
 from rest_framework.views import APIView
@@ -19,7 +22,9 @@ from common.util.common import query_params_to_single_dict
 from dataset.serializers.common_serializers import BatchSerializer
 from dataset.serializers.paragraph_serializers import ParagraphSerializers
 from dataset.models import Paragraph as ParagraphModel
-
+from dataset.models import Document as DocumentModel
+from django.db.models import QuerySet
+from dataset.models import Image
 class Paragraph(APIView):
     authentication_classes = [TokenAuth]
 
@@ -249,15 +254,10 @@ class Paragraph(APIView):
         def get(self, request: Request, dataset_id: str, document_id: str):
             """ 下载指定文档的所有段落为txt文件 """
             paragraphs = ParagraphModel.objects.filter(dataset_id=dataset_id, document_id=document_id).values_list(
-                 'content', flat=True)
-            titles = ParagraphModel.objects.filter(dataset_id=dataset_id, document_id=document_id).values_list(
-                'title', flat=True)
-            
-            combined_content = []  
-            for title, paragraph in zip(titles, paragraphs):  
-            # 将标题与段落内容组合，标题与内容之间使用一个换行符分隔  
-                combined_content.append(f"{title}\n{paragraph}")  
-            
-            content = '\n\n'.join(combined_content)
-            # 使用 result.success 将内容包装成 JSON 格式
-            return result.success({"content": content})
+                'content', flat=True)
+            name = DocumentModel.objects.filter(dataset_id=dataset_id,id=document_id).values('name').first()
+            content = '\n\n'.join(paragraphs)
+            image_link_match = re.search(r'!\[\]\((/api/image/.*?)\)', content) 
+            if image_link_match and name['name'].endswith('.pdf') :
+                return result.success({"content":image_link_match.group(1),"type":"image","image_name":name['name']})
+            return result.success({"content":content,"type":"txt"})

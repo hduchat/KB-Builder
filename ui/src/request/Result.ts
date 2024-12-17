@@ -2,6 +2,7 @@ export class Result<T> {
   message: string;
   code: number;
   data: T;
+  length: number;
   constructor(message: string, code: number, data: T) {
     this.message = message;
     this.code = code;

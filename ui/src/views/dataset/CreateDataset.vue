@@ -19,12 +19,7 @@
     <div class="create-dataset__footer text-right border-t" v-if="active !== 2">
       <el-button @click="router.go(-1)" :disabled="loading">取消</el-button>
       <el-button @click="prev" v-if="active === 1" :disabled="loading">上一步</el-button>
-      <el-button
-        @click="next"
-        type="primary"
-        v-if="active === 0"
-        :disabled="loading || StepFirstRef?.loading"
-      >
+      <el-button @click="next" type="primary" v-if="active === 0" :disabled="loading || StepFirstRef?.loading">
         创建并导入
       </el-button>
       <el-button @click="submit1" type="primary" v-if="active === 1" :disabled="loading">
@@ -127,60 +122,54 @@ function submit1() {
     })
   }
 
-  if (StepSecondRef.value?.useOCR) {  
-    fd.append('use_ocr', 'true');   
-  } else {  
-    fd.append('use_ocr', 'false');   
-  }  
+  fd.append('use_ocr', StepSecondRef.value?.useOCR ? 'true' : 'false');  
+  fd.append('extract_pic', StepSecondRef.value?.Extract_pic ? 'true' : 'false');  
 
-  if (StepSecondRef.value?.extractPic) {  
-    fd.append('extract_pic', 'true');   
-  } else {  
-    fd.append('extract_pic', 'false');   
-  }  
+  const handleSuccess = () => {  
+    MsgSuccess('提交成功了');  
+    clearStore();  
+    window.location.reload(); // 在操作完成后刷新页面  
+  };  
   
 
-  const obj = { ...baseInfo.value,  } as datasetData
+  const obj = { ...baseInfo.value, } as datasetData
   if (id) { // 存在id，上传文档  
-  // 跳转页面  
-  document.setFile(id as string,fd)
+    // 跳转页面
+    document.setFile(id as string, fd)
 
-  router.push({ path: `/dataset/${id}/document` })  
-    .then(() => {  
-      // 上传文档  
-      document.asyncspitlDocument(document.datasetId, document.file)  
-        .then(() => {  
-          MsgSuccess('提交成功了')  
-          clearStore()  
-        })  
-        .catch(() => {  
-          loading.value = false  
-        })  
-    })  
-    .catch(() => {  
-      loading.value = false  
-    })  
-} else { // 不存在id，创建新知识库  
-  datasetApi.postfatherDataset(obj, loading)  
-    .then((res) => {  
-      successInfo.value = res.data  
-      active.value = 2  
-      clearStore()  
-      // 跳转页面  
-      document.setFile(res.data.id as string,fd)
-      router.push({ path: `/dataset/${res.data.id}/document` }) // 假设新的id存储在res.data.id  
-        .then(() => {  
-          // 上传文档  
-          document.asyncspitlDocument(document.datasetId, document.file)  
-        })  
-        .catch(() => {  
-          loading.value = false  
-        })  
-    })  
-    .catch(() => {  
-      loading.value = false  
-    })  
-}  
+    router.push({ path: `/dataset/${id}/document` })
+      .then(() => {
+        // 上传文档
+        document.asyncspitlDocument(document.datasetId, document.file)
+          .then(handleSuccess)  
+          .catch(() => {
+            loading.value = false
+          })
+      })
+      .catch(() => {
+        loading.value = false
+      })
+  } else { // 不存在id，创建新知识库
+    datasetApi.postfatherDataset(obj, loading)
+      .then((res) => {
+        successInfo.value = res.data
+        active.value = 2
+        clearStore()
+        // 跳转页面
+        document.setFile(res.data.id as string, fd)
+        router.push({ path: `/dataset/${res.data.id}/document` }) // 假设新的id存储在res.data.id
+          .then(() => {
+            // 上传文档
+            document.asyncspitlDocument(document.datasetId, document.file)
+          })
+          .catch(() => {
+            loading.value = false
+          })
+      })
+      .catch(() => {
+        loading.value = false
+      })
+  }
 
 }
 
@@ -194,7 +183,7 @@ function back() {
         router.go(-1)
         clearStore()
       })
-      .catch(() => {})
+      .catch(() => { })
   } else {
     router.go(-1)
   }
@@ -223,6 +212,7 @@ onUnmounted(() => {
     margin: 0 auto;
     overflow: hidden;
   }
+
   &__footer {
     padding: 16px 24px;
     position: fixed;

@@ -42,19 +42,19 @@
             </template>
           </el-table-column>
           <el-table-column prop="paragraph_count" label="分段" align="right" />
-          <!--          <el-table-column prop="status" label="文件状态" min-width="90">-->
-          <!--            <template #default="{ row }">-->
-          <!--              <el-text v-if="row.status === '1'">-->
-          <!--                <el-icon class="success"><SuccessFilled /></el-icon> 成功-->
-          <!--              </el-text>-->
-          <!--              <el-text v-else-if="row.status === '2'">-->
-          <!--                <el-icon class="danger"><CircleCloseFilled /></el-icon> 失败-->
-          <!--              </el-text>-->
-          <!--              <el-text v-else-if="row.status === '0'">-->
-          <!--                <el-icon class="is-loading primary"><Loading /></el-icon> 导入中-->
-          <!--              </el-text>-->
-          <!--            </template>-->
-          <!--          </el-table-column>-->
+                   <el-table-column prop="status" label="文件状态" min-width="90">
+                     <template #default="{ row }">
+                       <el-text v-if="row.extraction_status === '1'">
+                         <el-icon class="success"><SuccessFilled /></el-icon> 成功
+                       </el-text>
+                       <el-text v-else-if="row.extraction_status === '2'">
+                         <el-icon class="danger"><CircleCloseFilled /></el-icon> 失败
+                       </el-text>
+                       <el-text v-else-if="row.extraction_status === '0'">
+                         <el-icon class="is-loading primary"><Loading /></el-icon> 导入中
+                       </el-text>
+                     </template>
+                    </el-table-column>
           <!-- <el-table-column label="启用状态">
             <template #default="{ row }">
               <div @click.stop>
@@ -127,7 +127,7 @@
                       </el-icon>
                     </el-button>
                     <template #dropdown>
-                      <el-dropdown-menu>
+                      <el-dropdown-menu>-->
                         <!--                        <el-dropdown-item @click="settingDoc(row)">-->
                 <!--                          <el-icon><Setting /></el-icon>-->
                 <!--                          设置-->
@@ -413,25 +413,52 @@ function downloadDocument(row: any) {
       loading
     )
     .then((response) => {
-      const { content } = response.data
-      const blob = new Blob([content], { type: 'text/plain' })
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      const lastDotIndex = row.name.lastIndexOf('.');
-      const basename = lastDotIndex === -1
-        ? row.name
-        : row.name.substring(0, lastDotIndex);
-      const filename = basename + '.txt';
-      link.setAttribute('download', filename);
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-      URL.revokeObjectURL(url)
-      MsgSuccess('段落下载成功')
+      //下载的如果是文本类型
+      if (response.data.type === 'txt') {
+        const { content } = response.data
+        const blob = new Blob([content], { type: 'text/plain' })
+        const url = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        link.href = url
+        const lastDotIndex = row.name.lastIndexOf('.');
+        const basename = lastDotIndex === -1
+          ? row.name
+          : row.name.substring(0, lastDotIndex);
+        const filename = basename + '.txt';
+        link.setAttribute('download', filename);
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
+        MsgSuccess('段落下载成功')
+      }
+      //图片类型
+      else {
+        const { content, image_name } = response.data
+        const lastDotIndex = image_name.lastIndexOf('.');
+        const basename = lastDotIndex === -1
+          ? row.name
+          : row.name.substring(0, lastDotIndex);
+        const filename = basename + '.png';
+        fetch(content)
+          .then(response => response.blob())
+          .then(blob => {
+            const url = URL.createObjectURL(blob); // 创建一个指向Blob对象的URL
+            const a = document.createElement('a'); // 创建一个<a>元素
+            a.style.display = 'none'; // 隐藏<a>元素
+            a.href = url; // 设置<a>元素的href属性为Blob对象的URL
+            a.download = filename; // 设置下载的文件名
+            document.body.appendChild(a); // 将<a>元素添加到文档中（虽然它是隐藏的）
+            a.click(); // 模拟点击<a>元素来触发下载
+            document.body.removeChild(a); // 下载完成后移除<a>元素（可选）
+            URL.revokeObjectURL(url); // 释放之前创建的URL对象（清理内存）
+          });
+      }
+
     })
     .catch((error) => {
       console.error('下载段落失败', error)
+
     })
     .finally(() => {
       loading.value = false
@@ -478,7 +505,7 @@ function changeState(bool: Boolean, row: any) {
 function editName(val: string, id: string) {
   if (val) {
     const obj = {
-      name: val
+      name: val,
     }
     updateData(id, obj, '修改成功')
   } else {

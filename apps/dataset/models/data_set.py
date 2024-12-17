@@ -72,6 +72,8 @@ class Document(AppModelMixin):
     char_length = models.IntegerField(verbose_name="文档字符数 冗余字段")
     status = models.CharField(verbose_name='状态', max_length=1, choices=Status.choices,
                               default=Status.embedding)
+    extraction_status = models.CharField(verbose_name='提取状态', max_length=1, choices=Status.choices,
+                                          default=Status.embedding)
     is_active = models.BooleanField(default=True)
 
     type = models.CharField(verbose_name='类型', max_length=1, choices=Type.choices,

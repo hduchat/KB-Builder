@@ -379,7 +379,7 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
             _document = QuerySet(Document).get(id=self.data.get("document_id"))
             if with_valid:
                 DocumentEditInstanceSerializer(data=instance).is_valid(document=_document)
-            update_keys = ['name', 'is_active', 'hit_handling_method', 'directly_return_similarity', 'meta']
+            update_keys = ['name', 'is_active', 'hit_handling_method', 'directly_return_similarity', 'meta','extraction_status']
             for update_key in update_keys:
                 if update_key in instance and instance.get(update_key) is not None:
                     _document.__setattr__(update_key, instance.get(update_key))
@@ -622,8 +622,8 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
             "使用ocr"))
         extract_pic = serializers.BooleanField(required=False, error_messages=ErrMessage.boolean(
             "提取图片"))
-        
-
+        get_file_content = serializers.BooleanField(required=False, error_messages=ErrMessage.boolean(
+            "提取文件内容"))
 
         def is_valid(self, *, raise_exception=True):
             super().is_valid(raise_exception=True)
@@ -666,6 +666,10 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
                                   in_=openapi.IN_FORM,
                                   required=False,
                                   type=openapi.TYPE_BOOLEAN, title="是否提取图片", description="是否提取图片"),
+                openapi.Parameter(name='get_file_content',
+                                  in_=openapi.IN_FORM,
+                                  required=False,
+                                  type=openapi.TYPE_BOOLEAN, title="是否提取提取文件内容", description="是否提取提取文件内容"),
             ]
 
         def parse(self):  
@@ -679,7 +683,9 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
                         self.data.get("limit", None),  
                         self.data.get("overlap", None),  
                         self.data.get("use_ocr", None),
-                        self.data.get("extract_pic", None)),  
+                        self.data.get("extract_pic", None), 
+                        self.data.get("get_file_content", None)
+                        ),  
                     file_list)  
                 )  
             )  
@@ -801,7 +807,6 @@ class DocumentSerializers(ApiMixin, serializers.Serializer):
 
 default_split_handle = TextSplitHandle()#默认切片方法
 split_handles = [DocSplitHandle(), default_split_handle]#定义文档切片方法
-split_ocr_handles = [DocSplitHandle(), PdfocrSplitHandle(), Pdf_picocrSplitHandle(), default_split_handle]#定义文档切片方法
 
 #处理文件内容的缓冲
 class FileBufferHandle:
@@ -820,21 +825,39 @@ def save_image(image_list):
     QuerySet(Image).bulk_create(image_list)
 
 # 定义一个函数将文件内容转换为段落，并根据一些配置进行处理
-def file_to_paragraph(file, pattern_list: List, with_filter: bool, limit: int, overlap: int, user_ocr:bool, extract_pic:bool):
+def file_to_paragraph(file, pattern_list: List, with_filter: bool, limit: int, overlap: int, user_ocr:bool, extract_pic:bool,get_file_content:bool):
     get_buffer = FileBufferHandle().get_buffer
     paragraph = []
     if (user_ocr):
         if PdfocrSplitHandle().support(file, get_buffer):#是否支持
-            paragraph.append(PdfocrSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+            if get_file_content:
+                paragraph.append(PdfocrSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+            else:
+                paragraph.append({'name': file.name + '_ocr',
+                    'content': []})#使用方法
     else:
         if PdfSplitHandle().support(file, get_buffer):#是否支持
-            paragraph.append(PdfSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+            if get_file_content:
+                paragraph.append(PdfSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+            else:
+                paragraph.append({'name': file.name,
+                    'content': []})#使用方法
 
     if (extract_pic):
         if Pdf_picocrSplitHandle().support(file, get_buffer):
-            paragraph.append(Pdf_picocrSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+            if get_file_content:
+                paragraph.append(Pdf_picocrSplitHandle().handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+            else:
+                paragraph.append({'name': file.name + '_pic',
+                    'content': []})#使用方法
 
-    for split_handle in split_handles:#遍历切片方法（以文档类型划分）
+    for split_handle in split_handles:#遍历切片方法（txt和doc）
         if split_handle.support(file, get_buffer):#是否支持
-            paragraph.append(split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+            if get_file_content:
+                paragraph.append(split_handle.handle(file, pattern_list, with_filter, limit, overlap, get_buffer, save_image))#使用方法
+            else:            
+                paragraph.append({'name': file.name,
+                    'content': []})#使用方法
+
+
     return paragraph

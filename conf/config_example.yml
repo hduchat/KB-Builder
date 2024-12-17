@@ -10,7 +10,7 @@ EMAIL_HOST_PASSWORD:
 # 数据库链接信息
 DB_NAME: kb_builder
 DB_HOST: 192.168.30.28
-DB_PORT: 5432
+DB_PORT: 5433
 DB_USER: postgres
 DB_PASSWORD: 123456
 DB_ENGINE: django.db.backends.postgresql_psycopg2

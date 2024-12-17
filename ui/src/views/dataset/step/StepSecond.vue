@@ -158,6 +158,7 @@ function changeHandle(val: boolean) {//是否导入分段标题
 }
 function splitDocument() {
   loading.value = true//加载状态
+
   let fd = new FormData()
   documentsFiles.value.forEach((item) => {//遍历，添加文件到FormData
     if (item?.raw) {
@@ -189,11 +190,14 @@ function splitDocument() {
   } else {  
     fd.append('use_ocr', 'false');   
   }  
+
   if (Extract_pic.value) {  
     fd.append('extract_pic', 'true');   
   } else {  
     fd.append('extract_pic', 'false');   
   }  
+
+  // fd.append('extract_pic', 'true'); 
 
   documentApi
     .postSplitDocument(fd)
@@ -242,7 +246,8 @@ defineExpose({
   useOCR,
   Extract_pic,
   documentsFiles,
-  form
+  form,
+  radio
 })
 </script>
 <style scoped lang="scss">  

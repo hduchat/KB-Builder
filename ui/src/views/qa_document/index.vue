@@ -4,16 +4,16 @@
       <div class="p-24">
         <div class="flex-between">
           <div>
-            <el-button v-if="datasetDetail.type === '1'" type="primary" @click="importDoc">导入文档</el-button>
-            <el-button @click="syncDataset" v-if="datasetDetail.type === '1'">同步问答库</el-button>
-            <el-button @click="syncMulDocument" :disabled="multipleSelection.length === 0"
-              v-if="datasetDetail.type === '1'">同步文档</el-button>
-            <!--            <el-button @click="openDatasetDialog()" :disabled="multipleSelection.length === 0">-->
-            <!--              迁移-->
-            <!--            </el-button>-->
-            <!-- <el-button @click="openBatchEditDocument" :disabled="multipleSelection.length === 0">
-              设置
-            </el-button> -->
+<!--            <el-button v-if="datasetDetail.type === '1'" type="primary" @click="importDoc">导入文档</el-button>-->
+<!--            <el-button @click="syncDataset" v-if="datasetDetail.type === '1'">同步问答库</el-button>-->
+<!--            <el-button @click="syncMulDocument" :disabled="multipleSelection.length === 0"-->
+<!--              v-if="datasetDetail.type === '1'">同步文档</el-button>-->
+<!--            <el-button @click="openDatasetDialog()" :disabled="multipleSelection.length === 0">-->
+<!--              迁移-->
+<!--            </el-button>-->
+<!--            <el-button @click="openBatchEditDocument" :disabled="multipleSelection.length === 0">-->
+<!--              设置-->
+<!--            </el-button>-->
             <el-button @click="deleteMulDocument" :disabled="multipleSelection.length === 0">
               删除
             </el-button>
@@ -32,6 +32,7 @@
             <template #default="{ row }">
               <ReadWrite @change="editName($event, row.id)" :data="row.name"
                 :showEditIcon="row.id === currentMouseId" />
+                
             </template>
           </el-table-column>
           <el-table-column prop="char_length" label="字符数" align="right">
@@ -474,6 +475,7 @@ function changeState(bool: Boolean, row: any) {
   }
   const str = bool ? '启用成功' : '禁用成功'
   currentMouseId.value && updateData(row.id, obj, str)
+  //currentMouseId.value 
 }
 
 function editName(val: string, id: string) {

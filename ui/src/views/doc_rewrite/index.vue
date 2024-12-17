@@ -104,7 +104,7 @@
             </el-form-item>
             <el-form-item label="详细提示词" prop="prompt">
               <el-input v-model="applicationForm.prompt" clearable type="textarea"
-                placeholder="描述问答库的内容，详尽的描述将帮助AI能深入理解该问答库的内容，能更准确的检索到内容，提高该问答库的命中率。" maxlength="2048" show-word-limit
+                placeholder="描述文档的内容，详尽的描述将帮助AI能深入理解该问答库的内容，同时可以提出你的要求。(提示词用户可以自行更改)" maxlength="2048" show-word-limit
                 :rows="5" @blur="applicationForm.prompt = applicationForm.prompt.trim()" />
             </el-form-item>
           </el-form>

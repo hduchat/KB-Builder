@@ -263,6 +263,8 @@ class Document(APIView):
                 split_data.__setitem__('use_ocr', request_data.get('use_ocr'))
             if 'extract_pic' in request.data:
                 split_data.__setitem__('extract_pic', request_data.get('extract_pic'))
+            if 'get_file_content' in request.data:  
+                split_data.__setitem__('get_file_content', request.data.get('get_file_content'))  
             
             ds = DocumentSerializers.Split(
                 data=split_data)#调用切片函数

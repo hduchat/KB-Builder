@@ -106,7 +106,7 @@ function searchHandle() {
   getList()
 }
 
-async function deleteDataset(row:any) {
+async function deleteDataset(row: any) {
   try {
     // 显示确认对话框，并等待用户确认
     await MsgConfirm(`是否删除问答库：${row.name} ?`, '', {
@@ -142,9 +142,9 @@ function getList() {
   datasetApi
     .getDataset(paginationConfig, searchValue.value && { name: searchValue.value }, loading)
     .then((res) => {
-      paginationConfig.total = res.data.total
       const temp = res.data.records.filter((item: any) => { return item.type_child === "1" })
       datasetList.value = [...datasetList.value, ...temp]
+      paginationConfig.total = datasetList.value.length
     })
 }
 
