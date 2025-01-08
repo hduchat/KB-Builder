@@ -6,7 +6,7 @@
           <BaseForm ref="BaseFormRef" :data="detail" />
 
           <el-form ref="webFormRef" :rules="rules" :model="form" label-position="top" require-asterisk-position="right">
-            <el-form-item label="本地模型" required prop="model">
+            <el-form-item style="width:60%" label="本地模型" required prop="model">
               <el-select v-model="form.model" clearable filterable placeholder="请选择本地模型">
                 <el-option-group v-for="(value, label) in modelOptions" :key="value"
                   :label="relatedObject(providerOptions, label, 'provider')?.name">
@@ -36,7 +36,7 @@
                 </template>
               </el-select>
             </el-form-item>
-            <el-form-item label="问答库类型" required>
+            <el-form-item style="width:60%" label="问答库类型" required>
               <el-card shadow="never" class="mb-8" v-if="detail.type === '0'">
                 <div class="flex align-center">
                   <AppAvatar class="mr-8 avatar-light" shape="square" :size="32">
@@ -88,7 +88,7 @@
           <!--          </el-row>-->
 
           <div class="text-right">
-            <el-button @click="submit" type="primary"> 保存 </el-button>
+            <el-button color="#1C9985" @click="submit" type="primary"> 保存 </el-button>
           </div>
         </div>
       </el-scrollbar>
@@ -238,7 +238,7 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .dataset-setting {
-  width: 70%;
-  margin: 0 auto;
+  width: 100%;
+  // margin: 0 auto;
 }
 </style>

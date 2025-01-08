@@ -1,27 +1,31 @@
 <template>
-  <div class="dataset-list-container p-24" style="padding-top: 16px">
+  <div class="dataset-list-container " style="padding-top: 16px">
     <div class="flex-between mb-16">
       <h3>问答库</h3>
+    </div>
+    <div class="search-create">
       <el-input v-model="searchValue" @change="searchHandle" placeholder="按名称搜索" prefix-icon="Search" class="w-240"
         clearable />
+      <el-button type="primary" color="#1C9985" @click="router.push({ path: '/dataset/create' })">创建问答库</el-button>
     </div>
-    <div v-loading.fullscreen.lock="paginationConfig.current_page === 1 && loading">
+    <div class="content" v-loading.fullscreen.lock="paginationConfig.current_page === 1 && loading">
       <InfiniteScroll :size="datasetList.length" :total="paginationConfig.total" :page_size="paginationConfig.page_size"
         v-model:current_page="paginationConfig.current_page" @load="getList" :loading="loading">
         <el-row :gutter="15">
-          <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb-16">
+          <!-- <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb-16">
             <CardAdd title="创建问答库" @click="router.push({ path: '/dataset/create' })" />
-          </el-col>
+          </el-col> -->
           <template v-for="(item, index) in datasetList" :key="index">
             <!--             <template v-if="item.type_child === '1'"> -->
-            <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb-16">
-              <CardBox :title="item.name" :description="item.desc" class="cursor"
+            <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="4" class="mb-16">
+              <CardBoxNew :title="item.name" :description="item.desc" class="cursor"
                 @click="router.push({ path: `/dataset/${item.id}/document` })">
                 <template #icon>
-                  <AppAvatar v-if="item.type === '1'" class="mr-8 avatar-purple" shape="square" :size="32">
+                  <AppAvatar backgroundColor="#1C9985" v-if="item.type === '1'" class="mr-8 avatar-purple"
+                    shape="square" :size="32">
                     <img src="@/assets/icon_web.svg" style="width: 58%" alt="" />
                   </AppAvatar>
-                  <AppAvatar v-else class="mr-8 avatar-light" shape="square" :size="32">
+                  <AppAvatar v-else backgroundColor="#1C9985" class="mr-8 avatar-light" shape="square" :size="32">
                     <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
                   </AppAvatar>
                 </template>
@@ -32,7 +36,7 @@
 
                 <template #footer>
                   <div class="footer-content flex-between">
-                    <div>
+                    <div style="font-size: 12px;;">
                       <span class="bold">{{ item?.document_count || 0 }}</span>
                       文档<el-divider direction="vertical" />
                       <span class="bold">{{ numberFormat(item?.char_length) || 0 }}</span>
@@ -61,7 +65,7 @@
                     </div>
                   </div>
                 </template>
-              </CardBox>
+              </CardBoxNew>
             </el-col>
             <!-- </template> -->
           </template>
@@ -154,6 +158,22 @@ onMounted(() => {
 </script>
 <style lang="scss" scoped>
 .dataset-list-container {
+  height: calc(100% - 20px);
+  padding: calc(var(--app-base-px) * 3) calc(var(--app-base-px) * 3) 0;
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    flex: 1;
+    overflow: auto;
+  }
+
+  .search-create {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
   .delete-button {
     position: absolute;
     right: 12px;

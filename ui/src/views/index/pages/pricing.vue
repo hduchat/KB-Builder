@@ -12,7 +12,7 @@
                 KB-builder支持企业级打造面向大模型的行业垂直领域知识模型
               </p>
               <div class="flex-center btns">
-                <el-button size="large" color="#626aef">
+                <el-button size="large" color="#1C9985">
                   <a href="https://jsj.top/f/aMG6Xs">申请试用</a>
                 </el-button>
               </div>
@@ -297,8 +297,8 @@ const isOdd = (index: any) => {
 }
 
 .bg-header {
-  background: #f8f9fa url('https://maxkb.cn/images/banner-bg.svg') center bottom no-repeat;
-  background-size: cover;
+  // background: #f8f9fa url('https://maxkb.cn/images/banner-bg.svg') center bottom no-repeat;
+  // background-size: cover;
   padding: 180px 0 140px;
 }
 

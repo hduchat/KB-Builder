@@ -1,14 +1,11 @@
 <template>
-  <div class="menu-item-container flex-center h-full" :class="isActive ? 'active' : ''"
-    @click="router.push({ name: menu.name })">
-    <!-- <div class="icon">
-      <AppIcon :iconName="menu.meta ? (menu.meta.icon as string) : '404'" />
-    </div> -->
-    <div class="title">
+  <div class="menu-item-container" :class="isActive ? 'active' : ''" @click="router.push({ name: menu.name })">
+    <div class="icon iconfont">
+      {{ menu.icon }}
+    </div>
+    <div class="menu-title">
       {{
-        $te(`layout.topbar.MenuItem.${String(props.menu.name)}`)
-          ? $t(`layout.topbar.MenuItem.${String(props.menu.name)}`)
-          : menu.meta?.title
+        menu.title
       }}
     </div>
 
@@ -21,7 +18,7 @@ const router = useRouter()
 const route = useRoute()
 
 const props = defineProps<{
-  menu: RouteRecordRaw
+  menu: any
 }>()
 
 const isActive = computed(() => {
@@ -31,33 +28,33 @@ const isActive = computed(() => {
 </script>
 <style lang="scss" scoped>
 .menu-item-container {
-  margin-right: 28px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  height: 40px;
   cursor: pointer;
   font-size: 16px;
   position: relative;
 
+  .menu-title {
+    color: #71747A;
+    font-size: 14px;
+  }
+
   .icon {
     font-size: 15px;
-    margin-right: 5px;
-    margin-top: 2px;
+    margin-right: 15px;
+    // margin-top: 2px;
   }
 
   &:hover {
-    color: var(--el-color-primary);
+    background-color: #D9DEE8;
   }
 }
 
 .active {
-  color: var(--el-color-primary);
-
-  &::after {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    content: '';
-    background-color: var(--el-color-primary-light-9);
-    border-bottom: 3px solid var(--el-color-primary);
-  }
+  background-color: #D9DEE8;
 }
 </style>

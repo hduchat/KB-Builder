@@ -3,20 +3,12 @@
     <div class="template-manage flex main-calc-height">
       <div class="template-manage__left p-8 border-r">
         <h4 class="p-16" style="padding-bottom: 8px">供应商</h4>
-        <common-list
-          :data="provider_list"
-          v-loading="loading"
-          @click="clickListHandle"
-          value-key="provider"
-          default-active=""
-        >
+        <common-list :data="provider_list" v-loading="loading" @click="clickListHandle" value-key="provider"
+          default-active="">
           <template #default="{ row, index }">
             <div class="flex" v-if="index === 0">
-              <AppIcon
-                class="mr-8"
-                style="height: 20px; width: 20px"
-                :iconName="active_provider === row ? 'app-all-menu-active' : 'app-all-menu'"
-              ></AppIcon>
+              <AppIcon class="mr-8" style="height: 20px; width: 20px"
+                :iconName="active_provider === row ? 'app-all-menu-active' : 'app-all-menu'"></AppIcon>
               <span>全部模型</span>
             </div>
             <div class="flex" v-else>
@@ -30,15 +22,9 @@
         <div class="p-24 pb-0">
           <h4>{{ active_provider?.name }}</h4>
           <div class="flex-between mt-16 mb-16">
-            <el-button type="primary" @click="openCreateModel(active_provider)">添加模型</el-button>
-            <el-input
-              v-model="model_search_form.name"
-              @change="list_model"
-              placeholder="按名称搜索"
-              prefix-icon="Search"
-              style="max-width: 240px"
-              clearable
-            />
+            <el-button color="#1C9985" type="primary" @click="openCreateModel(active_provider)">添加模型</el-button>
+            <el-input v-model="model_search_form.name" @change="list_model" placeholder="按名称搜索" prefix-icon="Search"
+              style="max-width: 240px" clearable />
           </div>
         </div>
         <div class="model-list-height">
@@ -46,22 +32,9 @@
             <div class="p-24 pt-0">
               <el-row v-if="model_split_list.length > 0" :gutter="15">
                 <template v-for="(row, index) in model_split_list" :key="index">
-                  <el-col
-                    :xs="24"
-                    :sm="24"
-                    :md="24"
-                    :lg="12"
-                    :xl="12"
-                    class="mb-16"
-                    v-for="(model, i) in row"
-                    :key="i"
-                  >
-                    <ModelCard
-                      @change="list_model"
-                      :updateModelById="updateModelById"
-                      :model="model"
-                      :provider_list="provider_list"
-                    >
+                  <el-col :xs="24" :sm="24" :md="24" :lg="12" :xl="12" class="mb-16" v-for="(model, i) in row" :key="i">
+                    <ModelCard @change="list_model" :updateModelById="updateModelById" :model="model"
+                      :provider_list="provider_list">
                     </ModelCard>
                   </el-col>
                 </template>
@@ -72,16 +45,9 @@
         </div>
       </div>
     </div>
-    <CreateModelDialog
-      ref="createModelRef"
-      @submit="list_model"
-      @change="openCreateModel($event)"
-    ></CreateModelDialog>
+    <CreateModelDialog ref="createModelRef" @submit="list_model" @change="openCreateModel($event)"></CreateModelDialog>
 
-    <SelectProviderDialog
-      ref="selectProviderRef"
-      @change="openCreateModel($event)"
-    ></SelectProviderDialog>
+    <SelectProviderDialog ref="selectProviderRef" @change="openCreateModel($event)"></SelectProviderDialog>
   </LayoutContainer>
 </template>
 

@@ -4,16 +4,16 @@
       <div class="p-24">
         <div class="flex-between">
           <div>
-<!--            <el-button v-if="datasetDetail.type === '1'" type="primary" @click="importDoc">导入文档</el-button>-->
-<!--            <el-button @click="syncDataset" v-if="datasetDetail.type === '1'">同步问答库</el-button>-->
-<!--            <el-button @click="syncMulDocument" :disabled="multipleSelection.length === 0"-->
-<!--              v-if="datasetDetail.type === '1'">同步文档</el-button>-->
-<!--            <el-button @click="openDatasetDialog()" :disabled="multipleSelection.length === 0">-->
-<!--              迁移-->
-<!--            </el-button>-->
-<!--            <el-button @click="openBatchEditDocument" :disabled="multipleSelection.length === 0">-->
-<!--              设置-->
-<!--            </el-button>-->
+            <!--            <el-button v-if="datasetDetail.type === '1'" type="primary" @click="importDoc">导入文档</el-button>-->
+            <!--            <el-button @click="syncDataset" v-if="datasetDetail.type === '1'">同步问答库</el-button>-->
+            <!--            <el-button @click="syncMulDocument" :disabled="multipleSelection.length === 0"-->
+            <!--              v-if="datasetDetail.type === '1'">同步文档</el-button>-->
+            <!--            <el-button @click="openDatasetDialog()" :disabled="multipleSelection.length === 0">-->
+            <!--              迁移-->
+            <!--            </el-button>-->
+            <!--            <el-button @click="openBatchEditDocument" :disabled="multipleSelection.length === 0">-->
+            <!--              设置-->
+            <!--            </el-button>-->
             <el-button @click="deleteMulDocument" :disabled="multipleSelection.length === 0">
               删除
             </el-button>
@@ -23,16 +23,16 @@
             clearable />
         </div>
         <app-table ref="multipleTableRef" class="mt-16" :data="documentData" :pagination-config="paginationConfig"
-          :quick-create="datasetDetail.type === '0'" @sizeChange="handleSizeChange" @changePage="getList"
-          @cell-mouse-enter="cellMouseEnter" @cell-mouse-leave="cellMouseLeave" @creatQuick="creatQuickHandle"
-          @row-click="rowClickHandle" @selection-change="handleSelectionChange" v-loading="loading"
-          :row-key="(row: any) => row.id" :storeKey="storeKey">
+          @sizeChange="handleSizeChange" @changePage="getList" @cell-mouse-enter="cellMouseEnter"
+          @cell-mouse-leave="cellMouseLeave" @creatQuick="creatQuickHandle" @row-click="rowClickHandle"
+          @selection-change="handleSelectionChange" v-loading="loading" :row-key="(row: any) => row.id"
+          :storeKey="storeKey">
           <el-table-column type="selection" width="55" :reserve-selection="true" />
           <el-table-column prop="name" label="文件名称" min-width="280">
             <template #default="{ row }">
               <ReadWrite @change="editName($event, row.id)" :data="row.name"
                 :showEditIcon="row.id === currentMouseId" />
-                
+
             </template>
           </el-table-column>
           <el-table-column prop="char_length" label="字符数" align="right">

@@ -32,10 +32,12 @@ const menuIcon = computed(() => {
     font-size: 20px;
     margin-top: -2px;
   }
+
   .el-menu-item {
     padding: 13px 12px 13px 16px !important;
     font-weight: 500;
-    border-radius: 4px;
+    border-radius: 4px 4px 0 0;
+
     &:hover {
       background: none;
       color: var(--el-menu-active-color);
@@ -45,6 +47,7 @@ const menuIcon = computed(() => {
   .el-menu-item.is-active {
     color: var(--el-menu-active-color);
     background: var(--el-color-primary-light-9);
+    border-bottom: 3px solid;
   }
 }
 </style>

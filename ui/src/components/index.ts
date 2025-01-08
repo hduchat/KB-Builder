@@ -6,6 +6,7 @@ import LoginContainer from './login-container/index.vue'
 import LayoutContainer from './layout-container/index.vue'
 import TagsInput from './tags-input/index.vue'
 import CardBox from './card-box/index.vue'
+import CardBoxNew from './card-box-new/index.vue'
 import CardAdd from './card-add/index.vue'
 import BackButton from './back-button/index.vue'
 import AppTable from './app-table/index.vue'
@@ -28,6 +29,7 @@ export default {
     app.component(LayoutContainer.name, LayoutContainer)
     app.component(TagsInput.name, TagsInput)
     app.component(CardBox.name, CardBox)
+    app.component(CardBoxNew.name, CardBoxNew)
     app.component(CardAdd.name, CardAdd)
     app.component(BackButton.name, BackButton)
     app.component(AppTable.name, AppTable)

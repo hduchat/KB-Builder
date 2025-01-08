@@ -6,7 +6,7 @@
       </AppAvatar>
       <span class="ml-8">{{ user.userInfo?.username }}</span>
       <el-icon class="el-icon--right">
-        <CaretBottom />
+        <CaretTop />
       </el-icon>
     </div>
 
@@ -23,7 +23,8 @@
         <el-dropdown-item class="border-t p-8" @click="openResetPassword">
           {{ $t("layout.topbar.avatar.resetPassword") }}
         </el-dropdown-item>
-        <el-dropdown-item class="border-t" @click="openAbout"> {{ $t("layout.topbar.avatar.about") }} </el-dropdown-item>
+        <el-dropdown-item class="border-t" @click="openAbout"> {{ $t("layout.topbar.avatar.about") }}
+        </el-dropdown-item>
         <el-dropdown-item class="border-t" @click="logout"> {{ $t("layout.topbar.avatar.logout") }} </el-dropdown-item>
       </el-dropdown-menu>
     </template>
@@ -69,9 +70,11 @@ onMounted(() => {
 <style lang="scss" scoped>
 .avatar-dropdown {
   min-width: 210px;
+
   .userInfo {
     padding: 12px 11px;
   }
+
   :deep(.el-dropdown-menu__item) {
     padding: 12px 11px;
   }

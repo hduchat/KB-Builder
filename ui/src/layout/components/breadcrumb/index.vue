@@ -1,21 +1,24 @@
 <template>
-  <div class="breadcrumb ml-4 mt-4 mb-12 flex">
-    <back-button :to="activeMenu" class="mt-4"></back-button>
-    <el-dropdown placement="bottom" trigger="click" @command="changeMenu" class="w-full" style="display: block">
+  <div class="breadcrumb ml-4 mt-4 mb-12">
+    <div class="flex-center">
+      <back-button :to="activeMenu" class="mt-4"></back-button>
+      <div style="font-size: 18px;font-weight: 600;width:200px">问答库详情</div>
+    </div>
+    <el-dropdown placement="bottom" trigger="click" @command="changeMenu" style="display: block;width:200px;">
       <div class="breadcrumb-hover flex-between cursor">
         <div class="flex align-center">
-          <AppAvatar v-if="isApplication && isAppIcon(current?.icon)" shape="square" :size="24" style="background: none"
-            class="mr-8">
+          <AppAvatar backgroundColor="#1C9985" v-if="isApplication && isAppIcon(current?.icon)" shape="square"
+            :size="24" style="background: none" class="mr-8">
             <img :src="current?.icon" alt="" />
           </AppAvatar>
-          <AppAvatar v-else-if="isApplication" :name="current?.name" pinyinColor shape="square" class="mr-8"
-            :size="24" />
+          <AppAvatar v-else-if="isApplication" backgroundColor="#1C9985" :name="current?.name" pinyinColor
+            shape="square" class="mr-8" :size="24" />
 
-          <AppAvatar v-else-if="isDataset && current?.type === '1'" class="mr-8 avatar-purple" shape="square"
-            :size="24">
+          <AppAvatar v-else-if="isDataset && current?.type === '1'" backgroundColor="#1C9985" class="mr-8 avatar-purple"
+            shape="square" :size="24">
             <img src="@/assets/icon_web.svg" style="width: 58%" alt="" />
           </AppAvatar>
-          <AppAvatar v-else class="mr-8 avatar-light" shape="square" :size="24">
+          <AppAvatar v-else class="mr-8 avatar-light" backgroundColor="#1C9985" shape="square" :size="24">
             <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
           </AppAvatar>
           <div class="ellipsis">{{ current?.name }}</div>
@@ -35,17 +38,17 @@
                 <div :class="item.id === id ? 'dropdown-active' : ''">
                   <el-dropdown-item :command="item.id">
                     <div class="flex align-center">
-                      <AppAvatar v-if="isApplication && isAppIcon(item?.icon)" shape="square" :size="24"
-                        style="background: none" class="mr-8">
+                      <AppAvatar backgroundColor="#1C9985" v-if="isApplication && isAppIcon(item?.icon)" shape="square"
+                        :size="24" style="background: none" class="mr-8">
                         <img :src="item?.icon" alt="" />
                       </AppAvatar>
-                      <AppAvatar v-else-if="isApplication" :name="item.name" pinyinColor class="mr-12" shape="square"
-                        :size="24" />
-                      <AppAvatar v-else-if="isDataset && item.type === '1'" class="mr-12 avatar-purple" shape="square"
-                        :size="24">
+                      <AppAvatar backgroundColor="#1C9985" v-else-if="isApplication" :name="item.name" pinyinColor
+                        class="mr-12" shape="square" :size="24" />
+                      <AppAvatar backgroundColor="#1C9985" v-else-if="isDataset && item.type === '1'"
+                        class="mr-12 avatar-purple" shape="square" :size="24">
                         <img src="@/assets/icon_web.svg" style="width: 58%" alt="" />
                       </AppAvatar>
-                      <AppAvatar v-else class="mr-12 avatar-light" shape="square" :size="24">
+                      <AppAvatar backgroundColor="#1C9985" v-else class="mr-12 avatar-light" shape="square" :size="24">
                         <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
                       </AppAvatar>
                       <span class="ellipsis"> {{ item?.name }}</span>
@@ -182,6 +185,10 @@ onMounted(() => {
 }
 
 .breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   .breadcrumb-hover {
     padding: 4px;
     border-radius: 4px;

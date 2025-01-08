@@ -14,24 +14,25 @@ import { TopBar, AppMain } from '../components'
 </template>
 <style lang="scss" scoped>
 .app-layout {
-  background-color: var(--app-layout-bg-color);
+  background-color: #FBFCFE;
   height: 100%;
-}
-
-.app-main {
-  position: relative;
-  height: 100%;
-  padding: var(--app-header-height) 0 0 !important;
-  box-sizing: border-box;
-  overflow: auto;
+  display: flex;
 }
 
 .app-header {
-  background: var(--app-header-bg-color);
-  position: fixed;
-  width: 100%;
-  left: 0;
-  top: 0;
+  border-right: 1px solid #E0E0E0;
+  background: #FFF;
+  width: 220px;
+  height: 100%;
   z-index: 100;
+}
+
+.app-main {
+  flex: 1;
+  position: relative;
+  height: 100%;
+  padding: 40px 20px 0;
+  box-sizing: border-box;
+  overflow: auto;
 }
 </style>
