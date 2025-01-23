@@ -197,7 +197,7 @@ function splitDocument() {
     fd.append('extract_pic', 'false');   
   }  
 
-  // fd.append('extract_pic', 'true'); 
+  fd.append('get_file_content', 'true'); 
 
   documentApi
     .postSplitDocument(fd)
