@@ -6,15 +6,24 @@
 @Author  ：Brian Yang
 @Date    ：5/12/24 7:44 AM 
 """
-from typing import List
+from typing import List, Dict
 
 from langchain_core.messages import BaseMessage, get_buffer_string
 from langchain_openai import ChatOpenAI
 
 from common.config.tokenizer_manage_config import TokenizerManage
+from setting.models_provider.base_model_provider import MaxKBBaseModel
 
 
-class DeepSeekChatModel(ChatOpenAI):
+class DeepSeekChatModel(MaxKBBaseModel, ChatOpenAI):
+    @staticmethod
+    def new_instance(model_type, model_name, model_credential: Dict[str, object], **model_kwargs):
+        deepseek_chat = DeepSeekChatModel(
+            model=model_name,
+            openai_api_base='https://api.deepseek.com',
+            openai_api_key=model_credential.get('api_key')
+        )
+        return deepseek_chat
     def get_num_tokens_from_messages(self, messages: List[BaseMessage]) -> int:
         try:
             return super().get_num_tokens_from_messages(messages)

@@ -6,16 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c7dd2354-3fb8-4f18-a951-8ea1845cf5e3" name="更改" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/serializers/dataset_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/serializers/dataset_serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataset/views/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataset/views/dataset.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users/serializers/user_serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers/user_serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/layout/components/top-bar/avatar/AboutDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/layout/components/top-bar/avatar/AboutDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/CreateDataset.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/CreateDataset.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepFirst.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/dataset/step/StepFirst.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/doc_rewrite/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/doc_rewrite/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_document/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_document/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/src/views/qa_generate/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting/models_provider/impl/deepseek_model_provider/deepseek_model_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/setting/models_provider/impl/deepseek_model_provider/deepseek_model_provider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting/models_provider/impl/deepseek_model_provider/model/deepseek_chat_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/setting/models_provider/impl/deepseek_model_provider/model/deepseek_chat_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting/models_provider/impl/ollama_model_provider/model/ollama_chat_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/setting/models_provider/impl/ollama_model_provider/model/ollama_chat_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setting/models_provider/impl/ollama_model_provider/ollama_model_provider.py" beforeDir="false" afterPath="$PROJECT_DIR$/setting/models_provider/impl/ollama_model_provider/ollama_model_provider.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +34,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/wcm/程序项目/开发/KB-Builder/apps/setting/sql&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -84,8 +79,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23339.19" />
-        <option value="bundled-python-sdk-0029f7779945-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23339.19" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
+        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
       </set>
     </attachedChunks>
   </component>
@@ -127,6 +122,10 @@
       <workItem from="1730705338825" duration="5147000" />
       <workItem from="1730720351495" duration="1850000" />
       <workItem from="1732015679344" duration="2076000" />
+      <workItem from="1739252745847" duration="5144000" />
+      <workItem from="1739261376682" duration="3574000" />
+      <workItem from="1739339469606" duration="1265000" />
+      <workItem from="1739340987464" duration="50000" />
     </task>
     <servers />
   </component>
