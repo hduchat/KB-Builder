@@ -11,7 +11,7 @@
         <a href="https://github.com/hduchat/KB-Builder/wiki">使用手册</a>
       </div>
 
-      <el-button size="large" color="#626aef" @click.stop @click="goToLogin">
+      <el-button size="large" color="#1C9985" @click.stop @click="goToLogin">
         <span>
           免费体验
         </span>
@@ -60,7 +60,7 @@ const goToLogin = () => {
   }
 
   .logo-font {
-    background: var(--app-logo-color);
+    background: linear-gradient(180deg, #095EAC 0%, #095EAC 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

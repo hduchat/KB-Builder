@@ -3,14 +3,8 @@
     <div class="upload-document p-24">
       <!-- 基本信息 -->
       <BaseForm ref="BaseFormRef" v-if="isCreate" />
-      <el-form
-        v-if="isCreate"
-        ref="webFormRef"
-        :rules="rules"
-        :model="form"
-        label-position="top"
-        require-asterisk-position="right"
-      >
+      <el-form v-if="isCreate" ref="webFormRef" :rules="rules" :model="form" label-position="top"
+        require-asterisk-position="right">
         <el-form-item label="问答库类型" required>
           <el-radio-group v-model="form.type" class="card__radio" @change="radioChange">
             <el-row :gutter="20">
@@ -18,9 +12,6 @@
                 <el-card shadow="never" class="mb-16" :class="form.type === '0' ? 'active' : ''">
                   <el-radio value="0" size="large">
                     <div class="flex align-center">
-                      <AppAvatar class="mr-8 avatar-light" shape="square" :size="32">
-                        <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
-                      </AppAvatar>
                       <div>
                         <p class="mb-4">通用型</p>
                         <el-text type="info">可以通过上传文件或手动录入方式构建问答库</el-text>
@@ -34,9 +25,7 @@
                 <el-card shadow="never" class="mb-16" :class="form.type === '1' ? 'active' : ''">
                   <el-radio value="1" size="large">
                     <div class="flex align-center">
-                      <AppAvatar class="mr-8 avatar-purple" shape="square" :size="32">
-                        <img src="@/assets/icon_web.svg" style="width: 58%" alt="" />
-                      </AppAvatar>
+
                       <div>
                         <p class="mb-4">Web 站点</p>
                         <el-text type="info">通过网站链接同步方式构建知识库 </el-text>
@@ -51,18 +40,12 @@
 
         </el-form-item>
         <el-form-item label="Web 根地址" prop="source_url" v-if="form.type === '1'">
-          <el-input
-            v-model="form.source_url"
-            placeholder="请输入 Web 根地址"
-            @blur="form.source_url = form.source_url.trim()"
-          />
+          <el-input v-model="form.source_url" placeholder="请输入 Web 根地址"
+            @blur="form.source_url = form.source_url.trim()" />
         </el-form-item>
         <el-form-item label="选择器" v-if="form.type === '1'">
-          <el-input
-            v-model="form.selector"
-            placeholder="默认为 body，可输入 .classname/#idname/tagname"
-            @blur="form.selector = form.selector.trim()"
-          />
+          <el-input v-model="form.selector" placeholder="默认为 body，可输入 .classname/#idname/tagname"
+            @blur="form.selector = form.selector.trim()" />
 
         </el-form-item>
       </el-form>
@@ -169,7 +152,7 @@ const onSubmit = async () => {
   }
 }
 
-onMounted(() => {})
+onMounted(() => { })
 
 defineExpose({
   onSubmit,

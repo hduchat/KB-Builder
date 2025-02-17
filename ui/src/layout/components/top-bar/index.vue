@@ -1,17 +1,16 @@
 ·
 <template>
-  <div class="top-bar-container border-b flex-between">
-    <div class="flex-center h-full">
-      <div class="app-title-container flex-center cursor" @click="router.push('/')">
-        <div class="app-title-icon"></div>
-        <div class="app-title-text app-logo-font ml-4">
-          {{ defaultTitle }}
-        </div>
+  <div class="top-bar-container">
+    <div class="app-title-container flex-center cursor" @click="router.push('/')">
+      <div class="app-title-icon"></div>
+      <div class="app-title-text app-logo-font ml-4">
+        {{ defaultTitle }}
       </div>
+    </div>
+    <div class="menu">
       <TopMenu></TopMenu>
     </div>
-
-    <div class="flex-center avatar">
+    <div class="info flex-center avatar">
       <el-tooltip effect="dark" :content="$t('layout.topbar.github')" placement="top">
         <AppIcon iconName="app-github" class="cursor color-secondary mr-8 ml-8" style="font-size: 20px"
           @click="toUrl('https://github.com/hduchat/KB-Builder')"></AppIcon>
@@ -47,12 +46,16 @@ function toUrl(url: string) {
 </script>
 <style lang="scss">
 .top-bar-container {
-  height: var(--app-header-height);
+  height: 100%;
+  width: 100%;
+  padding: 12px;
   box-sizing: border-box;
-  padding: var(--app-header-padding);
+  display: flex;
+  flex-direction: column;
 
   .app-title-container {
-    margin-right: 45px;
+    // margin-right: 45px;
+    height: 70px;
 
     .app-title-icon {
       background-image: url('@/assets/logo.png');
@@ -64,6 +67,14 @@ function toUrl(url: string) {
     .app-title-text {
       font-size: 24px;
     }
+  }
+
+  .menu {
+    flex: 1;
+  }
+
+  .info {
+    heihgt: 50px;
   }
 
   .line {

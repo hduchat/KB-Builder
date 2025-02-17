@@ -2,11 +2,8 @@
   <div class="common-list">
     <ul v-if="data.length > 0">
       <template v-for="(item, index) in data" :key="index">
-        <li
-          @click.prevent="clickHandle(item, index)"
-          :class="current === item[props.valueKey] ? 'active' : ''"
-          class="cursor"
-        >
+        <li @click.prevent="clickHandle(item, index)" :class="current === item[props.valueKey] ? 'active' : ''"
+          class="cursor">
           <slot :row="item" :index="index"> </slot>
         </li>
       </template>
@@ -57,6 +54,7 @@ function clickHandle(row: any, index: number) {
   li {
     padding: 10px 16px;
     font-weight: 400;
+
     &.active {
       background: var(--el-color-primary-light-9);
       border-radius: 4px;

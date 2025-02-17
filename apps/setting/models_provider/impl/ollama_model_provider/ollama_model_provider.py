@@ -19,7 +19,7 @@ from common.exception.app_exception import AppApiException
 from common.forms import BaseForm
 from common.util.file_util import get_file_content
 from setting.models_provider.base_model_provider import IModelProvider, ModelProvideInfo, ModelInfo, ModelTypeConst, \
-    BaseModelCredential, DownModelChunk, DownModelChunkStatus, ValidCode
+    BaseModelCredential, DownModelChunk, DownModelChunkStatus, ValidCode, ModelInfoManage
 from setting.models_provider.impl.ollama_model_provider.model.ollama_chat_model import OllamaChatModel
 from smartdoc.conf import PROJECT_DIR
 
@@ -27,7 +27,7 @@ from smartdoc.conf import PROJECT_DIR
 
 
 class OllamaLLMModelCredential(BaseForm, BaseModelCredential):
-    def is_valid(self, model_type: str, model_name, model_credential: Dict[str, object], raise_exception=False):
+    def is_valid(self, model_type: str, model_name, model_credential: Dict[str, object], provider, raise_exception=False):
         model_type_list = OllamaModelProvider().get_model_type_list()
         if not any(list(filter(lambda mt: mt.get('value') == model_type, model_type_list))):
             raise AppApiException(ValidCode.valid_error.value, f'{model_type} 模型类型不支持')
@@ -122,6 +122,19 @@ model_info_list = [
         ModelTypeConst.LLM, ollama_llm_model_credential, OllamaChatModel),
 ]
 
+# 构建模型信息管理器
+model_info_manage = ModelInfoManage.builder() \
+    .append_model_info_list(model_info_list) \
+    .append_default_model_info(ModelInfo(
+        'llama2',
+        'Llama 2 是一组经过预训练和微调的生成文本模型，其规模从 70 亿到 700 亿个不等。这是 7B 预训练模型的存储库。',
+        ModelTypeConst.LLM,
+        ollama_llm_model_credential,
+        OllamaChatModel
+    )) \
+    .build()
+
+
 def get_base_url(url: str):
     parse = urlparse(url)
     return ParseResult(scheme=parse.scheme, netloc=parse.netloc, path='', params='',
@@ -177,29 +190,29 @@ class OllamaModelProvider(IModelProvider):
             os.path.join(PROJECT_DIR, "apps", "setting", 'models_provider', 'impl', 'ollama_model_provider', 'icon',
                          'ollama_icon_svg')))
 
-    def get_model_type_list(self):
-        return [{'key': "大语言模型", 'value': "LLM"}]
+    # def get_model_type_list(self):
+    #     return [{'key': "大语言模型", 'value': "LLM"}]
 
-    def get_model_list(self, model_type):
-        if model_type is None:
-            raise AppApiException(500, '模型类型不能为空')
-        return [model_dict.get(key).to_dict() for key in
-                list(filter(lambda key: model_dict.get(key).model_type == model_type, model_dict.keys()))]
+    # def get_model_list(self, model_type):
+    #     if model_type is None:
+    #         raise AppApiException(500, '模型类型不能为空')
+    #     return [model_dict.get(key).to_dict() for key in
+    #             list(filter(lambda key: model_dict.get(key).model_type == model_type, model_dict.keys()))]
+    #
+    # def get_model_credential(self, model_type, model_name):
+    #     if model_name in model_dict:
+    #         return model_dict.get(model_name).model_credential
+    #     # 如果使用模型不在配置中,则使用默认认证
+    #     return ollama_llm_model_credential
 
-    def get_model_credential(self, model_type, model_name):
-        if model_name in model_dict:
-            return model_dict.get(model_name).model_credential
-        # 如果使用模型不在配置中,则使用默认认证
-        return ollama_llm_model_credential
+    # def get_model(self, model_type, model_name, model_credential: Dict[str, object], **model_kwargs) -> BaseChatModel:
+    #     api_base = model_credential.get('api_base')
+    #     base_url = get_base_url(api_base)
+    #     return OllamaChatModel(model=model_name, openai_api_base=(base_url + '/v1'),
+    #                            openai_api_key=model_credential.get('api_key'))
 
-    def get_model(self, model_type, model_name, model_credential: Dict[str, object], **model_kwargs) -> BaseChatModel:
-        api_base = model_credential.get('api_base')
-        base_url = get_base_url(api_base)
-        return OllamaChatModel(model=model_name, openai_api_base=(base_url + '/v1'),
-                               openai_api_key=model_credential.get('api_key'))
-
-    def get_dialogue_number(self):
-        return 2
+    # def get_dialogue_number(self):
+    #     return 2
 
     @staticmethod
     def get_base_model_list(api_base):

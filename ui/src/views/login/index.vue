@@ -2,49 +2,27 @@
   <login-layout v-loading="loading">
     <LoginContainer subTitle="欢迎使用 KB Builder 问答生成工具">
       <h2 class="mb-24">普通登录</h2>
-      <el-form
-        class="login-form"
-        :rules="rules"
-        :model="loginForm"
-        ref="loginFormRef"
-        @keyup.enter="login"
-      >
+      <el-form class="login-form" :rules="rules" :model="loginForm" ref="loginFormRef" @keyup.enter="login">
         <div class="mb-24">
           <el-form-item prop="username">
-            <el-input
-              size="large"
-              class="input-item"
-              v-model="loginForm.username"
-              placeholder="请输入用户名"
-            >
+            <el-input size="large" class="input-item" v-model="loginForm.username" placeholder="请输入用户名">
             </el-input>
           </el-form-item>
         </div>
         <div class="mb-24">
           <el-form-item prop="password">
-            <el-input
-              type="password"
-              size="large"
-              class="input-item"
-              v-model="loginForm.password"
-              placeholder="请输入密码"
-              show-password
-            >
+            <el-input type="password" size="large" class="input-item" v-model="loginForm.password" placeholder="请输入密码"
+              show-password>
             </el-input>
           </el-form-item>
         </div>
       </el-form>
-      <el-button size="large" type="primary" class="w-full" @click="login">登录</el-button>
+      <el-button size="large" color="#1C9985" type="primary" class="w-full" @click="login">登录</el-button>
       <div class="operate-container flex-between mt-12">
         <!-- <el-button class="register" @click="router.push('/register')" link type="primary">
           注册
         </el-button> -->
-        <el-button
-          class="forgot-password"
-          @click="router.push('/forgot_password')"
-          link
-          type="primary"
-        >
+        <el-button class="forgot-password" @click="router.push('/forgot_password')" link type="primary">
           忘记密码?
         </el-button>
       </div>

@@ -1,10 +1,14 @@
 <template>
-  <div class="sidebar p-8">
+  <div class="sidebar p-8 ">
     <div v-if="showBreadcrumb">
       <AppBreadcrumb />
     </div>
+    <div v-else class="setting-title ml-4 mt-4 mb-12">
+      <div style="font-size: 18px;font-weight: 600;width:200px">系统设置</div>
+    </div>
+
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu :default-active="activeMenu" router>
+      <el-menu mode="horizontal" :default-active="activeMenu" active-text-color="#1C9985" router>
         <sidebar-item v-hasPermission="menu.meta?.permission" v-for="(menu, index) in subMenuList" :key="index"
           :menu="menu" :activeMenu="activeMenu">
         </sidebar-item>
@@ -47,5 +51,10 @@ const activeMenu = computed(() => {
     height: 100%;
     border: none;
   }
+}
+
+.setting-title {
+  display: flex;
+  align-items: center;
 }
 </style>

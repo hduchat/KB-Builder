@@ -19,10 +19,11 @@
     <div class="create-dataset__footer text-right border-t" v-if="active !== 2">
       <el-button @click="router.go(-1)" :disabled="loading">取消</el-button>
       <el-button @click="prev" v-if="active === 1" :disabled="loading">上一步</el-button>
-      <el-button @click="next" type="primary" v-if="active === 0" :disabled="loading || StepFirstRef?.loading">
+      <el-button color="#1C9985" @click="next" type="primary" v-if="active === 0"
+        :disabled="loading || StepFirstRef?.loading">
         创建并导入
       </el-button>
-      <el-button @click="submit1" type="primary" v-if="active === 1" :disabled="loading">
+      <el-button color="#1C9985" @click="submit1" type="primary" v-if="active === 1" :disabled="loading">
         开始导入
       </el-button>
     </div>
@@ -122,15 +123,17 @@ function submit1() {
     })
   }
 
-  fd.append('use_ocr', StepSecondRef.value?.useOCR ? 'true' : 'false');  
-  fd.append('extract_pic', StepSecondRef.value?.Extract_pic ? 'true' : 'false');  
 
-  const handleSuccess = () => {  
-    MsgSuccess('提交成功了');  
-    clearStore();  
+  fd.append('use_ocr', StepSecondRef.value?.useOCR ? 'true' : 'false');
+  fd.append('extract_pic', StepSecondRef.value?.Extract_pic ? 'true' : 'false');
+
+
+  const handleSuccess = () => {
+    MsgSuccess('提交成功了');
+    clearStore();
     window.location.reload(); // 在操作完成后刷新页面  
-  };  
-  
+  };
+
 
   const obj = { ...baseInfo.value, } as datasetData
   if (id) { // 存在id，上传文档  
@@ -141,7 +144,7 @@ function submit1() {
       .then(() => {
         // 上传文档
         document.asyncspitlDocument(document.datasetId, document.file)
-          .then(handleSuccess)  
+          .then(handleSuccess)
           .catch(() => {
             loading.value = false
           })

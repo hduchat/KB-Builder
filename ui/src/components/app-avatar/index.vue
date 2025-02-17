@@ -1,9 +1,7 @@
 <template>
-  <el-avatar
-    :size="30"
-    :style="{ background: props.pinyinColor && getAvatarColour(firstUserName) }"
-    v-bind="$attrs"
-  >
+  <el-avatar :size="30"
+    :style="{ background: props.backgroundColor ? props.backgroundColor : props.pinyinColor && getAvatarColour(firstUserName) }"
+    v-bind="$attrs">
     <slot> {{ firstUserName }} </slot>
   </el-avatar>
 </template>
@@ -19,6 +17,10 @@ const props = defineProps({
   pinyinColor: {
     type: Boolean,
     default: false
+  },
+  backgroundColor: {
+    type: String,
+    default: ''
   }
 })
 

@@ -1,10 +1,10 @@
 <template>
   <LayoutContainer header="文档">
-    <div class="main-calc-height">
+    <div class="document-container">
       <div class="p-24">
         <div class="flex-between">
           <div>
-            <el-button v-if="datasetDetail.type === '0'" type="primary"
+            <el-button v-if="datasetDetail.type === '0'" color="#1C9985" type="primary"
               @click="router.push({ path: '/dataset/upload', query: { id: id } })">上传文档</el-button>
             <el-button v-if="datasetDetail.type === '1'" type="primary" @click="importDoc">导入文档</el-button>
             <el-button @click="syncDataset" v-if="datasetDetail.type === '1'">同步问答库</el-button>
@@ -25,10 +25,9 @@
             clearable />
         </div>
         <app-table ref="multipleTableRef" class="mt-16" :data="documentData" :pagination-config="paginationConfig"
-          :quick-create="datasetDetail.type === '0'" @sizeChange="handleSizeChange" @changePage="getList"
-          @cell-mouse-enter="cellMouseEnter" @cell-mouse-leave="cellMouseLeave" @creatQuick="creatQuickHandle"
-          @row-click="rowClickHandle" @selection-change="handleSelectionChange" v-loading="loading"
-          :row-key="(row: any) => row.id" :storeKey="storeKey">
+          @sizeChange="handleSizeChange" @changePage="getList" @cell-mouse-enter="cellMouseEnter"
+          @cell-mouse-leave="cellMouseLeave" @creatQuick="creatQuickHandle" @selection-change="handleSelectionChange"
+          v-loading="loading" :row-key="(row: any) => row.id" :storeKey="storeKey">
           <el-table-column type="selection" width="55" :reserve-selection="true" />
           <el-table-column prop="name" label="文件名称" min-width="280">
             <template #default="{ row }">
@@ -42,19 +41,25 @@
             </template>
           </el-table-column>
           <el-table-column prop="paragraph_count" label="分段" align="right" />
-                   <el-table-column prop="status" label="文件状态" min-width="90">
-                     <template #default="{ row }">
-                       <el-text v-if="row.extraction_status === '1'">
-                         <el-icon class="success"><SuccessFilled /></el-icon> 成功
-                       </el-text>
-                       <el-text v-else-if="row.extraction_status === '2'">
-                         <el-icon class="danger"><CircleCloseFilled /></el-icon> 失败
-                       </el-text>
-                       <el-text v-else-if="row.extraction_status === '0'">
-                         <el-icon class="is-loading primary"><Loading /></el-icon> 导入中
-                       </el-text>
-                     </template>
-                    </el-table-column>
+          <el-table-column prop="status" label="文件状态" min-width="90">
+            <template #default="{ row }">
+              <el-text v-if="row.extraction_status === '1'">
+                <el-icon class="success">
+                  <SuccessFilled />
+                </el-icon> 成功
+              </el-text>
+              <el-text v-else-if="row.extraction_status === '2'">
+                <el-icon class="danger">
+                  <CircleCloseFilled />
+                </el-icon> 失败
+              </el-text>
+              <el-text v-else-if="row.extraction_status === '0'">
+                <el-icon class="is-loading primary">
+                  <Loading />
+                </el-icon> 导入中
+              </el-text>
+            </template>
+          </el-table-column>
           <!-- <el-table-column label="启用状态">
             <template #default="{ row }">
               <div @click.stop>
@@ -128,7 +133,7 @@
                     </el-button>
                     <template #dropdown>
                       <el-dropdown-menu>-->
-                        <!--                        <el-dropdown-item @click="settingDoc(row)">-->
+                <!--                        <el-dropdown-item @click="settingDoc(row)">-->
                 <!--                          <el-icon><Setting /></el-icon>-->
                 <!--                          设置-->
                 <!--                        </el-dropdown-item>-->
@@ -573,4 +578,8 @@ onBeforeUnmount(() => {
   closeInterval()
 })
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.document-container {
+  box-sizing: border-box;
+}
+</style>

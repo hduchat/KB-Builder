@@ -1,13 +1,13 @@
 <template>
   <h4 class="title-decoration-1 mb-16">基本信息</h4>
   <el-form ref="FormRef" :model="form" :rules="rules" label-position="top" require-asterisk-position="right">
-    <el-form-item label="问答库名称" prop="name">
-      <el-input v-model="form.name" placeholder="请输入问答库名称" maxlength="64" show-word-limit
+    <el-form-item style="width:60%" label="问答库名称" prop="name">
+      <el-input v-model="form.name" placeholder="请输入问答库名称" maxlength="15" show-word-limit
         @blur="form.name = form.name.trim()" />
     </el-form-item>
-    <el-form-item label="问答库描述" prop="desc">
+    <el-form-item style="width:60%" label="问答库描述" prop="desc">
       <el-input v-model="form.desc" type="textarea" placeholder="描述问答库的内容，详尽的描述将帮助AI能深入理解该问答库的内容，能更准确的检索到内容，提高该问答库的命中率。"
-        maxlength="256" show-word-limit :autosize="{ minRows: 3 }" @blur="form.desc = form.desc.trim()" />
+        maxlength="50" show-word-limit :autosize="{ minRows: 3 }" @blur="form.desc = form.desc.trim()" />
     </el-form-item>
   </el-form>
 </template>

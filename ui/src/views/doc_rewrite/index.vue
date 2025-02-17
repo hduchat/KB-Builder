@@ -13,9 +13,6 @@
                     <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '0' ? 'active' : ''">
                       <el-radio value="0" size="large">
                         <div class="flex align-center">
-                          <AppAvatar class="mr-8 avatar-light" shape="square" :size="32">
-                            <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
-                          </AppAvatar>
                           <div>
                             <p class="mb-4">未处理的文件</p>
                             <el-text type="info">上传后的原始文件</el-text>
@@ -28,9 +25,6 @@
                     <el-card shadow="never" class="mb-12 custom-card" :class="fileType === '1' ? 'active' : ''">
                       <el-radio value="1" size="large">
                         <div class="flex align-center">
-                          <AppAvatar class="mr-8 avatar-purple" shape="square" :size="32">
-                            <img src="@/assets/icon_document.svg" style="width: 58%" alt="" />
-                          </AppAvatar>
                           <div>
                             <p class="mb-4">已处理的文档</p>
                             <el-text type="info">经过处理后的结果文件</el-text>
@@ -52,7 +46,7 @@
             <!--                <el-option v-for="item in documentArr" :label="item.name" :value="item.id" />-->
             <!--              </el-select>-->
             <!--            </el-form-item>-->
-            <el-form-item label="AI模型" prop="model_id">
+            <el-form-item style="width:60%" label="AI模型" prop="model_id">
               <el-select v-model="applicationForm.model_id" clearable filterable placeholder="请选择AI模型">
                 <el-option-group v-for="(value, label) in modelOptions" :key="value"
                   :label="relatedObject(providerOptions, label, 'provider')?.name">
@@ -95,21 +89,21 @@
                 </template>
               </el-select>
             </el-form-item>
-            <el-form-item label="提示词" prop="cueWord">
+            <el-form-item style="width:60%" label="提示词" prop="cueWord">
               <el-select v-model="applicationForm.cueWord" clearable filterable placeholder="请选择提示词"
                 value-key="cueWord">
                 <el-option v-for="item in promptGroup" :label="item.cueWord" :value="item"
                   @click="applicationForm.prompt = item.prompt" />
               </el-select>
             </el-form-item>
-            <el-form-item label="详细提示词" prop="prompt">
+            <el-form-item style="width:100%" label="详细提示词" prop="prompt">
               <el-input v-model="applicationForm.prompt" clearable type="textarea"
                 placeholder="描述文档的内容，详尽的描述将帮助AI能深入理解该问答库的内容，同时可以提出你的要求。(提示词用户可以自行更改)" maxlength="2048" show-word-limit
                 :rows="5" @blur="applicationForm.prompt = applicationForm.prompt.trim()" />
             </el-form-item>
           </el-form>
-          <div class="text-right">
-            <el-button type="primary" :disabled="loading" @click="onSubmit(FormRef)">文档结构改写</el-button>
+          <div class="text-right form-bottom">
+            <el-button color="#1C9985" type="primary" :disabled="loading" @click="onSubmit(FormRef)">文档结构改写</el-button>
             <el-button :disabled="loading" @click="resetForm(FormRef)">重置</el-button>
           </div>
           <!-- 添加生成状态提示 -->
@@ -294,9 +288,24 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.el-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .el-form-item {
+    width: calc(50% - 14px);
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+  }
+}
+
+
+
 .centered-content {
-  margin: 0 auto;
-  width: 70%;
+  // margin: 0 auto;
+  width: 100%;
 }
 
 

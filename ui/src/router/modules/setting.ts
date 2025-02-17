@@ -25,34 +25,34 @@ const settingRouter = {
         parentName: 'setting'
       },
       component: () => import('@/views/template/index.vue')
-    },
-    {
-      path: '/user',
-      name: 'user',
-      meta: {
-        icon: 'User',
-        iconActive: 'UserFilled',
-        title: '用户管理',
-        activeMenu: '/setting',
-        parentPath: '/setting',
-        parentName: 'setting',
-        permission: new Role('ADMIN')
-      },
-      component: () => import('@/views/user-manage/index.vue')
-    },
-    {
-      path: '/team',
-      name: 'team',
-      meta: {
-        icon: 'app-team',
-        iconActive: 'app-team-active',
-        title: '团队成员',
-        activeMenu: '/setting',
-        parentPath: '/setting',
-        parentName: 'setting'
-      },
-      component: () => import('@/views/team/index.vue')
     }
+    // {
+    //   path: '/user',
+    //   name: 'user',
+    //   meta: {
+    //     icon: 'User',
+    //     iconActive: 'UserFilled',
+    //     title: '用户管理',
+    //     activeMenu: '/setting',
+    //     parentPath: '/setting',
+    //     parentName: 'setting',
+    //     permission: new Role('ADMIN')
+    //   },
+    //   component: () => import('@/views/user-manage/index.vue')
+    // },
+    // {
+    //   path: '/team',
+    //   name: 'team',
+    //   meta: {
+    //     icon: 'app-team',
+    //     iconActive: 'app-team-active',
+    //     title: '团队成员',
+    //     activeMenu: '/setting',
+    //     parentPath: '/setting',
+    //     parentName: 'setting'
+    //   },
+    //   component: () => import('@/views/team/index.vue')
+    // }
   ]
 }
 

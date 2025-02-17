@@ -12,7 +12,7 @@
                 KB-builder是「滨电智言」的一款开源工具，由杭州电子科技大学滨江研究院自主开发完成，旨在成为企业的知识库构建中枢
               </p>
               <div class="flex-center btns">
-                <el-button size="large" color="#626aef">
+                <el-button size="large" color="#1C9985">
                   <a class="flex-center"
                     href="https://github.com/hduchat/KB-Builder/wiki/%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2">
                     <span>
@@ -23,7 +23,7 @@
                     </span>
                   </a>
                 </el-button>
-                <el-button size="large" color="#626aef">
+                <el-button size="large">
                   <a href="https://github.com/hduchat/KB-Builder">
                     <span class="iconfont">
                       &#xe885;
@@ -43,16 +43,13 @@
       <div class="shadow">
         <el-carousel indicator-position="outside" height="auto">
           <el-carousel-item style="height:auto">
-            <img src="@/assets/图片1-modified.png" class="carousel-img" alt="">
+            <img :src="picUrls[0]" class="carousel-img" alt="">
+          </el-carousel-item>
+          <el-carousel-item style="height:auto">
+            <img :src="picUrls[1]" class="carousel-img" alt="">
           </el-carousel-item>
           <el-carousel-item style="height:auto">
             <img :src="picUrls[2]" class="carousel-img" alt="">
-          </el-carousel-item>
-          <el-carousel-item style="height:auto">
-            <img :src="picUrls[3]" class="carousel-img" alt="">
-          </el-carousel-item>
-          <el-carousel-item style="height:auto">
-            <img :src="picUrls[4]" class="carousel-img" alt="">
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -98,29 +95,27 @@ router.beforeEach((to, from, next) => {
   next();
 });
 const picUrls = [
-  'https://pic.imgdb.cn/item/67173cbfd29ded1a8ce8b82a.jpg',
-  'https://pic.imgdb.cn/item/67173cc0d29ded1a8ce8b862.png',
-  'https://pic.imgdb.cn/item/67175c72d29ded1a8c1c0ce9.png',
-  'https://pic.imgdb.cn/item/67175c72d29ded1a8c1c0cfa.png',
-  'https://pic.imgdb.cn/item/67175c72d29ded1a8c1c0d06.png'
+  'https://pic1.imgdb.cn/item/66fa5797f21886ccc0a119d8.png',
+  'https://pic1.imgdb.cn/item/677de147d0e0a243d4f19e19.png',
+  'https://pic1.imgdb.cn/item/677de143d0e0a243d4f19e15.png'
 ]
 const introBoxes = [
   {
     title: '支持广泛',
     intro: '支持直接上传docx、txt、markdown、pdf格式文档。后续支持更多文本格式文件',
-    url: 'https://maxkb.cn/images/%E5%BC%80%E7%AE%B1%E5%8D%B3%E7%94%A8.svg'
+    url: 'https://pic1.imgdb.cn/item/677dea72d0e0a243d4f1a025.png'
   }, {
     title: '模型中立',
     intro: '支持对接各种大语言模型来生成QA，包括本地私有大模型（Llama3／Qwen2等）、国内公共大模型（通义千问／智谱AI等）和国外公共大模型（OpenAI/Gemini等）',
-    url: 'https://maxkb.cn/images/%E6%A8%A1%E5%9E%8B%E4%B8%AD%E7%AB%8B.svg'
+    url: 'https://pic1.imgdb.cn/item/677dea73d0e0a243d4f1a029.png'
   }, {
     title: '方式灵活',
     intro: '提供多种甚于R4G的文档切片(自定义/递归/自定义标识等)和多种文本清洗等R4G文档当预处理方式',
-    url: 'https://maxkb.cn/images/%E7%81%B5%E6%B4%BB%E7%BC%96%E6%8E%92.svg'
+    url: 'https://pic1.imgdb.cn/item/677dea72d0e0a243d4f1a026.png'
   }, {
     title: '知识生成',
     intro: '将文本分片后，提供多个预置Prompt库，生成高质量的QA问答对，并提供基于QA的知识库管理功能',
-    url: 'https://maxkb.cn/images/%E6%97%A0%E7%BC%9D%E5%B5%8C%E5%85%A5.svg'
+    url: 'https://pic1.imgdb.cn/item/677de9add0e0a243d4f19fe9.png'
   }
 ]
 const isReverse = (index: number) => {
@@ -130,8 +125,8 @@ const isReverse = (index: number) => {
 </script>
 <style lang='scss' scoped>
 .bg-header {
-  background: #f8f9fa url('https://maxkb.cn/images/banner-bg.svg') center bottom no-repeat;
-  background-size: cover;
+  // background: #f8f9fa url('https://img2.baidu.com/it/u=315412614,3971635865&fm=253&fmt=auto&app=138&f=PNG?w=860&h=483') center bottom no-repeat;
+  // background-size: cover;
   padding: 180px 0 140px;
 }
 

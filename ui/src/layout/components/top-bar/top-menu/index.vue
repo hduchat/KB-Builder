@@ -1,6 +1,6 @@
 <template>
-  <div class="top-menu-container flex align-center h-full">
-    <MenuItem :menu="menu" v-hasPermission="menu.meta?.permission" v-for="(menu, index) in topMenuList" :key="index">
+  <div class="top-menu-container  h-full">
+    <MenuItem :menu="menu" v-for="(menu, index) in topMenuList" :key="index">
     </MenuItem>
   </div>
 </template>
@@ -9,8 +9,21 @@ import { computed } from 'vue'
 import { getChildRouteListByPathAndName } from '@/router/index'
 import MenuItem from './MenuItem.vue'
 
-const topMenuList = computed(() => {
-  return getChildRouteListByPathAndName('/home', 'home')
-})
+const topMenuList = [{
+  title: '问答库',
+  name: 'dataset',
+  icon: '\ue600',
+  path: '/dataset'
+}, {
+  title: '系统设置',
+  name: 'setting',
+  icon: '\ue72d',
+  path: '/setting'
+}]
 </script>
-<style lang="scss" scope></style>
+<style lang="scss" scoped>
+.top-menu-container {
+  display: flex;
+  flex-direction: column;
+}
+</style>
